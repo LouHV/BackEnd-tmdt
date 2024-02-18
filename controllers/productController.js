@@ -46,6 +46,20 @@ const getAllProduct = asyncHandler(async (req, res) => {
         const sortBy = req.query.sort.split(',').join(' ')
         queryCommand = queryCommand.sort(sortBy)
     }
+    //Filed limiting
+    if (req.query.fields) {
+
+        const fields = req.query.fields.split(',').join(' ')
+
+        queryCommand = queryCommand.select(fields)
+    }
+    //Pagination
+    //limit la so object lay ve trong 1 api
+    //skip: 
+    const page = +req.query.page || 1 // Dau + se chuyen STRING sang number
+    const limit = +req.query.limit || process.env.LIMIT_PRODUCTS
+    const skip = (page - 1) * limit
+    queryCommand.skip(skip).limit(limit)
 
     //execute query
     // sl sp thoa man dk  khac voi so luong san pham tra ve 1 lan
@@ -53,8 +67,9 @@ const getAllProduct = asyncHandler(async (req, res) => {
         const counts = await Product.find(formatedQueries).countDocuments()
         return res.status(200).json({
             success: response ? true : false,
+            counts,
             products: response ? response : 'Cannot get products',
-            counts
+
         })
     }).catch((err) => {
         throw new Error(err.message)
@@ -81,10 +96,36 @@ const deleteProduct = asyncHandler(async (req, res) => {
     })
 })
 
+const ratings = asyncHandler(async (req, res) => {
+    const { _id } = req.user
+    const { star, comment, prdId } = req.body
+
+    const ratingProduct = await Product.findById(prdId)
+    const alreadyRating = ratingProduct?.rating?.find(el => el.postedBy.toString() === _id)
+    console.log('allreadyRating :>> ', { alreadyRating });
+    if (alreadyRating) {
+        await Product.updateOne({
+            rating: { $elemMatch: alreadyRating }
+        }, {
+            $set: { "rating.$.star": star, "rating.$.comment": comment }
+        }, { new: true })
+
+    } else {
+        // add star & comment
+        await Product.findByIdAndUpdate(
+            prdId, {
+            $push: { rating: { star, comment, postedBy: _id } }
+        }, { new: true })
+    }
+    return res.status(200).json({
+        status: true
+    })
+})
 module.exports = {
     createProduct,
     getProduct,
     getAllProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    ratings
 }
