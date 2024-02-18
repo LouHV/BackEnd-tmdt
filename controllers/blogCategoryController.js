@@ -1,41 +1,41 @@
-const Blog = require('../models/blogModel')
+const BlogCategory = require('../models/blogCategoryModel')
 const asyncHandler = require('express-async-handler')
-const createBlog = asyncHandler(async (req, res) => {
-    const response = await Blog.create(req.body)
+const createBlogCategory = asyncHandler(async (req, res) => {
+    const response = await BlogCategory.create(req.body)
     return res.json({
         success: response ? true : false,
-        createBlog: response ? response : 'Cannot create new Blog'
+        createBlogCategory: response ? response : 'Cannot create new BlogCategory'
     })
 
 })
-const getAllBlog = asyncHandler(async (req, res) => {
-    const response = await Blog.find().select('title _id')
+const getAllBlogCategory = asyncHandler(async (req, res) => {
+    const response = await BlogCategory.find().select('title _id')
     return res.json({
         success: response ? true : false,
-        blogs: response ? response : 'Cannot get Blog'
+        BlogCategorys: response ? response : 'Cannot get BlogCategory'
     })
 })
 
-const updateBlog = asyncHandler(async (req, res) => {
-    const { blogId } = req.params
-    const response = await Blog.findByIdAndUpdate(blogId, req.body, { new: true })
+const updateBlogCategory = asyncHandler(async (req, res) => {
+    const { blogcId } = req.params
+    const response = await Blog.findByIdAndUpdate(blogcId, req.body, { new: true })
     return res.json({
         success: response ? true : false,
         updatedBlog: response ? response : 'Cannot update Blog'
     })
 })
 
-const deleteBlog = asyncHandler(async (req, res) => {
-    const { blogId } = req.params
-    const response = await Blog.findByIdAndDelete(blogId)
+const deleteBlogCategory = asyncHandler(async (req, res) => {
+    const { blogcId } = req.params
+    const response = await Blog.findByIdAndDelete(blogcId)
     return res.json({
         success: response ? true : false,
-        deletedBlog: response ? response : 'Cannot delete Blog'
+        deletedBlogCategory: response ? response : 'Cannot delete BlogCategory'
     })
 })
 module.exports = {
-    createBlog,
-    getAllBlog,
-    updateBlog,
-    deleteBlog
+    createBlogCategory,
+    getAllBlogCategory,
+    updateBlogCategory,
+    deleteBlogCategory
 }
