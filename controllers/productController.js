@@ -117,8 +117,17 @@ const ratings = asyncHandler(async (req, res) => {
             $push: { rating: { star, comment, postedBy: _id } }
         }, { new: true })
     }
+
+    //sum rating
+    const updatedProduct = await Product.findById(prdId)
+    const ratingCount = updatedProduct.rating.length
+    const sumRating = updatedProduct.rating.reduce((sum, el) => sum + +el.star, 0)
+    updatedProduct.totalRating = Math.round(sumRating * 10 / ratingCount) / 10
+    await updatedProduct.save()
+
     return res.status(200).json({
-        status: true
+        status: true,
+        updatedProduct
     })
 })
 module.exports = {
