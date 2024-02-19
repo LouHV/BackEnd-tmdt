@@ -12,7 +12,7 @@ router.put('/ratings', verifyAccessToken, productController.ratings)
 router.put('/:prdId', [verifyAccessToken, isAdmin], productController.updateProduct)
 router.delete('/:prdId', [verifyAccessToken, isAdmin], productController.deleteProduct)
 router.get('/:prdId', productController.getProduct)
-router.put('/uploadimage/:prdId', [verifyAccessToken, isAdmin], uploader.array('files',3), productController.uploadImagesPrd)
+router.put('/uploadimage/:prdId', [verifyAccessToken, isAdmin], uploader.array('files',10), productController.uploadImagesPrd)
 
 
 module.exports = router
