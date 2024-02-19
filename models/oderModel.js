@@ -12,10 +12,14 @@ var OrderSchema = new mongoose.Schema({
         default: 'Processing',
         enum: ['Cancelled', 'Processing', 'Successed']
     },
-    paymentIntent:{},
-    oderBy:{
+    total: Number,
+    coupon:{
         type: mongoose.Types.ObjectId,
-        ref:'User'
+        ref:'Coupon'
+    },
+    oderBy: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User'
     }
 }, {
     timestamps: true

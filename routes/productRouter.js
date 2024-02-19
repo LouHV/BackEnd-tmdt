@@ -8,10 +8,11 @@ router.post('/', [verifyAccessToken, isAdmin], productController.createProduct)
 router.get('/', productController.getAllProduct)
 router.put('/ratings', verifyAccessToken, productController.ratings)
 
-router.post('/uploadimage/:prdId', [verifyAccessToken, isAdmin], uploader.single('images'), productController.uploadImagesPrd)
+
 router.put('/:prdId', [verifyAccessToken, isAdmin], productController.updateProduct)
 router.delete('/:prdId', [verifyAccessToken, isAdmin], productController.deleteProduct)
 router.get('/:prdId', productController.getProduct)
+router.put('/uploadimage/:prdId', [verifyAccessToken, isAdmin], uploader.array('files',3), productController.uploadImagesPrd)
 
 
 module.exports = router

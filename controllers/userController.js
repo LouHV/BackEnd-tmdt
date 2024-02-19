@@ -206,6 +206,49 @@ const deleteUser = asyncHandler(async (req, res) => {
         deleteUser: response ? `User with email ${response.email} deleted` : "No user delete"
     })
 })
+
+const updateUserAddress = asyncHandler(async (req, res) => {
+    const { _id } = req.user
+    if (!req.body.address) throw new Error('Missing inputs')
+    const response = await User.findByIdAndUpdate(_id, { $push: { address: req.body.address } }, { new: true }).select("-password -role -refreshToken")
+    return res.status(200).json({
+        success: user ? true : false,
+        updateUser: response ? response : "Some thing went wrong"
+    })
+})
+
+const updateCart = asyncHandler(async (req, res) => {
+    const { _id } = req.user
+    const { prdId, quantity, color } = req.body
+
+    if (!prdId || !quantity || !color) throw new Error('Missing inputs')
+    const user = await User.findById(_id).select('cart')
+    const alreadyPrd = user?.cart?.find(el => el.product.toString() === prdId)
+    console.log('alreadyPrd :>> ', alreadyPrd);
+    if (alreadyPrd) {
+        if (alreadyPrd.color === color) {
+            const response = await User.updateOne({ cart: { $elemMatch: alreadyPrd } }, { $set: { "cart.$.quantity": quantity } }, { new: true })
+            return res.status(200).json({
+                success: response ? true : false,
+                updatedCart: response ? response : "Some thing went wrong"
+            })
+        } else {
+            const response = await User.findByIdAndUpdate(_id, { $push: { cart: { product: prdId, quantity, color } } }, { new: true })
+            return res.status(200).json({
+                success: response ? true : false,
+                updatedCart: response ? response : "Some thing went wrong"
+            })
+        }
+    }
+    else {
+        const response = await User.findByIdAndUpdate(_id, { $push: { cart: { product: prdId, quantity, color } } }, { new: true })
+        return res.status(200).json({
+            success: response ? true : false,
+            updatedCart: response ? response : "Some thing went wrong"
+        })
+    }
+})
+
 module.exports = {
     register,
     login,
@@ -217,5 +260,7 @@ module.exports = {
     getUsers,
     deleteUser,
     updateUser,
-    updateUserByAdmin
+    updateUserByAdmin,
+    updateUserAddress,
+    updateCart
 }
