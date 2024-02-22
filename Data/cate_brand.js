@@ -1,26 +1,34 @@
 const data = [
     {
-        cate: 'Smartphone',
+        title: 'Smartphone',
         brand: ['Apple', 'SamSung', 'LG', 'Asus', 'Nokia', 'BlackBerry']
     },
     {
-        cate: 'Tablet',
+        title: 'Tablet',
         brand: ['Ipad', 'SamSung', 'Acer', 'Asus', 'Lenovo', 'Haier']
     },
     {
-        cate: 'Laptop',
+        title: 'Laptop',
         brand: ['Asus', 'Dell', 'Acer', 'Asus', 'Lenovo', 'HP', 'Macbook']
     },
     {
-        cate: 'Accessories',
-        brand: [' Smartswatches ', ' Headphone', 'Bluetooth', 'Keyboard', ' Mouse', ' Cases ']
+        title: 'Speaker',
+        brand: []
     },
     {
-        cate: 'Television',
+        title: 'Camera',
         brand: ['Apple', 'SamSung', 'LG', 'Asus', 'Nokia', 'BlackBerry']
     },
     {
-        cate: 'Printer',
+        title: 'Accessories',
+        brand: []
+    },
+    {
+        title: 'Television',
+        brand: ['Apple', 'SamSung', 'LG', 'Asus', 'Nokia', 'BlackBerry']
+    },
+    {
+        title: 'Printer',
         brand: ['SamSung','Acer','Asus','Lenovo','Canon']
     },
 ]

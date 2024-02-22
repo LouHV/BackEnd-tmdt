@@ -1,9 +1,9 @@
 const Product = require('../models/productModel')
 const Category = require("../models/productCategoryModel")
 const asyncHandler = require('express-async-handler')
-const data = require()
+const data = require('../../Data/ecommerce.json')
 const slugtify = require('slugify')
-const categoryData = require('../Data/cate_brand')
+const categoryData = require('../../Data/cate_brand')
 
 const fn = async (product) => {
     await Product.create({
@@ -11,12 +11,14 @@ const fn = async (product) => {
         slug: slugtify(product?.name),
         description: product?.description,
         brand: product?.brand,
-        price: Math.round(Number(product?.price).match(/\d/g).john('') / 100),
+        price: Math.round(Number(product?.price.match(/\d/g).join('')) / 100),
         category: product?.category[1],
         quantity: Math.round(Math.random() * 1000),
         sold: Math.round(Math.random() * 1000),
         images: product?.images,
-        color: product?.variants?.find(el => el.label === 'Color').variants[0]
+        color: product?.variants?.find(el => el.label === 'Color')?.variants?.[0] || null,
+        thumb: product?.thumb,
+        totalRating: Math.floor(Math.random() * 6),
     })
 }
 const insertProduct = asyncHandler(async (req, res) => {
@@ -29,8 +31,8 @@ const insertProduct = asyncHandler(async (req, res) => {
 })
 
 const fn2 = async (category) => {
-    await ProductCategory.create({
-        title: category?.name,
+    await Category.create({
+        title: category?.title,
         brand: category?.brand,
     })
 }

@@ -21,11 +21,15 @@ var productSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    thumb: {
+        type: String,
+        required: true
+    },
     price: {
         type: Number,
         required: true,
     },
-    category:  {
+    category: {
         type: String,
         required: true,
     },
@@ -42,7 +46,7 @@ var productSchema = new mongoose.Schema({
     },
     color: {
         type: String,
-        required: true,
+
     },
     rating: [
         {
@@ -53,7 +57,7 @@ var productSchema = new mongoose.Schema({
     ],
     totalRating: {
         type: Number,
-        default: 0
+        default: 0,
     },
 }, {
     timestamps: true
