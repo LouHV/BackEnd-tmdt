@@ -24,7 +24,7 @@ module.exports = {
     'slide-top': {
       '0%': {
         '-webkit-transform': 'translateY(40px);',
-        transform: 'translateY(40px);'
+        transform: 'translateY(20px);'
       },
       '100%': {
         ' -webkit-transform': 'translateY(-0px);',

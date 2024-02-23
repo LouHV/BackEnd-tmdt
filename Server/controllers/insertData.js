@@ -34,6 +34,7 @@ const fn2 = async (category) => {
     await Category.create({
         title: category?.title,
         brand: category?.brand,
+        image: category?.image
     })
 }
 const insertCategory = asyncHandler(async (req, res) => {
