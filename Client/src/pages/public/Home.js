@@ -55,7 +55,6 @@ const Public = () => {
             <div className="my-8 w-full">
                 <h3 className="text-[20px] uppercase font-semibold py-[15px] border-2 border-t-main">Blogs posts</h3>
             </div>
-            <div className="w-full h-[500px] bg-main">FOOTER</div>
         </>
 
     )

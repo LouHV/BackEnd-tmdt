@@ -5,6 +5,8 @@ import label from '../assets/new.png'
 import { renderStartFromNumber } from '../ultils/helper'
 import { SelectOptions } from './'
 import icons from "../ultils/icons";
+import {Link} from 'react-router-dom'
+import path from "../ultils/path";
 
 const { FaRegEye, FaHeart, IoMenu } = icons
 
@@ -12,7 +14,8 @@ const Product = ({ productData, isNew }) => {
     const [isShowOption, setIsShowOption] = useState(false)
     return (
         <div className="w-full text-base px-[10px]">
-            <div className="w-full border p-[15px] flex flex-col items-center rounded-[8px]"
+            <Link className="w-full border p-[15px] flex flex-col items-center rounded-[8px]"
+            to={`/${path.DETAIL_PRODUCT}/${productData?._id}/${productData?.title}`}
                 onMouseEnter={e => {
                     e.stopPropagation()
                     setIsShowOption(true)
@@ -38,14 +41,14 @@ const Product = ({ productData, isNew }) => {
                         className={`absolute w-[100px] h-[40px] top-[0] right-[0] objcet-cover`} />
 
                 </div>
-                <div className="flex flex-col gap-2 mt-[15px] items-start gap-1 w-full">
+                <div className="flex flex-col mt-[15px] items-start gap-1 w-full">
                     <span className="flex h-4">{renderStartFromNumber(productData?.totalRating)?.map((el,index)=>(
                         <span key={index}>{el}</span>
                     ))}</span>
                     <span className="line-clamp-1 hover:text-main cursor-pointer">{productData?.title}</span>
                     <span>{`${formatMoney(productData?.price)} VNĐ`}</span>
                 </div>
-            </div>
+            </Link>
         </div >
     )
 }

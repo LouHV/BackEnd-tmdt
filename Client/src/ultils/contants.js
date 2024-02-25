@@ -2,6 +2,11 @@ import path from "./path"
 
 export const navigation = [
     {
+        id:0,
+        value: 'HOME',
+        path:`/${path.HOME}`
+    },
+    {
         id:1,
         value: 'PRODUCT',
         path:`/${path.PRODUCTS}`
