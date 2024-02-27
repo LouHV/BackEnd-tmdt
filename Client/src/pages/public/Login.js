@@ -5,9 +5,10 @@ import path from "../../ultils/path";
 import { apiLogin, apiForgotPassword } from "../../apis/user";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
-import { register } from "../../store/user/userSlice";
+import { login } from "../../store/user/userSlice";
 import { useDispatch } from "react-redux";
 import { toast } from 'react-toastify'
+import { invalidate } from "../../ultils/helper";
 
 const Login = () => {
     const navigate = useNavigate()
@@ -16,6 +17,8 @@ const Login = () => {
         email: '',
         password: '',
     })
+
+    const [invalidFields, setinvalidFields] = useState([])
 
     const [isForgotPassword, setisForgotPassword] = useState(false)
 
@@ -26,18 +29,25 @@ const Login = () => {
             toast.info(response.message, { theme: 'colored' })
         } else toast.info(response.message, { theme: 'colored' })
     }
+    //
+
+
 
     const handleSubmit = useCallback(async () => {
         const { email, password } = payload
-        const response = await apiLogin(payload)
+
+        const invalids = invalidate(payload,setinvalidFields)
+        console.log('invalids :>> ', invalids);
+        if(invalids ===0){
+            const response = await apiLogin(payload)
         Swal.fire(response.success ? 'Congratulation' : 'Oops!', response.message, response.success ? 'Success' : 'Error')
             .then((result) => { // Nhận kết quả từ swal
                 if (result.isConfirmed && response.success) { // Nếu xác nhận và thành công
-                    console.log('result :>> ', result);
-                    dispatch(register({ isLoggedIn: true, token: response.accessToken, userData: response.userData }))
+                    dispatch(login({ isLoggedIn: true, token: response.accessToken, userData: response.userData }))
                     navigate(`/${path.HOME}`); // Điều hướng sang trang login
                 }
             })
+        }
 
     }, [payload])
 
@@ -77,12 +87,16 @@ const Login = () => {
                     <InputField
                         value={payload.email}
                         setValue={setPayload}
-                        nameKey='email' />
+                        nameKey='email'
+                        invalidFields={invalidFields}
+                        setInvalidField={setinvalidFields} />
                     <InputField
                         value={payload.password}
                         setValue={setPayload}
                         nameKey='password'
-                        type='password' />
+                        type='password'
+                        invalidFields={invalidFields}
+                        setInvalidField={setinvalidFields} />
 
                     <Button
                         nameButton='Login'
@@ -99,6 +113,10 @@ const Login = () => {
                             to={`/${path.REGISTER}`}
                         >Create new account</Link>
                     </div>
+                    <Link
+                    className="text-blue-500 hover:underline cursor-pointer pl-2"
+                    to={`/${path.HOME}`}
+                    >Go home?</Link>
                 </div>
             </div>
         </div>

@@ -11,7 +11,7 @@ const data = [
     },
     {
         title: 'Laptop',
-        brand: ['Asus', 'Dell', 'Acer', 'Asus', 'Lenovo', 'HP', 'Macbook'],
+        brand: ['Asus', 'Dell', 'Acer', 'Lenovo', 'HP', 'Macbook'],
         image:'https://digital-world-2.myshopify.com/cdn/shop/files/laptop_300x.jpg?v=1613166811'
     },
     {
