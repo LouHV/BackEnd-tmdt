@@ -134,22 +134,22 @@ const logout = asyncHandler(async (req, res) => {
 //check token co giong voi token cua server gui mail khong
 
 const forgotPassword = asyncHandler(async (req, res) => {
-    const { email } = req.query
+    const { email } = req.body
     if (!email) throw new Error('missing email')
     const user = await User.findOne({ email })
     if (!user) throw new Error('User not found')
     const resetToken = user.createPasswordChangedToken()
     await user.save()
     const html = `Xin vui lòng click vào link dưới đây để thay đổi mật khẩu của bạn.Link này sẽ hết hạn sau 15 phút kể từ bây giờ. 
-    <a href=${process.env.URL_SERVER}/api/user/reset-password/${resetToken}>Click here</a>`
+    <a href=${process.env.CLIENT_URL}reset-password/${resetToken}>Click here</a>`
     const data = {
         email,
         html
     }
     const rs = await sendMail(data)
     return res.status(200).json({
-        success: true,
-        rs
+        success: rs.response?.includes('OK') ? true : false,
+        message: rs.response?.includes('OK') ? 'Hãy check mail của bạn.' : 'Đã có lỗi, hãy thử lại sau.'
     })
 })
 const resetPassword = asyncHandler(async (req, res) => {

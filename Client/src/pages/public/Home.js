@@ -7,7 +7,8 @@ import { IoIosArrowForward } from "react-icons/io";
 const Public = () => {
 
     const { categories } = useSelector(state => state.app)
-    console.log('objectsdf :>> ', categories);
+    const { isLoggedIn,current } = useSelector(state => state.app)
+    
 
     return (
         <>
@@ -33,7 +34,7 @@ const Public = () => {
                             className="w-[396px]"
                         >
                             <div className="border flex p-4 gap-4 min-h-[190px]">
-                                <img src={el?.image} alt="" className=" flex-1 w-full object-contain w-[144px] h-[129px] object-cover-fill" />
+                                <img src={el?.image} alt="" className=" flex-1 object-contain w-[144px] h-[129px] object-cover-fill" />
                                 <div className="flex-1 text-gray-700">
                                     <h4 className="font-semibold uppercase">{el.title}</h4>
                                     <ul className="text-sm">
