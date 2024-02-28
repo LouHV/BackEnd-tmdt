@@ -18,7 +18,7 @@ const Footer = () => {
               className='p-4 pr-0 rounded-l-full flex-1 bg-[#F04646] outline-none text-gray-100 
               placeholder:text-sm placeholder:text-gray-100 placeholder:opacity-50'
               type='text' name='' id='' placeholder='Email adress' />
-            <div className='h-[56px] w-[56px] bg-[#F04646] rounded-r-full flex items-center justify-center text-white'>
+            <div className='h-[56px] w-[56px] bg-[#F04646] rounded-r-full flex items-center justify-center text-white cursor-pointer'>
               <MdEmail size={20} />
             </div>
           </div>

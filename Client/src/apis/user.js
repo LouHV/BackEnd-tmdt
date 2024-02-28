@@ -21,3 +21,7 @@ export const apiResetPassword = (data)=>axios({
     method:'PUT',
     data
 })
+export const apiGetcurrent = ()=>axios({
+    url:'/user/getcurrent',
+    method:'GET',
+})

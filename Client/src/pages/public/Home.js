@@ -12,7 +12,7 @@ const Public = () => {
 
     return (
         <>
-            <div className="w-Main flex">
+            <div className="w-main flex mt-6">
                 <div className="flex flex-col gap-5 w-[20%] flex-auto">
                     <Sidebar />
                 </div>
