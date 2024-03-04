@@ -1,17 +1,17 @@
-import React from 'react'
+import React, { memo } from 'react'
 
-const Button = ({ nameButton, handleOnClick, style, iconBefore, iconAfter, fw }) => {
+const Button = ({ children, handleOnClick, style,  fw }) => {
     return (
         <button
             type='button'
             className={style ? style : `px-4 py-2 rounded-md text-white my-2 bg-main text-semibold ${fw ? 'w-full' : 'w-fit'}`}
             onClick={() => { handleOnClick && handleOnClick() }}
         >
-            {iconBefore}
-            <span>{nameButton}</span>
-            {iconAfter}
+            
+            {children}
+            
         </button>
     )
 }
 
-export default Button
+export default memo(Button)

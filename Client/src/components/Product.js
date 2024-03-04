@@ -10,12 +10,12 @@ import path from "../ultils/path";
 
 const { FaRegEye, FaHeart, IoMenu } = icons
 
-const Product = ({ productData, isNew }) => {
+const Product = ({ productData, isNew, normal }) => {
     const [isShowOption, setIsShowOption] = useState(false)
     return (
         <div className="w-full text-base px-[10px]">
             <Link className="w-full border p-[15px] flex flex-col items-center rounded-[8px]"
-            to={`/${path.DETAIL_PRODUCT}/${productData?._id}/${productData?.title}`}
+            to={`/${productData?.category }/${productData?._id}/${productData?.title}`}
                 onMouseEnter={e => {
                     e.stopPropagation()
                     setIsShowOption(true)
@@ -35,10 +35,10 @@ const Product = ({ productData, isNew }) => {
                     <img src={productData?.thumb || 'https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg'}
                         alt=''
                         className="w-[274px] h-[274px] object-cover" />
-                    <img
+                    {!normal&&<img
                         src={isNew ? label : trending}
                         alt=""
-                        className={`absolute w-[100px] h-[40px] top-[0] right-[0] objcet-cover`} />
+                        className={`absolute w-[100px] h-[40px] top-[0] right-[0] objcet-cover`} />}
 
                 </div>
                 <div className="flex flex-col mt-[15px] items-start gap-1 w-full">

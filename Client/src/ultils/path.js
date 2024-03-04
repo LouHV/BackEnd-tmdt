@@ -8,8 +8,7 @@ const path = {
     BLOGS:'blogs',
     SERVICES:'services',
     FAQS:'faqs',
-    DETAIL_PRODUCT__PID__TITLE:'san-pham/:pid/:title',
-    DETAIL_PRODUCT:'san-pham',
+    DETAIL_PRODUCT__CATEGORY__PID__TITLE:':category/:pid/:title',
     RESET_PASSWORD:'reset-password/:token'
 }
 
