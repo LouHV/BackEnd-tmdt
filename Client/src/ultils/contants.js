@@ -32,26 +32,74 @@ export const productInforTabs = [
     {
         id: 1,
         name: 'DISCRIPTION',
-        content:'sdfsd'
+        content: 'sdfsd'
     },
     {
         id: 2,
         name: 'WARRANTY',
-        content:'sdfs'
+        content: 'sdfs'
     },
     {
         id: 3,
         name: 'DELIVERY',
-        content:'asdasd'
+        content: 'asdasd'
     },
     {
         id: 4,
         name: 'PAYMENT',
-        content:'asdqww'
+        content: 'asdqww'
     },
     {
         id: 5,
         name: 'CUSTOMER REVIEW',
-        content:'aaaaaaaaa'
+        content: 'aaaaaaaaa'
+    },
+]
+export const colors = [
+    'black',
+    'brown',
+    'white',
+    'pink',
+    'yellow',
+    'orange',
+    'green',
+    'blue'
+]
+export const sorts = [
+
+    {
+        id: 1,
+        value: '-sold',
+        text: 'Best selling'
+    },
+    {
+        id: 2,
+        value: '-title',
+        text: 'Alphabetically, A-Z'
+    },
+    {
+        id: 3,
+        value: 'title',
+        text: 'Alphabetically, Z-A'
+    },
+    {
+        id: 4,
+        value: '-price',
+        text: 'Price, high to low'
+    },
+    {
+        id: 5,
+        value: 'price',
+        text: 'Price, low to high'
+    },
+    {
+        id: 6,
+        value: '-createdAt',
+        text: 'Date, new to old'
+    },
+    {
+        id: 7,
+        value: 'createdAt',
+        text: 'Date, old to new'
     },
 ]

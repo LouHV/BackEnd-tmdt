@@ -25,7 +25,7 @@ const Register = () => {
     const handleSubmit = useCallback(async () => {
         const { email, password, firstname, lastname, mobile } = payload
         const response = await apiRegister(payload)
-        console.log('response :>> ', response);
+
 
         Swal.fire(response.success ? 'Congratulation' : 'Oops!', response.message, response.success ? 'Success' : 'Error')
             .then((result) => { // Nhận kết quả từ swal

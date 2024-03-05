@@ -34,12 +34,21 @@ const getAllProduct = asyncHandler(async (req, res) => {
     //format operators cho đúng cú pháp của mongoose
     let queryString = JSON.stringify(queries)
     queryString = queryString.replace(/\b(gte|gt|lt|lte)\b/g, matchedEl => `$${matchedEl}`)
-    const formatedQueries = JSON.parse(queryString)
+    const restQueries = JSON.parse(queryString)
 
+    let formatedQueries = {}
+    if (queries?.color) {
+        delete restQueries.color
+        const colorQuery = queries.color?.split(',').map(el => ({ color: { $regex: el, $options: 'i' } }))
+        formatedQueries = { $or: colorQuery }
+    }
     //filltering
-    if (queries?.title) formatedQueries.title = { $regex: queries.title, $options: 'i' }
-    if (queries?.category) formatedQueries.category = { $regex: queries.category, $options: 'i' }
-    let queryCommand = Product.find(formatedQueries)
+
+    if (queries?.title) restQueries.title = { $regex: queries.title, $options: 'i' }
+    if (queries?.category) restQueries.category = { $regex: queries.category, $options: 'i' }
+    const q = { ...formatedQueries, ...restQueries }
+
+    let queryCommand = Product.find(q)
 
     //sorting
     // acb,efg [abc,efg] => abc efg

@@ -37,7 +37,7 @@ const Login = () => {
         const { email, password } = payload
 
         const invalids = invalidate(payload,setinvalidFields)
-        console.log('invalids :>> ', invalids);
+  
         if(invalids ===0){
             const response = await apiLogin(payload)
         Swal.fire(response.success ? 'Congratulation' : 'Oops!', response.message, response.success ? 'Success' : 'Error')

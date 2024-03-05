@@ -105,12 +105,12 @@ const DetailProducts = () => {
                     <ul className="pl-7 list-item text-sm text-gray-500">
                         {product?.description?.map(el => (<li key={el} className=" leading-6 list-disc">{el}</li>))}
                     </ul>
-                    <div className="text-sm flex flex-col gap-8">
+                    <div className="text-sm flex flex-col gap-8 ">
                         <SelectQuantity
                             quantity={quantity}
                             handleQuantity={handleQuantity}
                             handleChangeQuantity={handleChangeQuantity} />
-                        <Button>
+                        <Button fw>
                             Add to cart
                         </Button>
                     </div>
