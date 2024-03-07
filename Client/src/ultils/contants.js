@@ -49,11 +49,7 @@ export const productInforTabs = [
         name: 'PAYMENT',
         content: 'asdqww'
     },
-    {
-        id: 5,
-        name: 'CUSTOMER REVIEW',
-        content: 'aaaaaaaaa'
-    },
+
 ]
 export const colors = [
     'black',
@@ -101,5 +97,27 @@ export const sorts = [
         id: 7,
         value: 'createdAt',
         text: 'Date, old to new'
+    },
+]
+export const voteOptions = [
+    {
+        id: 1,
+        text: 'Terrible'
+    },
+    {
+        id: 2,
+        text: 'Bad'
+    },
+    {
+        id: 3,
+        text: 'Neutral'
+    },
+    {
+        id: 4,
+        text: 'Good'
+    },
+    {
+        id: 5,
+        text: 'Perfect'
     },
 ]

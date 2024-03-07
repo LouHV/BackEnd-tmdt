@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 //HOOKS REACT -router-dom
 import { useParams } from 'react-router-dom'
-import { apiGetroduct,apiGetProducts } from "../../apis";
+import { apiGetroduct, apiGetProducts } from "../../apis";
 import { Breadcrumbs, Button, SelectQuantity, ProductInformation, CustomSlider } from "../../components";
 import Slider from "react-slick/lib";
 import "slick-carousel/slick/slick.css";
@@ -24,17 +24,24 @@ const DetailProducts = () => {
     const [quantity, setquantity] = useState(1)
 
     const [product, setproduct] = useState(null)
-    
+
+    const [currentImage, setCurrentImage] = useState(null)
+
+    const [update, setUpdate] = useState(false)
+
     const [relatedProduct, setrelatedProduct] = useState(null)
 
     const fetchProductData = async () => {
         const response = await apiGetroduct(pid)
-        if (response.success) setproduct(response.productData)
+        if (response.success) {
+            setproduct(response.productData)
+            setCurrentImage(response.productData?.thumb)
+        }
     }
 
     //latdata see mo
-    const fetchProducts =async()=>{
-        const response = await apiGetProducts({category})
+    const fetchProducts = async () => {
+        const response = await apiGetProducts({ category })
         if (response.success) setrelatedProduct(response.products)
     }
 
@@ -43,8 +50,18 @@ const DetailProducts = () => {
             fetchProductData()
             fetchProducts()
         }
+        window.scrollTo(0, 0)
     }, [pid])
-    console.log('product?.totalRating :>> ', product);
+
+    //
+    useEffect(() => {
+        if (pid) {
+            fetchProductData()
+        }
+        window.scrollTo(0, 0)
+    }, [update])
+    const rerender = useCallback(() => { setUpdate(!update) }, [update])
+
     const handleQuantity = useCallback((number) => {
         let previous
         if (!Number(number) || Number(number) < 1) {
@@ -59,8 +76,14 @@ const DetailProducts = () => {
         if (flag === 'minus') setquantity(prev => +prev - 1)
         if (flag === 'plus') setquantity(prev => +prev + 1)
     }, [quantity])
+
+    const handleClickImage = (e, el) => {
+        e.stopPropagation()
+        setCurrentImage(el)
+    }
+
     return (
-        <div className="w-full">
+        <div className="w-full ">
             <div className="h-[81px] flex justify-center items-center bg-gray-100">
                 <div className="w-main">
                     <h3 className="font-semibold">{title}</h3>
@@ -69,15 +92,15 @@ const DetailProducts = () => {
             </div>
             <div className="w-main m-auto mt-4 flex">
                 <div className="w-2/5 flex-col flex gap-4">
-                    <div className="h-[458px] w-[458px]  object-cover border border-red-300">
+                    <div className="h-[458px] w-[458px] overflow-hidden justify-center object-cover-fill border border-red-300">
                         <ReactImageMagnify {...{
                             smallImage: {
                                 alt: 'Wristwatch by Ted Baker London',
                                 isFluidWidth: true,
-                                src: product?.images
+                                src: currentImage
                             },
                             largeImage: {
-                                src: product?.images,
+                                src: currentImage,
                                 width: 1800,
                                 height: 1500
                             }
@@ -88,7 +111,7 @@ const DetailProducts = () => {
                         <Slider className="images-slider" {...settings}>
                             {product?.images?.map(el => (
                                 <div className="flex w-full gap-2" key={el}>
-                                    <img src={el} alt="sub-product" className="h-[143px] w-[143px] object-cover-fill border " />
+                                    <img onClick={e => handleClickImage(e, el)} src={el} alt="sub-product" className="h-[143px] w-[143px] object-cover-fill border " />
                                 </div>
                             ))}
                         </Slider>
@@ -121,11 +144,16 @@ const DetailProducts = () => {
 
             </div>
             <div className="w-main m-auto mt-8">
-                <ProductInformation />
+                <ProductInformation
+                    totalRating={product?.totalRating}
+                    rating={product?.rating}
+                    nameProduct={product?.title}
+                    pid={product?._id}
+                    rerender={rerender} />
             </div>
             <div className="w-main m-auto mt-8">
                 <h3 className="text-[20px] uppercase font-semibold py-[15px] border-2 border-t-main">OTHER CUSTINERS ALSO BUY:</h3>
-                <CustomSlider normal={true} products={relatedProduct}/>
+                <CustomSlider normal={true} products={relatedProduct} />
             </div>
             <div className="h-[500px]"></div>
         </div>

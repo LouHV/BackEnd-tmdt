@@ -36,17 +36,17 @@ const Login = () => {
     const handleSubmit = useCallback(async () => {
         const { email, password } = payload
 
-        const invalids = invalidate(payload,setinvalidFields)
-  
-        if(invalids ===0){
+        const invalids = invalidate(payload, setinvalidFields)
+
+        if (invalids === 0) {
             const response = await apiLogin(payload)
-        Swal.fire(response.success ? 'Congratulation' : 'Oops!', response.message, response.success ? 'Success' : 'Error')
-            .then((result) => { // Nhận kết quả từ swal
-                if (result.isConfirmed && response.success) { // Nếu xác nhận và thành công
-                    dispatch(login({ isLoggedIn: true, token: response.accessToken, userData: response.userData }))
-                    navigate(`/${path.HOME}`); // Điều hướng sang trang login
-                }
-            })
+            Swal.fire(response.success ? 'Congratulation' : 'Oops!', response.message, response.success ? 'Success' : 'Error')
+                .then((result) => { // Nhận kết quả từ swal
+                    if (result.isConfirmed && response.success) { // Nếu xác nhận và thành công
+                        dispatch(login({ isLoggedIn: true, token: response.accessToken, userData: response.userData }))
+                        navigate(`/${path.HOME}`); // Điều hướng sang trang login
+                    }
+                })
         }
 
     }, [payload])
@@ -98,11 +98,13 @@ const Login = () => {
                         invalidFields={invalidFields}
                         setInvalidField={setinvalidFields} />
 
-                    <Button
-                        nameButton='Login'
-                        handleOnClick={handleSubmit}
-                        fw
-                    />
+                    <Button handleOnClick={handleSubmit}
+                        fw>
+                        Login
+                    </Button>
+
+
+
 
                     <div className="flex items-center justify-between my-2 w-full text-sm">
                         <span className="text-main hover:underline cursor-pointer"
@@ -114,8 +116,8 @@ const Login = () => {
                         >Create new account</Link>
                     </div>
                     <Link
-                    className="text-blue-500 hover:underline cursor-pointer pl-2"
-                    to={`/${path.HOME}`}
+                        className="text-blue-500 hover:underline cursor-pointer pl-2"
+                        to={`/${path.HOME}`}
                     >Go home?</Link>
                 </div>
             </div>

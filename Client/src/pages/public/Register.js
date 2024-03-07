@@ -77,11 +77,8 @@ const Register = () => {
                         setValue={setPayload}
                         nameKey='mobile'
                     />
-                    <Button
-                        nameButton='Register'
-                        handleOnClick={handleSubmit}
-                        fw
-                    />
+                    <Button handleOnClick={handleSubmit}
+                        fw>Register</Button>
 
                     <div className="flex items-center my-2 w-full text-sm">
                         <span>You already have an account?</span>
