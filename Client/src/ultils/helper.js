@@ -7,10 +7,10 @@ export const formatMoney = number => Number(number.toFixed(1)).toLocaleString()
 export const renderStartFromNumber = (number, size) => {
     if (!Number(number)) return null; // Nếu number không phải là một số, trả về null
     const stars = [];
-    
+
     for (let i = 0; i < number; i++) stars.push(<BsStarFill color="orange" size={size || 16} key={i} />);
     for (let i = number; i < 5; i++) stars.push(<BsStar color="orange" size={size || 16} key={i} />);
-    if(number === 0 || number === null){ // Kiểm tra xem number có bằng 0 hoặc null không
+    if (number === 0 || number === null) { // Kiểm tra xem number có bằng 0 hoặc null không
         for (let i = 0; i < 5; i++) stars.push(<BsStar color="orange" size={size || 16} key={i} />);
     }
     return stars; // Trả về mảng chứa các biểu tượng sao
@@ -44,3 +44,8 @@ export const invalidate = (payload, setInvalidFields) => {
 }
 
 export const formatPrice = number => Math.round(number / 1000) * 1000
+
+export const generateRange = (star, end) => {
+    const length = end + 1 - star
+    return Array.from({length}, (_, index) => star + index)
+}

@@ -4,6 +4,7 @@ import { IoSearch,IoMenu } from "react-icons/io5";
 import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import { IoIosArrowForward,IoIosLogOut } from "react-icons/io";
 import { MdEmail } from "react-icons/md";
+import { HiOutlineDotsHorizontal } from "react-icons/hi";
 
 const icons = {
     FaCartShopping,
@@ -18,6 +19,7 @@ const icons = {
     IoIosArrowForward,
     MdEmail,
     IoIosLogOut,
-    FaChevronDown
+    FaChevronDown,
+    HiOutlineDotsHorizontal 
 }
 export default icons

@@ -18,7 +18,13 @@ const createProduct = asyncHandler(async (req, res) => {
 
 const getProduct = asyncHandler(async (req, res) => {
     const { prdId } = req.params
-    const product = await Product.findById(prdId)
+    const product = await Product.findById(prdId).populate({
+        path: 'rating',
+        populate: {
+            path: 'postedBy',
+            select: 'firstname lastname avatar'
+        }
+    })
     return res.status(200).json({
         success: product ? true : false,
         productData: product ? product : 'Cannot get product'
@@ -108,7 +114,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
 const ratings = asyncHandler(async (req, res) => {
     const { _id } = req.user
-    const { star, comment, prdId } = req.body
+    const { star, comment, prdId, updatedAt } = req.body
 
     const ratingProduct = await Product.findById(prdId)
     const alreadyRating = ratingProduct?.rating?.find(el => el.postedBy.toString() === _id)
@@ -117,14 +123,14 @@ const ratings = asyncHandler(async (req, res) => {
         await Product.updateOne({
             rating: { $elemMatch: alreadyRating }
         }, {
-            $set: { "rating.$.star": star, "rating.$.comment": comment }
+            $set: { "rating.$.star": star, "rating.$.comment": comment, "rating.$.updatedAt": updatedAt }
         }, { new: true })
 
     } else {
         // add star & comment
         await Product.findByIdAndUpdate(
             prdId, {
-            $push: { rating: { star, comment, postedBy: _id } }
+            $push: { rating: { star, comment, postedBy: _id, updatedAt } }
         }, { new: true })
     }
 

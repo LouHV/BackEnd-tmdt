@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useParams, useSearchParams, useNavigate,createSearchParams } from 'react-router-dom'
-import { Breadcrumbs, Product, SearchItem, InputSelect } from "../../components";
+import { useParams, useSearchParams, useNavigate, createSearchParams } from 'react-router-dom'
+import { Breadcrumbs, Product, SearchItem, InputSelect, Pagination } from "../../components";
 import { apiGetProducts } from "../../apis";
 import Masonry from 'react-masonry-css'
 import { sorts } from "../../ultils/contants";
@@ -23,7 +23,7 @@ const Products = () => {
     const fetchProductsByCategory = async (queries) => {
         const response = await apiGetProducts(queries)
 
-        if (response.success) setproducts(response.products)
+        if (response.success) setproducts(response)
     }
 
     const { category } = useParams()
@@ -44,27 +44,29 @@ const Products = () => {
 
                 ]
             }
-            delete queries.to
-            delete queries.from
+
             delete queries.price
         }
-
-
-        if (queries.from) {
-            queries.price = {
-                gte: queries.from,
-                delete: queries.from
-            }
-        }
-        if (queries.to) {
-            queries.price = {
-                lte: queries.to,
-                delete: queries.to
-            }
+        else {
+            if (queries.from) queries.price = { gte: queries.from }
+            if (queries.to) queries.price = { gte: queries.to }
         }
 
-
-        fetchProductsByCategory({ ...priceQuery, ...queries })
+        // if (queries.from) {
+        //     queries.price = {
+        //         gte: queries.from,
+        //     }
+        // }
+        // if (queries.to) {
+        //     queries.price = {
+        //         lte: queries.to,
+        //     }
+        // }
+        delete queries.to
+        delete queries.from
+        const q = { ...priceQuery, ...queries }
+        fetchProductsByCategory(q)
+        window.scrollTo(0, 0)
     }, [params])
 
     const changeActiveFilter = useCallback((name) => {
@@ -72,18 +74,19 @@ const Products = () => {
         else setActiveClick(name)
     }, [activeClick])
 
-    const changeValue = useCallback((value)=>{
+    const changeValue = useCallback((value) => {
         setSort(value)
-    },[sort])
+    }, [sort])
 
-    useEffect(()=>{
-        navigate({
-            pathname: `/${category}`,
-            search: createSearchParams({
-                sort
-            }).toString()
-        });
-    },[sort])
+    useEffect(() => {
+        if (sort)
+            navigate({
+                pathname: `/${category}`,
+                search: createSearchParams({
+                    sort
+                }).toString()
+            });
+    }, [sort])
 
     return (
         <div className="w-full">
@@ -113,9 +116,9 @@ const Products = () => {
                     <span className="font-semibold text-sm">Sort by</span>
                     <div className="w-full">
                         <InputSelect
-                        changeValue={changeValue}
-                        value={sort}
-                        options={sorts}/>
+                            changeValue={changeValue}
+                            value={sort}
+                            options={sorts} />
                     </div>
                 </div>
             </div>
@@ -124,7 +127,7 @@ const Products = () => {
                     breakpointCols={4}
                     className="my-masonry-grid"
                     columnClassName="my-masonry-grid_column">
-                    {products?.map(el => (
+                    {products?.products?.map(el => (
                         <Product
                             key={el._id}
                             pid={el.id}
@@ -134,6 +137,11 @@ const Products = () => {
                     ))}
                 </Masonry>
             </div>
+            {products?.products?.length > 0 && <div className="bg-red-500 w-main m-auto my-4 flex justify-center">
+                <Pagination
+                    totalCount={products?.counts}
+                />
+            </div>}
             <div className="w-full h-[500px]"></div>
         </div>
     )

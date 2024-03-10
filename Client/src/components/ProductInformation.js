@@ -1,6 +1,6 @@
 import React, { memo, useState, useCallback } from 'react'
 import { productInforTabs } from '../ultils/contants'
-import { Votebar, Button, VoteOption } from './'
+import { Votebar, Button, VoteOption, Comment } from './'
 import { renderStartFromNumber } from '../ultils/helper'
 import { apiRatings } from '../apis'
 import { useDispatch, useSelector } from 'react-redux'
@@ -20,15 +20,14 @@ const ProductInformation = ({ totalRating, rating, nameProduct, pid, rerender })
   const { isLoggedIn } = useSelector(state => state.user)
 
   const handleSubmitVoteOption = async ({ comment, score }) => {
-    console.log('response :>> ', { comment, score, pid });
+
     if (!comment || !pid || !score) {
       alert('Please vote when click submit')
       return
     }
-    const response = await apiRatings({ star: score, comment, prdId: pid })
+    await apiRatings({ star: score, comment, prdId: pid, updatedAt: Date.now() })
     dispatch(showModal({ isShowModal: false, modal: null }))
     rerender()
-    console.log('response api :>> ', response);
 
   }
 
@@ -75,7 +74,7 @@ const ProductInformation = ({ totalRating, rating, nameProduct, pid, rerender })
 
         </div>
       </div>
-      <div className='w-full h-[300px] border'>
+      <div className='w-full min-h-[300px] border'>
         {productInforTabs.some(el => el.id === activeTabs) && productInforTabs.find(el => el.id === activeTabs)?.content}
         {activeTabs === 5 &&
           <div className='flex p-4 flex-col'>
@@ -104,8 +103,20 @@ const ProductInformation = ({ totalRating, rating, nameProduct, pid, rerender })
               <span>Do you review this product?</span>
               <Button handleOnClick={handleVoteNow}>
                 Vote now!</Button>
+
             </div>
+            <div className='flex flex-col gap-4'>
+              {rating?.map(el => (
+                <Comment
+                  key={el._id}
+                  star={el.star}
+                  updatedAt={el.updatedAt}
+                  comment={el.comment}
+                  name={`${el.postedBy?.firstname} ${el.postedBy?.lastname}`}
+                />
+              ))}</div>
           </div>}
+
       </div>
     </div>
   )
