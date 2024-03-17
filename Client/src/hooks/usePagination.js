@@ -4,12 +4,10 @@ import { HiOutlineDotsHorizontal } from 'react-icons/hi'
 
 const usePagination = (totalPrdCount, currentPage, siblingCount = 1) => {
     const paginationArray = useMemo(() => {
-        const pageSize = process.env.REACT_APP_PRODUCT_LIMIT || 10
+        const pageSize = process.env.REACT_APP_LIMIT || 10
         const paginationCount = Math.ceil(totalPrdCount / pageSize)
         const totalPaginationItem = siblingCount + 5
-        console.log('pageSize :>> ', pageSize);
-        console.log('paginationCount :>> ', paginationCount);
-        console.log('totalPaginationItem :>> ', totalPaginationItem);
+        
 
         if (paginationCount <= totalPaginationItem) return generateRange(1, paginationCount)
 

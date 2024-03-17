@@ -21,20 +21,21 @@ const Products = () => {
 
     ///
     const fetchProductsByCategory = async (queries) => {
+        
         const response = await apiGetProducts(queries)
-
+        
         if (response.success) setproducts(response)
+        console.log('response :>> ', response);
     }
+
+    
+
 
     const { category } = useParams()
     useEffect(() => {
-        let param = []
-        for (let i of params.entries()) param.push(i)
-
-        const queries = {}
-
+        const queries = Object.fromEntries([...params])
+        
         let priceQuery = {}
-        for (let i of params) queries[i[0]] = i[1]
 
         if (queries.to && queries.from) {
             priceQuery = {
@@ -64,8 +65,20 @@ const Products = () => {
         // }
         delete queries.to
         delete queries.from
-        const q = { ...priceQuery, ...queries }
-        fetchProductsByCategory(q)
+
+        // var q= {};
+
+        if(category == ":category"){
+            var q = { ...priceQuery, ...queries };
+            fetchProductsByCategory(q)
+        }else{
+            var p = { ...priceQuery, ...queries,category };
+            fetchProductsByCategory(p)
+        }
+
+        // fetchProductsByCategory(q)
+
+        
         window.scrollTo(0, 0)
     }, [params])
 
@@ -77,7 +90,7 @@ const Products = () => {
     const changeValue = useCallback((value) => {
         setSort(value)
     }, [sort])
-
+    console.log('category :>> ', category);
     useEffect(() => {
         if (sort)
             navigate({

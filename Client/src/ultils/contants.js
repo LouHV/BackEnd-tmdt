@@ -121,3 +121,49 @@ export const voteOptions = [
         text: 'Perfect'
     },
 ]
+export const adminSideBar = [
+
+    {
+        id: 1,
+        type: 'SINGLE',
+        text: 'Dashboard',
+        path: `/${path.ADMIN}/${path.DASHBOARD}`
+    },
+    {
+        id: 2,
+        type: 'SINGLE',
+        text: 'Manage Users',
+        path: `/${path.ADMIN}/${path.MANAGE_USER}`
+    },
+    {
+        id: 3,
+        type: 'PARENT',
+        text: 'Manage Products',
+        submenu: [
+            {
+                text: 'Create product',
+                path: `/${path.ADMIN}/${path.CREATE_PRODUCTS}`
+            },
+            {
+                text: 'Manage Product',
+                path: `/${path.ADMIN}/${path.MANAGE_PRODUCTS}`
+            },
+        ]
+    },
+    {
+        id: 4,
+        type: 'SINGLE',
+        text: 'Manage Order',
+        path: `/${path.ADMIN}/${path.MANAGE_ORDER}`
+    },
+]
+export const roles = [
+    {
+        code: 0,
+        value: 'admin'
+    },
+    {
+        code: 1,
+        value: 'user'
+    }
+]

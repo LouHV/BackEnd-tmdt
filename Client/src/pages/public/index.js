@@ -8,4 +8,4 @@ export { default as Blogs } from './Blogs'
 export { default as Services } from './Service'
 export { default as Faq } from './FAQ'
 export { default as ResetPassword } from './ResetPassword'
-
+export { default as FinalRegister } from './FinalRegister'

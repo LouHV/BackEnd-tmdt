@@ -19,6 +19,9 @@ export const userSlice = createSlice({
 
             state.isLoggedIn = false
             state.token = null
+            state.current = null
+            state.token = null
+            state.message = ''
         },
         clearMessage: (state) => {
             state.message = ''

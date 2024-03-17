@@ -25,3 +25,8 @@ export const apiGetcurrent = ()=>axios({
     url:'/user/getcurrent',
     method:'GET',
 })
+export const apiGetUsers = (params)=>axios({
+    url:'/user/',
+    method:'GET',
+    params
+})

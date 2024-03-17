@@ -92,7 +92,7 @@ const getCurrent = asyncHandler(async (req, res) => {
     const { _id } = req.user
 
     // kiem tra neu ton tai email tra ra loi
-    const user = await User.findById({ _id }).select('-refreshToken -password -role')
+    const user = await User.findById({ _id }).select('-refreshToken -password ')
     return res.status(200).json({
         success: user ? true : false,
         rs: user ? user : 'User not found'
@@ -170,12 +170,64 @@ const resetPassword = asyncHandler(async (req, res) => {
     })
 })
 const getUsers = asyncHandler(async (req, res) => {
-    const user = await User.find().select('-refreshToken -password -role')
-    return res.status(200).json({
-        success: user ? true : false,
-        user: user ? user : 'User not found'
-    })
-})
+    let queryCommand = User.find();
+    const queries = { ...req.query };
+    const excludeFields = ['limit', 'sort', 'page', 'fields'];
+    excludeFields.forEach(el => delete queries[el]);
+
+    let queryString = JSON.stringify(queries);
+    queryString = queryString.replace(/\b(gte|gt|lt|lte)\b/g, matchedEl => `$${matchedEl}`);
+    const formattedQueries = JSON.parse(queryString);
+
+    if (queries?.name) {
+        formattedQueries.name = { $regex: queries.name, $options: 'i' };
+    }
+
+    if (req.query.q) {
+        delete formattedQueries.q
+        formattedQueries['$or'] = [
+            { firstname: { $regex: req.query.q, $options: 'i' } },
+            { lastname: { $regex: req.query.q, $options: 'i' } },
+            { email: { $regex: req.query.q, $options: 'i' } }
+
+        ]
+    }
+    console.log('formattedQueries :>> ', formattedQueries);
+
+    if (req.query.sort) {
+        const sortBy = req.query.sort.split(',').join(' ');
+        queryCommand = queryCommand.sort(sortBy);
+    }
+
+    if (req.query.fields) {
+        const fields = req.query.fields.split(',').join(' ');
+        queryCommand = queryCommand.select(fields);
+    }
+
+    const page = +req.query.page || 1; // Dấu + sẽ chuyển STRING sang number
+    const limit = +req.query.limit || process.env.LIMIT_PRODUCTS;
+    const skip = (page - 1) * limit;
+
+    queryCommand = queryCommand.skip(skip).limit(limit);
+
+    try {
+        const response = await queryCommand.find(formattedQueries).select('-refreshToken -password ').exec();
+        const counts = await User.countDocuments(formattedQueries);
+        return res.status(200).json({
+            success: response ? true : false,
+            counts,
+            Users: response ? response : 'Cannot get Users',
+        });
+    } catch (err) {
+        throw new Error(err.message);
+    }
+});
+
+// const user = await User.find().select('-refreshToken -password -role')
+// return res.status(200).json({
+//     success: user ? true : false,
+//     user: user ? user : 'User not found'
+// })
 
 const updateUser = asyncHandler(async (req, res) => {
     const { _id } = req.user

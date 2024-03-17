@@ -80,7 +80,7 @@ const getAllProduct = asyncHandler(async (req, res) => {
     //execute query
     // sl sp thoa man dk  khac voi so luong san pham tra ve 1 lan
     queryCommand.then(async (response) => {
-        const counts = await Product.find(formatedQueries).countDocuments()
+        const counts = await Product.find(q).countDocuments()
         return res.status(200).json({
             success: response ? true : false,
             counts,

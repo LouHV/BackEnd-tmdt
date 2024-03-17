@@ -1,11 +1,12 @@
 import React, { useState, useCallback } from "react";
-import { InputField, Button } from "../../components";
+import { InputField, Button, Loading } from "../../components";
 import { Link } from "react-router-dom";
 import path from "../../ultils/path";
 import { apiLogin, apiForgotPassword } from "../../apis/user";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
 import { login } from "../../store/user/userSlice";
+import { showModal } from "../../store/app/appSlice";
 import { useDispatch } from "react-redux";
 import { toast } from 'react-toastify'
 import { invalidate } from "../../ultils/helper";
@@ -39,7 +40,9 @@ const Login = () => {
         const invalids = invalidate(payload, setinvalidFields)
 
         if (invalids === 0) {
+            dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }))
             const response = await apiLogin(payload)
+            dispatch(showModal({ isShowModal: false, modalChildren: null }))
             Swal.fire(response.success ? 'Congratulation' : 'Oops!', response.message, response.success ? 'Success' : 'Error')
                 .then((result) => { // Nhận kết quả từ swal
                     if (result.isConfirmed && response.success) { // Nếu xác nhận và thành công
