@@ -2,10 +2,10 @@ import React, { useEffect, useState, useCallback } from 'react'
 import { apiGetUsers } from '../../apis'
 import moment from 'moment'
 import { roles } from '../../ultils/contants'
-import { IoSearch } from 'react-icons/io5'
-import { InputField, Pagination, InputForm, Select } from '../../components/index'
+import { InputField, Pagination, Select } from '../../components/index'
 import useDebounce from '../../hooks/useDebounce'
 import { useSearchParams } from 'react-router-dom';
+import { InputForm } from '../../components'
 import { useForm } from 'react-hook-form'
 
 const ManageUser = () => {
@@ -48,7 +48,7 @@ const ManageUser = () => {
       <h1 className='h-[75px] flex justify-between items-center text-3xl font-bold px-4 border-b'>
         <span>Manage Users</span>
       </h1>
-      <InputForm />
+
       <div className='w-full p-4'>
         <div className='flex items-center justify-end py-4 '>
 
@@ -86,17 +86,18 @@ const ManageUser = () => {
                 <td className='py-4'>
                   {editElm?._id === el._id
                     ? <InputForm
-                    register={register}
+                      register={register}
                       errors={errors}
                       defaultValue={editElm?.email}
                       fullWidth
                       id={'email'}
-                      validate={{ required: true }} />
+                      validate={{ required: true }}
+                    />
                     : <span>{el.email}</span>}</td>
                 <td className='py-4'>
                   {editElm?._id === el._id
                     ? <InputForm
-                    register={register}
+                      register={register}
                       errors={errors}
                       defaultValue={editElm?.firstname}
                       fullWidth
@@ -106,7 +107,7 @@ const ManageUser = () => {
                 <td className='py-4'>
                   {editElm?._id === el._id
                     ? <InputForm
-                    register={register}
+                      register={register}
                       errors={errors}
                       defaultValue={editElm?.lastname}
                       fullWidth

@@ -41,12 +41,12 @@ export const userSlice = createSlice({
             state.isLoading = false;
             state.current = action.payload;
             state.isLoggedIn = true;
-            console.log('action1 :>> ', action);
+
         });
 
         // Khi thực hiện action login thất bại (Promise rejected)
         builder.addCase(actions.getCurrent.rejected, (state, action) => {
-            console.log('action2 :>> ', action);
+
 
             // Tắt trạng thái loading, lưu thông báo lỗi vào store
             state.isLoading = false;

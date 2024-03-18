@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 const Header = () => {
     const { FaCartShopping, FaRegHeart, IoSearch } = icons
     const { current } = useSelector(state => state.user)
-    console.log('current :>> ', current);
+
     return (
         <div className=" w-main flex justify-between h-[110px] py-[35px]">
             <img src={logo} alt="logo" className="w-[234px] object-contain" />

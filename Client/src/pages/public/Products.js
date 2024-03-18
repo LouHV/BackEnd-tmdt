@@ -25,7 +25,7 @@ const Products = () => {
         const response = await apiGetProducts(queries)
         
         if (response.success) setproducts(response)
-        console.log('response :>> ', response);
+
     }
 
     
@@ -90,7 +90,7 @@ const Products = () => {
     const changeValue = useCallback((value) => {
         setSort(value)
     }, [sort])
-    console.log('category :>> ', category);
+
     useEffect(() => {
         if (sort)
             navigate({

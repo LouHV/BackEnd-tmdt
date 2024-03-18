@@ -22,7 +22,7 @@ const usePagination = (totalPrdCount, currentPage, siblingCount = 1) => {
         }
         if (!isShowLeft && isShowRight) {
             const leftRange = generateRange(1, 5)
-            console.log('leftRange :>> ', leftRange);
+
             return [...leftRange, <HiOutlineDotsHorizontal size={40} />, paginationCount]
         }
         const siblingLeft = Math.max(currentPage - siblingCount, 1)
