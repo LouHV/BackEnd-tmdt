@@ -90,3 +90,6 @@
     
     margin-bottom: 30px;
   }
+  code{
+    white-space: initial;
+  }

@@ -18,6 +18,8 @@ const PagiItem = ({ children }) => {
       search: createSearchParams(queries).toString()
     })
   }
+
+ 
   return (
     <button className={clsx('w-10 h-10 flex items-center cursor-pointer justify-center p-4 ', !Number(children) &&
       'items-end pb-2', Number(children) && 'items-center hover:rounded-full hover:bg-gray-300',

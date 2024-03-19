@@ -32,9 +32,10 @@ const Products = () => {
 
 
     const { category } = useParams()
+  
     useEffect(() => {
         const queries = Object.fromEntries([...params])
-        
+        console.log('category :>> ', queries);
         let priceQuery = {}
 
         if (queries.to && queries.from) {
@@ -68,7 +69,7 @@ const Products = () => {
 
         // var q= {};
 
-        if(category == ":category"){
+        if(category === ":category"){
             var q = { ...priceQuery, ...queries };
             fetchProductsByCategory(q)
         }else{

@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ReactImageMagnify from 'react-image-magnify';
 import { formatMoney, formatPrice, renderStartFromNumber } from "../../ultils/helper";
-
+import DOMPurify from 'dompurify';
 
 const settings = {
     dots: false,
@@ -92,7 +92,7 @@ const DetailProducts = () => {
             </div>
             <div className="w-main m-auto mt-4 flex">
                 <div className="w-2/5 flex-col flex gap-4">
-                    <div className="h-[458px] w-[458px] overflow-hidden justify-center object-cover-fill border border-red-300">
+                    <div className="h-[458px] w-[458px] overflow-hidden flex items-center justify-center object-cover-fill border border-red-300">
                         <ReactImageMagnify {...{
                             smallImage: {
                                 alt: 'Wristwatch by Ted Baker London',
@@ -126,7 +126,10 @@ const DetailProducts = () => {
                     </div>
 
                     <ul className="pl-7 list-item text-sm text-gray-500">
-                        {product?.description?.map(el => (<li key={el} className=" leading-6 list-disc">{el}</li>))}
+                        {product?.description?.length > 1 && product?.description?.map(el => (<li key={el} className=" leading-6 list-disc">{el}</li>))}
+                        {product?.description?.length === 1 && <div 
+                        className="text-sm"
+                        dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(product?.description[0])}}></div>}
                     </ul>
                     <div className="text-sm flex flex-col gap-8 ">
                         <SelectQuantity
