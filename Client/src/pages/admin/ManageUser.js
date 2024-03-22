@@ -20,17 +20,17 @@ const ManageUser = () => {
   const [queries, setQueries] = useState({
     q: "",
   });
-  
+
   const [update, setUpdate] = useState(false)
 
-  
+
   const render = useCallback(() => {
     setUpdate(!update)
   }, [update])
 
-	
 
-  
+
+
 
   const [params] = useSearchParams();
 
@@ -61,17 +61,25 @@ const ManageUser = () => {
   };
 
   const handleUpdate = async (userData) => {
-   
-    const response = await apiUpdateUsers(userData, userData._id)
-    if (response.success) {
-      
-      render()
-      toast.success(response.message)
-	  setIsModalOpen(false);
+
+
+    try {
+      const response = await apiUpdateUsers(userData, userData._id)
+
+      if (response.success) {
+        fectchUser()
+        toast.success(response.message)
+        setIsModalOpen(false);
+      }
+      else {
+        toast.error(response.message)
+      }
+
     }
-    else {
-      toast.error(response.message)
+    catch (err) {
+      console.log(err);
     }
+
   };
   const handldeDeleteUser = (uid) => {
     Swal.fire({
@@ -111,41 +119,41 @@ const ManageUser = () => {
           />
         </div>
         <table className="table-auto mb-6 w-full">
-          <thead className="font-bold  text-[13px] border border-black text-center">
+          <thead className="font-bold  text-[13px] border border-black text-center bg-sky-700 text-white">
             <tr>
-              <th className="px-4 py-2">Stt</th>
-              <th className="px-4 py-2">Email Adress</th>
-              <th className="px-4 py-2">Fisrtname</th>
-              <th className="px-4 py-2">Lastname</th>
-              <th className="px-4 py-2">Address</th>
-              <th className="px-4 py-2">Phone</th>
-              <th className="px-4 py-2">Role</th>
-              <th className="px-4 py-2">Status</th>
-              <th className="px-4 py-2">createdAt</th>
-              <th className="px-4 py-2">Actions</th>
+              <th className="px-4 py-2 border border-black">Stt</th>
+              <th className="px-4 py-2 border border-black">Email Adress</th>
+              <th className="px-4 py-2 border border-black">Fisrtname</th>
+              <th className="px-4 py-2 border border-black">Lastname</th>
+              <th className="px-4 py-2 border border-black">Address</th>
+              <th className="px-4 py-2 border border-black">Phone</th>
+              <th className="px-4 py-2 border border-black">Role</th>
+              <th className="px-4 py-2 border border-black">Status</th>
+              <th className="px-4 py-2 border border-black">createdAt</th>
+              <th className="px-4 py-2 border border-black">Actions</th>
             </tr>
           </thead>
           <tbody>
             {users?.Users?.map((el, idx) => (
               <tr key={el._id} className="text-center border border-black">
-                <td className="py-4">{idx + 1}</td>
-                <td className="py-4">{el?.email}</td>
-                <td className="py-4">{el?.firstname}</td>
-                <td className="py-4">{el?.lastname}</td>
-                <td className="py-4">{el?.address}</td>
-                <td className="py-4">{el?.mobile}</td>
-                <td className="py-4">
+                <td className="py-4 border border-black">{idx + 1}</td>
+                <td className="py-4 border border-black">{el?.email}</td>
+                <td className="py-4 border border-black">{el?.firstname}</td>
+                <td className="py-4 border border-black">{el?.lastname}</td>
+                <td className="py-4 border border-black">{el?.address}</td>
+                <td className="py-4 border border-black">{el?.mobile}</td>
+                <td className="py-4 border border-black">
                   <span>
                     {roles.find((role) => +role.code === +el.role)?.value}
                   </span>
                 </td>
-                <td className="py-4">
+                <td className="py-4 border border-black">
                   <span>{el.isBlocked ? "Blocked" : "Active"}</span>
                 </td>
-                <td className="py-4">
+                <td className="py-4 border border-black">
                   {moment(el.createdAt).format("DD/MM/YYYY")}
                 </td>
-                <td className="py-4">
+                <td className="py-4 border border-black">
                   <span
                     className="px-2 text-orange-600 hover:underline cursor-pointer"
                     onClick={() => handleOpenModal(el)}
@@ -159,7 +167,7 @@ const ManageUser = () => {
           </tbody>
         </table>
         <div className="w-ful text-rightx">
-          <Pagination totalCount={users?.counts}/>
+          <Pagination totalCount={users?.counts} />
         </div>
       </div>
       {isModalOpen && (

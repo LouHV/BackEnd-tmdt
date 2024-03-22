@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 
 const ModalUpdateUser = ({ onClose, updateUser, setUpdateUser, handleUpdate }) => {
     const [userData, setUserData] = useState(updateUser);
-    console.log('userData :>> ', userData);
     
     const handleSubmit = (event) => {
         event.preventDefault();

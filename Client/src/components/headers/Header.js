@@ -29,7 +29,7 @@ const Header = () => {
                 {current && <Fragment>
                     <Link className="flex cursor-pointer items-center justify-center px-6 gap-2"
                         to={+current?.role === 0 ? `/${path.ADMIN}/${path.DASHBOARD}` : `/${path.MEMBER}/${path.PERSONAL}`}>
-                        Pròile
+                        Profile
                     </Link>
                 </Fragment>
                 }

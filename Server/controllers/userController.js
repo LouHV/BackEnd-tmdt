@@ -231,31 +231,36 @@ const getUsers = asyncHandler(async (req, res) => {
 
 const updateUser = asyncHandler(async (req, res) => {
     const { _id } = req.user
-    if (!id || Object.keys(req.body).length === 0) throw new Error('Missing inputs')
-    const response = await User.findByIdAndUpdate(_id, req.body, { new: true }).select("-password -role -refreshToken")
+    console.log('_id :>> ', _id);
+    const { firstname, lastname, mobile } = req.body
+    const data = { firstname, lastname, mobile }
+    if (req.file) data.avatar = req.file.path
+    if (!_id || Object.keys(req.body).length === 0) throw new Error('Missing inputs')
+    const response = await User.findByIdAndUpdate(_id, data, { new: true }).select("-password -role -refreshToken")
+    console.log('response :>> ', response);
     return res.status(200).json({
-        success: user ? true : false,
-        updateUser: response ? response : "Some thing went wrong"
+        success: response ? true : false,
+        message: response ? "Updated!" : "Some thing went wrong"
     })
 })
 
 const updateUserByAdmin = asyncHandler(async (req, res) => {
     const { uid } = req.params
+    console.log(req.params);
     if (Object.keys(req.body).length === 0) throw new Error('Missing inputs')
     const response = await User.findByIdAndUpdate(uid, req.body, { new: true }).select("-password -role -refreshToken")
     return res.status(200).json({
-        success: user ? true : false,
-        updateUser: response ? response : "Some thing went wrong"
+        success: response ? true : false,
+        message: response ? 'Updated' : "Some thing went wrong"
     })
 })
 
 const deleteUser = asyncHandler(async (req, res) => {
-    const { _id } = req.query
-    if (!id) throw new Error('Missing inputs')
-    const response = await User.findByIdAndDelete(_id)
+    const { uid } = req.params
+    const response = await User.findByIdAndDelete(uid)
     return res.status(200).json({
-        success: user ? true : false,
-        deleteUser: response ? `User with email ${response.email} deleted` : "No user delete"
+        success: response ? true : false,
+        message: response ? `User with email ${response.email} deleted` : "No user delete"
     })
 })
 

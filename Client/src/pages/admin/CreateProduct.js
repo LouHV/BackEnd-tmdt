@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react'
 import { InputForm, Select, Button, MarkdownEditor, Loading } from '../../components'
-import { set, useForm } from 'react-hook-form'
+import {  useForm } from 'react-hook-form'
 import { useSelector, useDispatch } from 'react-redux'
 import { invalidate, fileTobase64 } from '../../ultils/helper'
 import { toast } from 'react-toastify'

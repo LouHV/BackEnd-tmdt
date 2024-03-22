@@ -4,15 +4,21 @@ const productController = require("../controllers/productController")
 const { verifyAccessToken, isAdmin } = require('../middlewares/verifyToken')
 const uploader = require('../config/cloundinary.config')
 
-router.post('/', [verifyAccessToken, isAdmin], productController.createProduct)
+router.post('/', [verifyAccessToken, isAdmin], uploader.fields([
+    { name: 'images', maxCount: 10 },
+    { name: 'thumb', maxCount: 1 }
+]), productController.createProduct)
 router.get('/', productController.getAllProduct)
 router.put('/ratings', verifyAccessToken, productController.ratings)
 
 
-router.put('/:prdId', [verifyAccessToken, isAdmin], productController.updateProduct)
+router.put('/:prdId', [verifyAccessToken, isAdmin], uploader.fields([
+    { name: 'images', maxCount: 10 },
+    { name: 'thumb', maxCount: 1 }
+]), productController.updateProduct)
 router.delete('/:prdId', [verifyAccessToken, isAdmin], productController.deleteProduct)
 router.get('/:prdId', productController.getProduct)
-router.put('/uploadimage/:prdId', [verifyAccessToken, isAdmin], uploader.array('files',10), productController.uploadImagesPrd)
+router.put('/uploadimage/:prdId', [verifyAccessToken, isAdmin], uploader.array('files', 10), productController.uploadImagesPrd)
 
 
 module.exports = router

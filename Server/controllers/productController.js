@@ -4,15 +4,21 @@ const asyncHandler = require("express-async-handler")
 const slugtify = require('slugify')
 
 const createProduct = asyncHandler(async (req, res) => {
-    if (Object.keys(req.body).length === 0) throw new Error("Missing inputs")
-    console.log(1)
-    if (req.body && req.body.title) req.body.slug = slugtify(req.body.title)
-    console.log(req.body.slug)
+    const { title, price, description, brand, category, color } = req.body
+    console.log('req.file :>> ', req.file);
+    const thumb = req.files?.thumb[0]?.path
+    const images = req.files?.images?.map(el => el.path)
+    if (!(title && price && description && brand && category && color)) throw new Error("Missing inputs")
+
+    req.body.slug = slugtify(title)
+    if (thumb) req.body.thumb = thumb
+    if (images) req.body.images = images
+
     const newProduct = await Product.create(req.body)
-    console.log(3)
+
     return res.status(200).json({
         success: newProduct ? true : false,
-        createProduct: newProduct ? newProduct : 'Cannot create new product'
+        message: newProduct ? "Created" : 'Failed! Cannot create new product!'
     })
 })
 
@@ -42,19 +48,35 @@ const getAllProduct = asyncHandler(async (req, res) => {
     queryString = queryString.replace(/\b(gte|gt|lt|lte)\b/g, matchedEl => `$${matchedEl}`)
     const restQueries = JSON.parse(queryString)
 
+    //filltering
     let formatedQueries = {}
     if (queries?.color) {
         delete restQueries.color
         const colorQuery = queries.color?.split(',').map(el => ({ color: { $regex: el, $options: 'i' } }))
         formatedQueries = { $or: colorQuery }
     }
-    //filltering
 
     if (queries?.title) restQueries.title = { $regex: queries.title, $options: 'i' }
     if (queries?.category) restQueries.category = { $regex: queries.category, $options: 'i' }
-    const q = { ...formatedQueries, ...restQueries }
 
-    let queryCommand = Product.find(q)
+    let queryObject = {}
+
+    if (queries?.q) {
+        delete restQueries.q
+        queryObject = {
+            $or: [
+                { color: { $regex: queries?.q, $options: 'i' } },
+                { title: { $regex: queries?.q, $options: 'i' } },
+                { category: { $regex: queries?.q, $options: 'i' } },
+                { brand: { $regex: queries?.q, $options: 'i' } },
+                { description: { $regex: queries?.q, $options: 'i' } },
+
+            ]
+        }
+    }
+
+    const qr = { ...formatedQueries, ...restQueries, ...queryObject }
+    let queryCommand = Product.find(qr)
 
     //sorting
     // acb,efg [abc,efg] => abc efg
@@ -80,7 +102,7 @@ const getAllProduct = asyncHandler(async (req, res) => {
     //execute query
     // sl sp thoa man dk  khac voi so luong san pham tra ve 1 lan
     queryCommand.then(async (response) => {
-        const counts = await Product.find(q).countDocuments()
+        const counts = await Product.find(qr).countDocuments()
         return res.status(200).json({
             success: response ? true : false,
             counts,
@@ -95,11 +117,20 @@ const getAllProduct = asyncHandler(async (req, res) => {
 
 const updateProduct = asyncHandler(async (req, res) => {
     const { prdId } = req.params
+    const files = req?.files
+    if (files?.thumb) {
+        req.body.thumb = files?.thumb[0]?.path
+    }
+
+    if (files?.images) {
+        req.body.images = files?.images?.map(el => el.path)
+    }
+
     if (req.body && req.body.title) req.body.slug = slugtify(req.body.title)
     const updatedProduct = await Product.findByIdAndUpdate(prdId, req.body, { new: true })
     return res.status(200).json({
         success: updatedProduct ? true : false,
-        productData: updatedProduct ? updatedProduct : 'Cannot update product'
+        productData: updatedProduct ? `Updateted ${updateProduct.title}` : 'Cannot update product'
     })
 })
 
@@ -108,7 +139,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
     const deletedProduct = await Product.findByIdAndDelete(prdId)
     return res.status(200).json({
         success: deletedProduct ? true : false,
-        productData: deletedProduct ? deletedProduct : 'Cannot delete product'
+        message: deletedProduct ? `${deletedProduct.title} deleted` : 'Cannot delete product'
     })
 })
 

@@ -177,3 +177,42 @@ export const blockStatus = [
         value: 'Active'
     }
 ]
+
+
+export const memberSidebar = [
+
+
+    {
+        id: 1,
+        type: 'PARENT',
+        text: 'Thông tin cá nhân',
+        submenu: [
+            {
+                text: 'Hồ Sơ',
+                path: `/${path.MEMBER}/${path.PERSONAL}`
+            },
+            // {
+            //     text: 'Địa chỉ',
+            //     path: `/${path.ADMIN}/${path.MANAGE_PRODUCTS}`
+            // },
+        ]
+    },
+    {
+        id: 2,
+        type: 'SINGLE',
+        text: 'My Cart',
+        path: `/${path.MEMBER}/${path.MY_CART}`
+    },
+    {
+        id: 3,
+        type: 'SINGLE',
+        text: 'Buy History',
+        path: `/${path.MEMBER}/${path.HISTORY}`
+    },
+    {
+        id: 4,
+        type: 'SINGLE',
+        text: 'Wishlist',
+        path: `/${path.MEMBER}/${path.WISHLIST}`
+    },
+]

@@ -22,7 +22,13 @@ import {
   CreateProduct,
   Dashboard
 } from './pages/admin'
-import { MemberLayout, Personal } from './pages/member'
+import {
+  MemberLayout,
+  Personal,
+  MyCart,
+  History,
+  WishList,
+} from './pages/member'
 import { getCategories } from './store/app/asyncActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
@@ -50,6 +56,12 @@ function App() {
           <Route path={path.PRODUCTS} element={<Products />} />
           <Route path={path.RESET_PASSWORD} element={<ResetPassword />} />
           <Route path={path.ALL} element={<Home />} />
+          <Route path={path.MEMBER} element={<MemberLayout />}>
+          <Route path={path.PERSONAL} element={<Personal />} />
+          <Route path={path.MY_CART} element={<MyCart />} />
+          <Route path={path.HISTORY} element={<History />} />
+          <Route path={path.WISHLIST} element={<WishList />} />
+        </Route>
         </Route>
         {/* admin */}
         <Route path={path.ADMIN} element={<AdminLayout />}>

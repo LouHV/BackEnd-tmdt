@@ -50,11 +50,24 @@ export const generateRange = (star, end) => {
     return Array.from({ length }, (_, index) => star + index)
 }
 export const fileTobase64 = (file) => {
-    if(!file) return
+    if (!file) return
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => resolve(reader.result);
         reader.onerror = error => reject(error);
-      });
+    });
+};
+
+export const HideEmail = (email) => {
+    const [username, domain] = email.split('@');
+    const maskedUsername = username.substring(0, 2) + '*'.repeat(username.length - 2);
+    return maskedUsername + '@' + domain;
+};
+
+export const HidePhoneNumber = (phoneNumber) => {
+    const cleaned = ('' + phoneNumber).replace(/\D/g, ''); // Xóa tất cả các ký tự không phải số khỏi chuỗi số điện thoại
+    const lastFourDigits = cleaned.slice(-2); // Lấy 4 chữ số cuối cùng
+    const hiddenPart = '*'.repeat(cleaned.length - 2); // Tạo một chuỗi dấu '*' có chiều dài bằng phần còn lại của chuỗi số điện thoại
+    return hiddenPart + lastFourDigits; // Kết hợp phần đã ẩn và 4 chữ số cuối cùng
 };

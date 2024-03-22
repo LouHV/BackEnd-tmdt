@@ -2,7 +2,7 @@ import React, { Fragment, memo, useState } from 'react'
 import { adminSideBar } from '../../ultils/contants'
 import { NavLink } from 'react-router-dom'
 import clsx from 'clsx'
-import { FaCaretDown, FaCaretRight } from 'react-icons/fa6'
+import { FaCaretDown, FaCaretUp } from 'react-icons/fa6'
 
 
 const activeStyle = 'px-4 py-2 flex items-centar gap-2 text-gray-200 bg-gray-400'
@@ -32,7 +32,7 @@ const SidebarAdmin = () => {
                 <div onClick={() => handleShowTabs(+el.id)} className=' flex flex-col text-gray-200  ' >
                   <div className='flex items-center justify-between gap-2 px-4 py-2 hover:bg-gray-600 cursor-pointer'>
                     <span>{el.text}</span>
-                    {actived.some(id => id === el.id) ? <FaCaretDown /> : <FaCaretRight />}
+                    {actived.some(id => id === el.id) ? <FaCaretDown /> : <FaCaretUp />}
                   </div>
                   {actived.some(id => +id === +el.id) && <div className='flex flex-col'>
                     {el.submenu.map(item => (

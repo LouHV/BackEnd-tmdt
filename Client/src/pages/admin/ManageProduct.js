@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { InputForm } from '../../components'
 import { useForm } from 'react-hook-form'
-import { apiGetProducts } from '../../apis'
+import { apiGetProducts, apiDeleteProduct } from '../../apis'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
 import moment from "moment";
 import { useSearchParams, useParams, createSearchParams, useNavigate, useLocation } from 'react-router-dom'
 import { Pagination } from '../../components'
 import useDebounce from '../../hooks/useDebounce'
+import UpdateProduct from './UpdateProduct'
 
 
 const ManageProduct = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editProduct, setEditProduct] = useState(null);
+
+
   const navigate = useNavigate()
   const location = useLocation()
   const [params] = useSearchParams()
@@ -20,7 +25,6 @@ const ManageProduct = () => {
   const handleSearchProducts = (data) => {
     console.log('data :>> ', data);
   }
-
 
   const fectchProducts = async (params) => {
     const response = await apiGetProducts({ ...params, limit: process.env.REACT_APP_LIMIT })
@@ -32,7 +36,6 @@ const ManageProduct = () => {
   }
 
   const queryDecounce = useDebounce(watch('q'), 800)
-  console.log('queryDecounce :>> ', queryDecounce);
 
   //search
   useEffect(() => {
@@ -55,9 +58,44 @@ const ManageProduct = () => {
     fectchProducts(searchParams)
   }, [params])
 
+  //dong mo edit
+  const handleOpenModal = (prd) => {
+    setIsModalOpen(true);
+    setEditProduct(prd);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditProduct(null);
+  };
+
+  const handldeDeleteProduct = (pid) => {
+    Swal.fire({
+      title: 'Are you sure...',
+      text: 'Are you ready remove this product?',
+      showCancelButton: true
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+
+        const response = await apiDeleteProduct(pid)
+        if (response.success) {
+          fectchProducts()
+          toast.success(response.message)
+        }
+        else {
+          toast.error(response.message)
+        }
+      }
+    })
+  }
 
   return (
     <div className='w-full relative'>
+      {editProduct && <div className='absolute inset-0 bg-sky-100 min-h-screen'>
+        <UpdateProduct 
+        editProduct={editProduct} 
+        setEditProduct={setEditProduct}/>
+      </div>}
       <div className='flex justify-center items-center bg-slate-500'>
         <h1 className="h-[75px] w-full flex justify-between items-center text-3xl font-bold px-4 border-b  top-0  ">
           <span>Manage Product</span>
@@ -92,6 +130,7 @@ const ManageProduct = () => {
               <th className="px-4 py-2 border border-black">Color</th>
               <th className="px-4 py-2 border border-black">Ratings</th>
               <th className="px-4 py-2 border border-black">CreatedAt</th>
+              <th className="px-4 py-2 border border-black">Actions</th>
 
 
             </tr>
@@ -116,15 +155,16 @@ const ManageProduct = () => {
 
 
 
-                {/* <td className="py-4">
+                <td className="py-4">
                   <span
                     className="px-2 text-orange-600 hover:underline cursor-pointer"
-                    onClick={() => handleOpenModal(el)}
-                  >
-                    Edit
+                    onClick={() => setEditProduct(el)}
+                  >Edit
                   </span>
-                  <span onClick={() => handldeDeleteUser(el._id)} className='px-2 text-orange-600 hover:underline cursor-pointer'>Delete</span>
-                </td> */}
+                  <span
+                    onClick={() => handldeDeleteProduct(el._id)}
+                    className='px-2 text-orange-600 hover:underline cursor-pointer'>Remove</span>
+                </td>
               </tr>
             ))}
           </tbody>
