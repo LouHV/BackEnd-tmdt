@@ -13,9 +13,10 @@ router.post('/forgotpassword', userController.forgotPassword)
 router.put('/resetpassword', userController.resetPassword)
 router.get('/', [verifyAccessToken, isAdmin], userController.getUsers)
 router.delete('/:uid', [verifyAccessToken, isAdmin], userController.deleteUser)
-router.put('/current', verifyAccessToken,uploader.single('avatar'), userController.updateUser)
+router.put('/current', verifyAccessToken, uploader.single('avatar'), userController.updateUser)
 router.put('/cart', [verifyAccessToken], userController.updateCart)
 router.put('/address', [verifyAccessToken, isAdmin], userController.updateUserAddress)
+router.put('/wishlist/:prdId', [verifyAccessToken], userController.updateWishlist)
 router.put('/:uid', userController.updateUserByAdmin)
 
 module.exports = router

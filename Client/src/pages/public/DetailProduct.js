@@ -63,7 +63,7 @@ const DetailProducts = () => {
     const rerender = useCallback(() => { setUpdate(!update) }, [update])
 
     const handleQuantity = useCallback((number) => {
-        let previous
+        
         if (!Number(number) || Number(number) < 1) {
             return
         } else {

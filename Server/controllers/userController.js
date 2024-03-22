@@ -92,7 +92,16 @@ const getCurrent = asyncHandler(async (req, res) => {
     const { _id } = req.user
 
     // kiem tra neu ton tai email tra ra loi
-    const user = await User.findById({ _id }).select('-refreshToken -password ')
+    const user = await User.findById({ _id })
+        .select('-refreshToken -password ')
+        .populate({
+            path: "cart",
+            populate: {
+                path: "product",
+                select: "title thumb price"
+            },
+        })
+        .populate("wishlist", 'title thumb price color')
     return res.status(200).json({
         success: user ? true : false,
         rs: user ? user : 'User not found'
@@ -305,6 +314,31 @@ const updateCart = asyncHandler(async (req, res) => {
         })
     }
 })
+const updateWishlist = asyncHandler(async (req, res) => {
+    const { prdId } = req.params
+    const { _id } = req.user
+
+    // kiem tra neu ton tai email tra ra loi
+    const user = await User.findById(_id)
+    const alreadyInWishlist = user.wishlist?.find((el) => el.toString() === prdId)
+    console.log('alreadyInWishlist :>> ', alreadyInWishlist);
+    if (alreadyInWishlist) {
+        const response = await User.findByIdAndUpdate(_id, { $pull: { wishlist: prdId } }, { new: true })
+        console.log('response :>> ', response);
+        return res.json({
+            success: response ? true : false,
+            message: response ? `Product has been removed from your wishlist list!` : 'Failed to add wishlist'
+        })
+    }
+    else {
+        const response = await User.findByIdAndUpdate(_id, { $push: { wishlist: prdId } }, { new: true })
+
+        return res.json({
+            success: response ? true : false,
+            message: response ? `Added to your wishlist!` : 'Failed to add wishlist'
+        })
+    }
+})
 
 module.exports = {
     register,
@@ -319,5 +353,6 @@ module.exports = {
     updateUser,
     updateUserByAdmin,
     updateUserAddress,
-    updateCart
+    updateCart,
+    updateWishlist
 }

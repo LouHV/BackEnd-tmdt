@@ -41,7 +41,11 @@ export const apiDeleteUsers = (uid) => axios({
 
 })
 export const apiUpdateCurrent = (data) => axios({
-    url: '/user/current' ,
+    url: '/user/current',
     method: 'Put',
     data
+})
+export const apiUpdateWishlist = (pid) => axios({
+    url: '/user/wishlist/' + pid,
+    method: 'Put',
 })
