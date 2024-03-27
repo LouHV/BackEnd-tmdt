@@ -20,12 +20,12 @@ const Personal = () => {
       firstname: current?.firstname,
       lastname: current?.lastname,
       mobile: current?.mobile,
-      avatar: current?.avatar
+      avatar: current?.avatar,
+      address: current?.address
     })
 
 
   }, [current])
-  console.log('current :>> ', current);
 
   const handleUpdateInfor = async (data) => {
     const formData = new FormData()
@@ -99,6 +99,17 @@ const Personal = () => {
               pattern: {
                 value: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4}$/gm,
               }
+            }}
+            fullWidth
+
+          />
+          <InputForm
+            label='Address:'
+            register={register}
+            errors={errors}
+            id='address'
+            validate={{
+              required: 'Need fill this filed'
             }}
             fullWidth
 

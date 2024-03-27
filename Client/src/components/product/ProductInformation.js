@@ -18,7 +18,7 @@ const ProductInformation = ({ totalRating, rating, nameProduct, pid, rerender })
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { isLoggedIn } = useSelector(state => state.user)
-
+  console.log('rating :>> ', rating);
   const handleSubmitVoteOption = async ({ comment, score }) => {
 
     if (!comment || !pid || !score) {
@@ -113,6 +113,7 @@ const ProductInformation = ({ totalRating, rating, nameProduct, pid, rerender })
                   updatedAt={el.updatedAt}
                   comment={el.comment}
                   name={`${el.postedBy?.firstname} ${el.postedBy?.lastname}`}
+                  avatar={el.postedBy?.avatar}
                 />
               ))}</div>
           </div>}

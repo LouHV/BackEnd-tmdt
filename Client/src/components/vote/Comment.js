@@ -3,11 +3,11 @@ import avaDF from '../../assets/avatar-default.jpg'
 import moment from "moment"
 import { renderStartFromNumber } from '../../ultils/helper'
 
-const Comment = ({ image = avaDF, name ='Anonymous', updatedAt, comment, star }) => {
+const Comment = ({ avatar, name = 'Anonymous', updatedAt, comment, star }) => {
     return (
         <div className='flex gap-4'>
             <div className='flex-none'>
-                <img src={image} alt='avatar' className='w-[50px] h-[50px] object-cover rounded-full' />
+                <img src={avatar||avaDF} alt='avatar' className='w-[50px] h-[50px] object-cover rounded-full' />
             </div>
             <div className='flex flex-col flex-auto'>
                 <div className='flex justify-between items-center'>

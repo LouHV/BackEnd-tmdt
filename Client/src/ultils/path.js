@@ -4,13 +4,17 @@ const path = {
     ALL: '*',
     LOGIN: 'login',
     REGISTER: 'register',
-    PRODUCTS: ':category', //products
+    PRODUCTS__CATEGORY: ':category', //products
     BLOGS: 'blogs',
     SERVICES: 'services',
     FAQS: 'faqs',
     DETAIL_PRODUCT__CATEGORY__PID__TITLE: ':category/:pid/:title',
     FINAL_REGISTER: 'finalregister/:status',
     RESET_PASSWORD: 'reset-password/:token',
+    DETAIL_CART: 'my-cart',
+    CHECKOUT: "checkout",
+    PRODUCTS:'products',
+    SEARCH:'search',
 
     //admin
     ADMIN: 'admin',
@@ -25,7 +29,7 @@ const path = {
     PERSONAL: 'personnal',
     MY_CART: 'my-cart',
     HISTORY: 'buy-history',
-    WISHLIST: 'wishlist'
+    WISHLIST: 'wishlist',
 }
 
 export default path

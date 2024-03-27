@@ -24,7 +24,7 @@ const Register = () => {
     }
 
     const [invalidFields, setinvalidFields] = useState([])
-    
+
     const handleSubmit = useCallback(async () => {
         const { email, password, firstname, lastname, mobile } = payload
         const response = await apiRegister(payload)
@@ -53,6 +53,7 @@ const Register = () => {
                     <h1 className="text-[28px] font-semibold text-main mb-8">Register</h1>
                     <div className='flex items-center gap-2'>
                         <InputField
+                            fullWidth
                             value={payload.firstname}
                             setValue={setPayload}
                             nameKey='firstname'
@@ -60,6 +61,7 @@ const Register = () => {
                         />
 
                         <InputField
+                            fullWidth
                             value={payload.lastname}
                             setValue={setPayload}
                             nameKey='lastname'
@@ -69,17 +71,20 @@ const Register = () => {
 
 
                     <InputField
+                        fullWidth
                         value={payload.email}
                         setValue={setPayload}
                         nameKey='email'
                         setInvalidField={setinvalidFields} />
                     <InputField
+                        fullWidth
                         value={payload.password}
                         setValue={setPayload}
                         nameKey='password'
                         type='password'
                         setInvalidField={setinvalidFields} />
                     <InputField
+                        fullWidth
                         value={payload.mobile}
                         setValue={setPayload}
                         nameKey='mobile'

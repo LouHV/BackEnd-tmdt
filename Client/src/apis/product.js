@@ -31,3 +31,16 @@ export const apiDeleteProduct = (pid) => axios({
     method: 'Delete',
 
 })
+export const apiCreateOrder = (data) => axios({
+    url: '/order/',
+    method: 'Post',
+    data
+})
+export const apiGetOrders = (params) => axios({
+    url: '/order/admin',
+    method: 'Get',
+})
+export const apiGetUserOrders = (params) => axios({
+    url: '/order/',
+    method: 'Get',
+})

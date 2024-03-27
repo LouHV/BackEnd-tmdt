@@ -14,7 +14,6 @@ const notActiveStyle = 'px-4 py-2 flex items-centar gap-2 text-balck hover:bg-gr
 const MemberSidebar = () => {
     const [actived, setActived] = useState([])
     const data = useSelector(state => state.user)
-    console.log('current :>> ', data);
     const handleShowTabs = (tabID) => {
         if (actived.some(el => el === tabID)) setActived(prev => prev.filter(el => el !== tabID)) //xoa di
         else setActived(prev => [...prev, tabID]) //them vao

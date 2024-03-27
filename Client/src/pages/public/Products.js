@@ -21,21 +21,17 @@ const Products = () => {
 
     ///
     const fetchProductsByCategory = async (queries) => {
-        
+        if (category && category !== 'products') queries.category = category
         const response = await apiGetProducts(queries)
-        
+
         if (response.success) setproducts(response)
 
     }
 
-    
-
-
     const { category } = useParams()
-  
+
     useEffect(() => {
         const queries = Object.fromEntries([...params])
-        console.log('category :>> ', queries);
         let priceQuery = {}
 
         if (queries.to && queries.from) {
@@ -69,17 +65,14 @@ const Products = () => {
 
         // var q= {};
 
-        if(category === ":category"){
-            var q = { ...priceQuery, ...queries };
-            fetchProductsByCategory(q)
-        }else{
-            var p = { ...priceQuery, ...queries,category };
-            fetchProductsByCategory(p)
-        }
+
+        var p = { ...priceQuery, ...queries };
+        fetchProductsByCategory(p)
+
 
         // fetchProductsByCategory(q)
 
-        
+
         window.scrollTo(0, 0)
     }, [params])
 
@@ -103,7 +96,7 @@ const Products = () => {
     }, [sort])
 
     return (
-        <div className="w-full">
+        <div className="w-full bottom-5">
             <div className="h-[81px] flex justify-center items-center bg-gray-100">
                 <div className="w-main">
                     <h3 className="font-semibold uppercase">{category}</h3>
@@ -151,12 +144,12 @@ const Products = () => {
                     ))}
                 </Masonry>
             </div>
-            {products?.products?.length > 0 && <div className="bg-red-500 w-main m-auto my-4 flex justify-center">
+            {products?.products?.length > 0 && <div className=" w-main m-auto my-4 flex justify-center">
                 <Pagination
                     totalCount={products?.counts}
                 />
             </div>}
-            <div className="w-full h-[500px]"></div>
+            
         </div>
     )
 }

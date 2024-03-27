@@ -25,12 +25,15 @@ const SidebarAdmin = () => {
             <Fragment key={el.id}>
               {el.type === 'SINGLE' && <NavLink
                 to={el.path}
-                className={({ isActive }) => clsx(isActive && activeStyle, !isActive && notActiveStyle)}>
+                className={({ isActive }) => clsx(isActive && activeStyle, !isActive && notActiveStyle, 'items-center')}>
+                {el?.icon}
                 {el.text}
               </NavLink>}
               {el.type === 'PARENT' &&
                 <div onClick={() => handleShowTabs(+el.id)} className=' flex flex-col text-gray-200  ' >
-                  <div className='flex items-center justify-between gap-2 px-4 py-2 hover:bg-gray-600 cursor-pointer'>
+
+                  <div className='flex items-center gap-2 px-4 py-2 hover:bg-gray-600 cursor-pointer'>
+                    {el?.icon}
                     <span>{el.text}</span>
                     {actived.some(id => id === el.id) ? <FaCaretDown /> : <FaCaretUp />}
                   </div>
@@ -39,7 +42,7 @@ const SidebarAdmin = () => {
                       <NavLink
                         key={item.text}
                         to={item.path}
-                        onClick={e =>e.stopPropagation()}
+                        onClick={e => e.stopPropagation()}
                         className={({ isActive }) => clsx(isActive && activeStyle, !isActive && notActiveStyle, ' pl-10')}>
                         {item.text}
                       </NavLink>

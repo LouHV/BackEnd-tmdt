@@ -34,6 +34,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { Modal } from './components';
+import DetailCart from './pages/public/DetailCart';
+import Checkout from './pages/member/Checkout';
+import SearchPrd from './components/common/SearchPrd';
 
 
 function App() {
@@ -53,15 +56,19 @@ function App() {
           <Route path={path.FAQS} element={<Faq />} />
           <Route path={path.DETAIL_PRODUCT__CATEGORY__PID__TITLE} element={<DetailProducts />} />
           <Route path={path.SERVICES} element={<Services />} />
-          <Route path={path.PRODUCTS} element={<Products />} />
+          <Route path={path.PRODUCTS__CATEGORY} element={<Products />} />
           <Route path={path.RESET_PASSWORD} element={<ResetPassword />} />
-          <Route path={path.ALL} element={<Home />} />
+          <Route path={path.DETAIL_CART} element={<DetailCart />} />
+          <Route path={path.SEARCH} element={<SearchPrd />} />
+          {/* //mememe */}
           <Route path={path.MEMBER} element={<MemberLayout />}>
-          <Route path={path.PERSONAL} element={<Personal />} />
-          <Route path={path.MY_CART} element={<MyCart />} />
-          <Route path={path.HISTORY} element={<History />} />
-          <Route path={path.WISHLIST} element={<WishList />} />
-        </Route>
+            <Route path={path.PERSONAL} element={<Personal />} />
+            <Route path={path.HISTORY} element={<History />} />
+            <Route path={path.WISHLIST} element={<WishList />} />
+            <Route path={path.MY_CART} element={<MyCart />} />
+          </Route>
+
+          <Route path={path.ALL} element={<Home />} />
         </Route>
         {/* admin */}
         <Route path={path.ADMIN} element={<AdminLayout />}>
@@ -72,13 +79,15 @@ function App() {
           <Route path={path.CREATE_PRODUCTS} element={<CreateProduct />} />
         </Route>
         {/* member */}
-        <Route path={path.MEMBER} element={<MemberLayout />}>
+        {/* <Route path={path.MEMBER} element={<MemberLayout />}>
           <Route path={path.PERSONAL} element={<Personal />} />
-        </Route>
+        </Route> */}
         {/* lien quan login */}
         <Route path={path.LOGIN} element={<Login />} />
         <Route path={path.REGISTER} element={<Register />} />
         <Route path={path.FINAL_REGISTER} element={<FinalRegister />} />
+        <Route path={path.CHECKOUT} element={<Checkout />} />
+
 
       </Routes>
 

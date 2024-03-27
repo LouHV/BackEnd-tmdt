@@ -33,13 +33,15 @@ var userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum:[0,1],
+        enum: [0, 1],
         default: '1',
     },
     cart: [{
-        product:{type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+        product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
         quantity: Number,
-        color: String
+        color: String,
+        price: Number,
+
     }],
     address: {
         type: Array,

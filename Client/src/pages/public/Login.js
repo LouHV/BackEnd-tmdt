@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { InputField, Button, Loading } from "../../components";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import path from "../../ultils/path";
 import { apiLogin, apiForgotPassword } from "../../apis/user";
 import { useNavigate } from "react-router-dom";
@@ -22,6 +22,7 @@ const Login = () => {
     const [invalidFields, setinvalidFields] = useState([])
 
     const [isForgotPassword, setisForgotPassword] = useState(false)
+    const [searchParams] = useSearchParams()
 
     const [email, setemail] = useState('')
     const handleForgotPassword = async () => {
@@ -43,13 +44,16 @@ const Login = () => {
             dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }))
             const response = await apiLogin(payload)
             dispatch(showModal({ isShowModal: false, modalChildren: null }))
-            Swal.fire(response.success ? 'Congratulation' : 'Oops!', response.message, response.success ? 'Success' : 'Error')
-                .then((result) => { // Nhận kết quả từ swal
-                    if (result.isConfirmed && response.success) { // Nếu xác nhận và thành công
-                        dispatch(login({ isLoggedIn: true, token: response.accessToken, userData: response.userData }))
-                        navigate(`/${path.HOME}`); // Điều hướng sang trang login
-                    }
-                })
+            setTimeout(() => {
+                Swal.fire(response.success ? 'Logged in successfully!' : 'Oops!', response.message, response.success ? 'Success' : 'Error')
+                    .then((result) => { // Nhận kết quả từ swal
+                        if (result.isConfirmed && response.success) { // Nếu xác nhận và thành công
+                            dispatch(login({ isLoggedIn: true, token: response.accessToken, userData: response.userData }))
+                            searchParams.get('redirect') ? navigate(searchParams.get('redirect')) : navigate(`/${path.HOME}`); // Điều hướng sang trang login
+                        }
+                    })
+            },500)
+
         }
 
     }, [payload])
@@ -58,7 +62,7 @@ const Login = () => {
         <div className="w-screen h-screen relative">
             {isForgotPassword && <div className="absolute top-0 left-0 bottom-0 right-0 flex-col bg-white flex items-center py-8 z-50">
                 <div className="flex flex-col gap-4">
-                    <label htmlFor="email">Enter your email</label>
+                    <label htmlFor="email">Enter your email:</label>
                     <div className="flex items-center justify-center mt-2 w-full gap-2">
                         <input type="text" id="email"
                             className="2-[800px] pb-2 border-b  placeholder:text-sm p-1 mr-2"
@@ -66,14 +70,14 @@ const Login = () => {
                             value={email}
                             onChange={e => setemail(e.target.value)}
                         />
+
+                        <Button handleOnClick={handleForgotPassword}
+                            style='px-4 py-2 rounded-md text-white bg-blue-500 text-semibold my-2'>
+                            Submit
+                        </Button>
                         <Button
-                            nameButton='Submit'
-                            handleOnClick={handleForgotPassword}
-                            style='px-4 py-2 rounded-md text-white bg-blue-500 text-semibold my-2'
-                        />
-                        <Button
-                            nameButton='Back'
-                            handleOnClick={() => { setisForgotPassword(false) }} />
+                            handleOnClick={() => { setisForgotPassword(false) }} >Back
+                        </Button>
                     </div>
                 </div>
             </div>}
@@ -86,14 +90,15 @@ const Login = () => {
                 <div className="p-8 bg-white rounded-md flex flex-col items-center min-w-[500px] absolute ">
                     <h1 className="text-[28px] font-semibold text-main mb-8">Login</h1>
 
-
                     <InputField
+                        fullWidth
                         value={payload.email}
                         setValue={setPayload}
                         nameKey='email'
                         invalidFields={invalidFields}
                         setInvalidField={setinvalidFields} />
                     <InputField
+                        fullWidth
                         value={payload.password}
                         setValue={setPayload}
                         nameKey='password'
@@ -105,9 +110,6 @@ const Login = () => {
                         fw>
                         Login
                     </Button>
-
-
-
 
                     <div className="flex items-center justify-between my-2 w-full text-sm">
                         <span className="text-main hover:underline cursor-pointer"

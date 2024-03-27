@@ -26,8 +26,8 @@ const Public = () => {
             </div>
 
             <div className="my-8 w-full">
-                <h3 className="text-[20px] uppercase font-semibold py-[15px] border-2 border-t-main">Hot Collection</h3>
-                <div className="flex flex-wrap gap-4 mt-4 ">
+                <h3 className=" text-[20px] uppercase font-semibold py-[15px] border-2 border-t-main pl-5">Hot Collection</h3>
+                <div className="flex flex-wrap gap-4 mt-4  justify-center">
                     {categories?.filter(el => el.brand.length > 0)?.map(el => (
                         <div
                             key={el._id}

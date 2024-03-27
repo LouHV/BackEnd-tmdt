@@ -49,3 +49,12 @@ export const apiUpdateWishlist = (pid) => axios({
     url: '/user/wishlist/' + pid,
     method: 'Put',
 })
+export const apiUpdateCart = (data) => axios({
+    url: '/user/cart/' ,
+    method: 'Put',
+    data
+})
+export const apiDeleteCart = (pid) => axios({
+    url: '/user/remove-cart/' + pid,
+    method: 'DELETE',
+})

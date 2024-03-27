@@ -1,11 +1,13 @@
 import React, { useState, useEffect, memo } from "react";
 import ProductCard from "./ProductCard";
 import { apiGetProducts } from "../../apis";
-const FeautureProducts = () => {
+import withBase from "../../hocs/withBase";
+
+const FeautureProducts = ({ navigate }) => {
     const [products, setProducts] = useState(null)
 
     const fetchProducts = async () => {
-        const response = await apiGetProducts({ limit: 9, page: Math.round(Math.random() * 10) })
+        const response = await apiGetProducts({ limit: 9, page: Math.round(Math.random() * 10)})
 
         if (response.success) setProducts(response.products)
     }
@@ -14,8 +16,9 @@ const FeautureProducts = () => {
     }, [])
     return (
         <div className="w-full">
-            <h3 className="text-[20px] uppercase font-semibold py-[15px] border-2 border-t-main">feauture</h3>
-            <div className="flex flex-wrap mt-[15px] mx-[10px]">
+            <h3 className="text-[20px] uppercase font-semibold py-[15px] border-2 border-t-main  pl-5">Feauture</h3>
+            <div className="flex flex-wrap mt-[15px] mx-[10px]"
+                >
                 {products?.map(el => (
                     <ProductCard
                         key={el._id}
@@ -23,10 +26,12 @@ const FeautureProducts = () => {
                         title={el.title}
                         totalRating={el.totalRating}
                         price={el.price}
+                        category={el.category}
+                        pid={el._id}
                     />
                 ))}
             </div>
         </div>
     )
 }
-export default memo(FeautureProducts)
+export default withBase(memo(FeautureProducts))

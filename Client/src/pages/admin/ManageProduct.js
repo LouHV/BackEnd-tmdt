@@ -12,7 +12,6 @@ import UpdateProduct from './UpdateProduct'
 
 
 const ManageProduct = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [editProduct, setEditProduct] = useState(null);
 
 
@@ -28,7 +27,6 @@ const ManageProduct = () => {
 
   const fectchProducts = async (params) => {
     const response = await apiGetProducts({ ...params, limit: process.env.REACT_APP_LIMIT })
-    console.log('response :>> ', response);
     if (response.success) {
       setProducts(response.products)
       setCounts(response.counts)
@@ -36,6 +34,7 @@ const ManageProduct = () => {
   }
 
   const queryDecounce = useDebounce(watch('q'), 800)
+
 
   //search
   useEffect(() => {
@@ -58,16 +57,7 @@ const ManageProduct = () => {
     fectchProducts(searchParams)
   }, [params])
 
-  //dong mo edit
-  const handleOpenModal = (prd) => {
-    setIsModalOpen(true);
-    setEditProduct(prd);
-  };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setEditProduct(null);
-  };
 
   const handldeDeleteProduct = (pid) => {
     Swal.fire({

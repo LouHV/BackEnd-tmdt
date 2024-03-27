@@ -1,14 +1,14 @@
 import React, { memo } from 'react'
-
-const SelectQuantity = ({ quantity, handleQuantity, handleChangeQuantity }) => {
+import clsx from 'clsx'
+const SelectQuantity = ({ quantity, handleQuantity, handleChangeQuantity, fullWidth }) => {
     return (
-        <div className='flex items-center'>
-            <span onClick={() => handleChangeQuantity('minus')} className='p-2 cursor-pointer border-r border-black'>-</span>
+        <div className={clsx('flex items-center w-1/4', fullWidth && 'w-full')}>
+            <span onClick={() => handleChangeQuantity('minus')} className='px-[10px] py-[10px]  cursor-pointer border hover:bg-gray-200'>-</span>
             <input className='py-2 outline-none w-[40px] text-center'
                 type='text'
                 value={quantity}
                 onChange={e => handleQuantity(e.target.value)} />
-            <span onClick={() => handleChangeQuantity('plus')} className='p-2 cursor-pointer border-l border-black'>+</span>
+            <span onClick={() => handleChangeQuantity('plus')} className='px-[10px] py-[10px] cursor-pointer border hover:bg-gray-200 '>+</span>
         </div>
     )
 }

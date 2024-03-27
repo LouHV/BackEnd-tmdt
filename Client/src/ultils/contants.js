@@ -1,24 +1,30 @@
 import path from "./path"
-
+import { IoHome } from "react-icons/io5";
+import { FaUsers } from "react-icons/fa";
+import { GrProductHunt } from "react-icons/gr";
+import { GrDocumentText } from "react-icons/gr";
+import { FaChartBar } from "react-icons/fa";
+import { AiOutlineHome } from "react-icons/ai";
 export const navigation = [
     {
         id: 0,
-        value: 'HOME',
-        path: `/${path.HOME}`
+        value: 'Home',
+        path: `/${path.HOME}`,
+        icon: <AiOutlineHome size={14}/>
     },
     {
         id: 1,
-        value: 'PRODUCT',
+        value: 'Products',
         path: `/${path.PRODUCTS}`
     },
     {
         id: 2,
-        value: 'BLOGS',
+        value: 'Blogs',
         path: `/${path.BLOGS}`
     },
     {
         id: 3,
-        value: 'OUR SERVICES',
+        value: 'Our service',
         path: `/${path.SERVICES}`
     },
     {
@@ -70,12 +76,12 @@ export const sorts = [
     },
     {
         id: 2,
-        value: '-title',
+        value: 'title',
         text: 'Alphabetically, A-Z'
     },
     {
         id: 3,
-        value: 'title',
+        value: '-title',
         text: 'Alphabetically, Z-A'
     },
     {
@@ -127,18 +133,21 @@ export const adminSideBar = [
         id: 1,
         type: 'SINGLE',
         text: 'Dashboard',
-        path: `/${path.ADMIN}/${path.DASHBOARD}`
+        path: `/${path.ADMIN}/${path.DASHBOARD}`,
+        icon: <FaChartBar />
     },
     {
         id: 2,
         type: 'SINGLE',
         text: 'Manage Users',
-        path: `/${path.ADMIN}/${path.MANAGE_USER}`
+        path: `/${path.ADMIN}/${path.MANAGE_USER}`,
+        icon: <FaUsers />
     },
     {
         id: 3,
         type: 'PARENT',
         text: 'Manage Products',
+        icon: <GrProductHunt />,
         submenu: [
             {
                 text: 'Create product',
@@ -154,7 +163,15 @@ export const adminSideBar = [
         id: 4,
         type: 'SINGLE',
         text: 'Manage Order',
-        path: `/${path.ADMIN}/${path.MANAGE_ORDER}`
+        path: `/${path.ADMIN}/${path.MANAGE_ORDER}`,
+        icon: <GrDocumentText />
+    },
+    {
+        id: 5,
+        type: 'SINGLE',
+        text: 'Back to Homepage',
+        path: `/${path.HOME}`,
+        icon: <IoHome />
     },
 ]
 export const roles = [
