@@ -48,12 +48,12 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
         color: '',
     })
 
-    const quantityCart = (+current.cart.find(i => i.product._id.toString() === pid.toString())?.quantity)
-    var countPrd = (product?.quantity) - (+current.cart.find(i => i.product._id.toString() === pid.toString())?.quantity)
+    const quantityCart = (+current?.cart.find(i => i.product._id.toString() === pid.toString())?.quantity)
+    var countPrd = (product?.quantity) - (+current?.cart.find(i => i.product._id.toString() === pid.toString())?.quantity)
     if (!countPrd) {
         var countPrd = (product?.quantity)
     }
-   
+
 
     const fetchProductData = async () => {
         const response = await apiGetroduct(pid)
@@ -102,13 +102,13 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
             setquantity(number)
             return toast.error('loi')
         }
-         else {
+        else {
             setquantity(number)
         }
     }, [quantity])
 
 
-
+console.log('quantity :>> ', quantity);
     const handleChangeQuantity = useCallback((flag) => {
 
         // const updateCount = (product?.quantity) - 
@@ -155,7 +155,7 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
             return toast.error("Bạn số lượng bạn có thể chọn là: " + countPrd)
         }
         else {
-            const response = await apiUpdateCart({ pid, color: currentProduct.color || product?.color, quantity, price: product.price })
+            const response = await apiUpdateCart({ pid, color: currentProduct.color || product?.color, quantity, price: product.price, title: product?.title })
 
             if (response.success) {
                 toast.success(response.message)
@@ -178,7 +178,6 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
             }
         }
     }
-
 
     return (
         <div className="w-full ">

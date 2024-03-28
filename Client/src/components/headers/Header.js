@@ -66,11 +66,9 @@ const Header = ({ navigate }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (inputSearch) {
-
             navigate({
                 pathname: '/search',
                 search: createSearchParams({ q: inputSearch }).toString(),
-
             })
         } else {
             navigate({
@@ -89,7 +87,7 @@ const Header = ({ navigate }) => {
                 <input type="text" placeholder="Search..." className="w-[100%] h-[100%] px-[5px]"
                     value={inputSearch} // Gán giá trị từ trạng thái vào trường input
                     onChange={(e) => setInputSearch(e.target.value)
-                    
+
                     } />
                 <button type="submit" value="Submit" className="flex items-center justify-center" style={{ backgroundColor: 'red', color: 'white', height: '100%', width: '10%' }}><IoSearch size={23} /></button>
             </form>
@@ -99,17 +97,15 @@ const Header = ({ navigate }) => {
                     onClick={() => handleWishList()}>
                     <FaRegHeart color="red" size={24} />
                 </div>
-                <div className="flex items-center justify-center gap-2 px-5 cursor-pointer ">
+                <div className="flex items-center justify-center gap-2 px-5 cursor-pointer hover:text-main "
+                    onClick={() => {
+                        handleOnclick()
+                    }}>
                     <FaCartShopping color="red" size={24} />
-                    <span
-                        onClick={() => {
-                            handleOnclick()
-                        }}
+                    <span>{`${current?.cart?.length || 0} item(s)`}</span>
 
-                    >{`${current?.cart?.length || 0} item(s)`}</span>
-                  
                 </div>
-                
+
             </div>
         </div>
 

@@ -3,6 +3,7 @@ import { adminSideBar } from '../../ultils/contants'
 import { NavLink } from 'react-router-dom'
 import clsx from 'clsx'
 import { FaCaretDown, FaCaretUp } from 'react-icons/fa6'
+import logo from '../../assets/logo2.png'
 
 
 const activeStyle = 'px-4 py-2 flex items-centar gap-2 text-gray-200 bg-gray-400'
@@ -16,8 +17,9 @@ const SidebarAdmin = () => {
   }
   return (
     <div className=' bg-sky-800 h-full py-4 '>
-      <div className='flex-col justify-center items-center p-4  flex gap-2'>
-        <small>Admin Workspace</small>
+      <div className='flex-col justify-center items-center p-4  flex gap-3'>
+        <img src={logo} alt='logo' className='h-[45px]'/>
+        <small className='text-white text-xl'>Admin Workspace</small>
       </div>
       <div className='flex flex-col'>
         {

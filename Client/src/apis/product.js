@@ -37,10 +37,12 @@ export const apiCreateOrder = (data) => axios({
     data
 })
 export const apiGetOrders = (params) => axios({
-    url: '/order/admin',
+    url: '/order/admin/',
     method: 'Get',
+    params
 })
 export const apiGetUserOrders = (params) => axios({
     url: '/order/',
     method: 'Get',
+    params
 })

@@ -9,6 +9,7 @@ import { useSearchParams, useParams, createSearchParams, useNavigate, useLocatio
 import { Pagination } from '../../components'
 import useDebounce from '../../hooks/useDebounce'
 import UpdateProduct from './UpdateProduct'
+import { formatMoney, formatPrice } from '../../ultils/helper'
 
 
 const ManageProduct = () => {
@@ -86,7 +87,7 @@ const ManageProduct = () => {
         editProduct={editProduct} 
         setEditProduct={setEditProduct}/>
       </div>}
-      <div className='flex justify-center items-center bg-slate-500'>
+      <div className='flex justify-center items-center '>
         <h1 className="h-[75px] w-full flex justify-between items-center text-3xl font-bold px-4 border-b  top-0  ">
           <span>Manage Product</span>
         </h1>
@@ -132,10 +133,10 @@ const ManageProduct = () => {
                 <td className="p-2 border border-black text-center">{el?.title}</td>
                 <td className="p-2 border border-black text-center">{el?.description}</td>
                 <td className="p-2 border border-black text-center">{el?.brand}</td>
-                <td className="p-2 border border-black text-center">
+                <td className="p-2 border border-black text-center ">
                   <img src={el?.thumb} alt='thumb' className=' w-12 h-12 object-cover' />
                 </td>
-                <td className="p-2 border border-black text-center ">{el?.price}</td>
+                <td className="p-2 border border-black text-center ">{`${formatMoney(formatPrice(el?.price))} VND`}</td>
                 <td className="p-2 border border-black text-center">{el?.category}</td>
                 <td className="p-2 border border-black text-center">{el?.quantity}</td>
                 <td className="p-2 border border-black text-center">{el?.slod}</td>

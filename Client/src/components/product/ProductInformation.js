@@ -59,13 +59,13 @@ const ProductInformation = ({ totalRating, rating, nameProduct, pid, rerender })
     <div >
 
       <div className='flex items-center gap-2 relative bottom-[-1px]'>
-        {productInforTabs.map(el => (
+        {/* {productInforTabs.map(el => (
           <span key={el.id}
             className={`p-2 px-4 ${activeTabs === +el.id ? 'bg-white border border-b-0' : 'bg-gray-200'} cursor-pointer`}
             onClick={() => setactiveTabs(el.id)}
           >{el.name}</span>
 
-        ))}
+        ))} */}
         <div
           className={`p-2 px-4 ${activeTabs === 5 ? 'bg-white border border-b-0' : 'bg-gray-200'} cursor-pointer`}
           onClick={() => setactiveTabs(5)}
@@ -75,9 +75,10 @@ const ProductInformation = ({ totalRating, rating, nameProduct, pid, rerender })
         </div>
       </div>
       <div className='w-full min-h-[300px] border'>
-        {productInforTabs.some(el => el.id === activeTabs) && productInforTabs.find(el => el.id === activeTabs)?.content}
-        {activeTabs === 5 &&
-          <div className='flex p-4 flex-col'>
+        {/* {productInforTabs.some(el => el.id === activeTabs) && productInforTabs.find(el => el.id === activeTabs)?.content} */}
+        {/* {activeTabs === 5 &&
+          } */}
+<div className='flex p-4 flex-col'>
             <div className='flex p-4'>
               <div className=' flex-4 border flex flex-col items-center justify-center border-red-500'>
                 <span className='font-semibold text-3xp'>{`${totalRating}/5`}</span>
@@ -116,8 +117,7 @@ const ProductInformation = ({ totalRating, rating, nameProduct, pid, rerender })
                   avatar={el.postedBy?.avatar}
                 />
               ))}</div>
-          </div>}
-
+          </div>
       </div>
     </div>
   )

@@ -5,8 +5,8 @@ const { verifyAccessToken, isAdmin } = require('../middlewares/verifyToken')
 const uploader = require('../config/cloundinary.config')
 
 router.post('/', [verifyAccessToken], OrderController.createNewOrder)
-router.put('/status/:orderId', [verifyAccessToken,isAdmin], OrderController.updateStatus)
-router.get('/admin', [verifyAccessToken,isAdmin], OrderController.getOders)
+router.put('/status/:orderId', [verifyAccessToken, isAdmin], OrderController.updateStatus)
+router.get('/admin', [verifyAccessToken, isAdmin], OrderController.getOders)
 router.get('/', [verifyAccessToken], OrderController.getUserOder)
 
 

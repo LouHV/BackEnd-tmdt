@@ -37,6 +37,7 @@ import { Modal } from './components';
 import DetailCart from './pages/public/DetailCart';
 import Checkout from './pages/member/Checkout';
 import SearchPrd from './components/common/SearchPrd';
+import Notfound from './Notfound';
 
 
 function App() {
@@ -68,7 +69,8 @@ function App() {
             <Route path={path.MY_CART} element={<MyCart />} />
           </Route>
 
-          <Route path={path.ALL} element={<Home />} />
+          <Route path={path.ALL} element={<Notfound />} />
+
         </Route>
         {/* admin */}
         <Route path={path.ADMIN} element={<AdminLayout />}>
@@ -87,8 +89,6 @@ function App() {
         <Route path={path.REGISTER} element={<Register />} />
         <Route path={path.FINAL_REGISTER} element={<FinalRegister />} />
         <Route path={path.CHECKOUT} element={<Checkout />} />
-
-
       </Routes>
 
       <ToastContainer

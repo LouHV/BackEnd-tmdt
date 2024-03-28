@@ -1,6 +1,7 @@
 const Order = require('../models/oderModel')
 const User = require("../models/userModel")
 const Coupon = require("../models/couponModel")
+const Product = require("../models/productModel")
 
 const asyncHandler = require('express-async-handler')
 
@@ -35,6 +36,24 @@ const createNewOrder = asyncHandler(async (req, res) => {
     const data = { products, total, orderBy: _id }
     if (status) data.status = status
     const rs = await Order.create(data)
+    const orderedProducts = rs.products;
+    console.log('orderedProducts :>> ', orderedProducts);
+    for (const product of orderedProducts) {
+        // Truy cập vào bảng Product để lấy thông tin sản phẩm
+        const productInfo = await Product.findById(product.product);
+        console.log('productInfo :>> ', productInfo);
+        // Trừ đi số lượng đã đặt hàng từ quantity hiện tại
+        const newQuantity = productInfo.quantity - product.quantity;
+
+        // Tăng sold lên
+        const newSold = +productInfo.sold + +product.quantity;
+
+        // Cập nhật thông tin sản phẩm trong bảng Product
+        await Product.findByIdAndUpdate(product.product, {
+            quantity: newQuantity,
+            sold: newSold
+        });
+    }
     return res.json({
         success: rs ? true : false,
         rs: rs ? rs : 'Something went wrong'
@@ -122,7 +141,7 @@ const getUserOder = asyncHandler(async (req, res) => {
 })
 
 const getOders = asyncHandler(async (req, res) => {
-    let queryCommand = User.find();
+    let queryCommand = Order.find();
     const queries = { ...req.query };
     const excludeFields = ['limit', 'sort', 'page', 'fields'];
     excludeFields.forEach(el => delete queries[el]);
@@ -164,7 +183,10 @@ const getOders = asyncHandler(async (req, res) => {
     queryCommand = queryCommand.skip(skip).limit(limit);
 
     try {
-        const response = await queryCommand.find(qr).exec();
+        const response = await queryCommand.find(qr).populate({
+            path: 'orderBy',
+            select: 'firstname lastname avatar'
+        })
         const counts = await Order.countDocuments(qr);
         return res.status(200).json({
             success: response ? true : false,
@@ -175,10 +197,41 @@ const getOders = asyncHandler(async (req, res) => {
         throw new Error(err.message);
     }
 })
+const getOrdersCountByDate = asyncHandler(async (req, res) => {
+    const { dateType, dateValue } = req.query; // dateType can be 'day', 'month', or 'year'
+    const dateField = dateType === 'day' ? '$date' : dateType === 'month' ? { $month: '$date' } : { $year: '$date' };
+    console.log('dateField :>> ', dateField);
+    const pipeline = [
+        {
+            $match: {
+                date: {
+                    $gte: new Date(dateValue),
+                    $lt: new Date(new Date(dateValue).setMonth(new Date(dateValue).getMonth() + 1))
+                }
+            }
+        },
+        {
+            $group: {
+                _id: dateField,
+                count: { $sum: 1 }
+            }
+        }
+    ];
 
+    try {
+        const response = await Order.aggregate(pipeline);
+        return res.status(200).json({
+            success: true,
+            data: response
+        });
+    } catch (err) {
+        throw new Error(err.message);
+    }
+});
 module.exports = {
     createNewOrder,
     updateStatus,
     getUserOder,
-    getOders
+    getOders,
+    getOrdersCountByDate
 }

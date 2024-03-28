@@ -38,10 +38,10 @@ var userSchema = new mongoose.Schema({
     },
     cart: [{
         product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+        title: String,
         quantity: Number,
         color: String,
         price: Number,
-
     }],
     address: {
         type: Array,

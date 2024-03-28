@@ -5,6 +5,7 @@ import withBase from "../../hocs/withBase";
 
 const FeautureProducts = ({ navigate }) => {
     const [products, setProducts] = useState(null)
+    console.log('products :>> ', products);
 
     const fetchProducts = async () => {
         const response = await apiGetProducts({ limit: 9, page: Math.round(Math.random() * 10)})

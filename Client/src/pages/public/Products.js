@@ -13,21 +13,22 @@ const breakpointColumnsObj = {
 };
 
 const Products = () => {
+    
     const navigate = useNavigate()
     const [products, setproducts] = useState(null)
     const [activeClick, setActiveClick] = useState(null)
     const [params] = useSearchParams()
     const [sort, setSort] = useState('')
-
+    
     ///
     const fetchProductsByCategory = async (queries) => {
         if (category && category !== 'products') queries.category = category
         const response = await apiGetProducts(queries)
-
+        
         if (response.success) setproducts(response)
-
+        
     }
-
+    
     const { category } = useParams()
 
     useEffect(() => {

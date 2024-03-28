@@ -240,13 +240,11 @@ const getUsers = asyncHandler(async (req, res) => {
 
 const updateUser = asyncHandler(async (req, res) => {
     const { _id } = req.user
-    console.log('_id :>> ', _id);
     const { firstname, lastname, mobile, address } = req.body
     const data = { firstname, lastname, mobile, address }
     if (req.file) data.avatar = req.file.path
     if (!_id || Object.keys(req.body).length === 0) throw new Error('Missing inputs')
     const response = await User.findByIdAndUpdate(_id, data, { new: true }).select("-password -role -refreshToken")
-    console.log('response :>> ', response);
     return res.status(200).json({
         success: response ? true : false,
         message: response ? "Updated!" : "Some thing went wrong"
@@ -285,24 +283,23 @@ const updateUserAddress = asyncHandler(async (req, res) => {
 
 const updateCart = asyncHandler(async (req, res) => {
     const { _id } = req.user
-    const { pid, quantity = 1, color, price } = req.body
-    if (!pid ) throw new Error('Missing inputs')
+    const { pid, quantity = 1, color, price, title } = req.body
+    if (!pid) throw new Error('Missing inputs')
     const user = await User.findById(_id).select('cart')
-    console.log('user :>> ', user);
     const alreadyPrd = user?.cart?.find(el => el.product?.toString() === pid)
-    console.log('alreadyPrd :>> ', alreadyPrd);
     if (alreadyPrd && alreadyPrd.color === color) {
-        const updatedQuantity = +alreadyPrd.quantity + +quantity
-        const updatePrice = price * +updatedQuantity
+        const updatedQuantity = alreadyPrd.quantity + +quantity
+        const updatePrice = price * updatedQuantity
         const response = await User.updateOne({ cart: { $elemMatch: alreadyPrd } }, { $set: { "cart.$.quantity": updatedQuantity, "cart.$.price": updatePrice } }, { new: true })
         return res.status(200).json({
             success: response ? true : false,
-            message: response ? "updated your cart" : "Some thing went wrong"
+            message: response ? "Updated your cart" : "Some thing went wrong"
         })
     }
     else {
         // If the product is not in the cart, add it
-        const response = await User.findByIdAndUpdate(_id, { $push: { cart: { product: pid, quantity, color, price } } }, { new: true })
+        const priceu = +quantity * +price
+        const response = await User.findByIdAndUpdate(_id, { $push: { cart: { product: pid, quantity, color, price: priceu, title } } }, { new: true })
         return res.status(200).json({
             success: response ? true : false,
             message: response ? "Added your cart" : "Some thing went wrong"
@@ -312,10 +309,8 @@ const updateCart = asyncHandler(async (req, res) => {
 const removeProductIncart = asyncHandler(async (req, res) => {
     const { _id } = req.user
     const { prdId } = req.params
-    console.log('prdId :>> ', _id);
     const user = await User.findById(_id).select('cart')
     const alreadyPrd = user?.cart?.find(el => el.product?.toString() === prdId)
-    console.log('alreadyPrd :>> ', alreadyPrd);
     if (!alreadyPrd) {
         return res.status(200).json({
             success: true,
@@ -337,10 +332,8 @@ const updateWishlist = asyncHandler(async (req, res) => {
     // kiem tra neu ton tai email tra ra loi
     const user = await User.findById(_id)
     const alreadyInWishlist = user.wishlist?.find((el) => el.toString() === prdId)
-    console.log('alreadyInWishlist :>> ', alreadyInWishlist);
     if (alreadyInWishlist) {
         const response = await User.findByIdAndUpdate(_id, { $pull: { wishlist: prdId } }, { new: true })
-        console.log('response :>> ', response);
         return res.json({
             success: response ? true : false,
             message: response ? `Product has been removed from your wishlist list!` : 'Failed to add wishlist'
