@@ -2,12 +2,20 @@ import React, { useState } from 'react'
 import { Button } from '../../components'
 import { useParams } from 'react-router-dom'
 import { apiResetPassword } from '../../apis/user'
+import { toast } from 'react-toastify'
+import withBase from '../../hocs/withBase'
+import path from '../../ultils/path'
 
-const ResetPassword = () => {
+const ResetPassword = ({navigate}) => {
   const [password, setpassword] = useState('')
   const { token } = useParams()
   const handleResetPassword = async () => {
     const response = await apiResetPassword({ password, token })
+    if(response.success){
+      setpassword('')
+      toast.success(response.message)
+      navigate(`/${path.LOGIN}`)
+    }
   }
   return (
     <div className="absolute top-0 left-0 bottom-0 right-0 flex-col bg-white flex items-center py-8 z-50">
@@ -20,15 +28,16 @@ const ResetPassword = () => {
             value={password}
             onChange={e => setpassword(e.target.value)}
           />
-          <Button
-            nameButton='Submit'
+          <Button       
             handleOnClick={handleResetPassword}
-            style='px-4 py-2 rounded-md text-white bg-blue-500 text-semibold my-2'
-          />
+            style='px-4 py-2 rounded-md text-white bg-blue-500 text-semibold my-2'>
+              Submit
+            </Button>
+
         </div>
       </div>
     </div>
   )
 }
 
-export default ResetPassword
+export default withBase(ResetPassword)

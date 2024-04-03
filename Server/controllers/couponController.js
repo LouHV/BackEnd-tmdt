@@ -2,24 +2,69 @@ const Coupon = require('../models/couponModel')
 const asyncHandler = require('express-async-handler')
 
 const createNewCoupon = asyncHandler(async (req, res) => {
-    const { name_coupon, disscount, expiry } = req.body
-    if (!name_coupon || !disscount || !expiry) throw new Error('Missing inputs')
+    const { name_coupon, discount, expiry, quanity, start_date } = req.body;
+    if (!name_coupon || !discount || !expiry || !start_date) throw new Error('Missing inputs');
+
+    // Convert start_date to a Date object
+    const startDate = new Date(start_date);
+
+    // Calculate the expiry date by adding the expiry duration to the start_date
+    const expiryDate = new Date(startDate.getTime() + expiry * 24 * 60 * 60 * 1000);
+
     const response = await Coupon.create({
         ...req.body,
-        expiry: Date.now() + +expiry * 24 * 60 * 60 * 1000
-    })
+        expiry: expiryDate,
+        start_date: startDate
+    });
+
     return res.json({
         success: response ? true : false,
-        createCoupon: response ? response : 'Cannot create new Coupon'
-    })
+        message: response ? "Created new coupon!" : 'Cannot create new Coupon'
+    });
 })
 
 const getCoupon = asyncHandler(async (req, res) => {
-    const response = await Coupon.find().select('-createdAt -updatedAt')
-    return res.json({
-        success: response ? true : false,
-        coupons: response ? response : 'Cannot get coupons'
-    })
+
+    let queryCommand = Coupon.find();
+    const queries = { ...req.query };
+    const excludeFields = ['limit', 'sort', 'page', 'fields'];
+    excludeFields.forEach(el => delete queries[el]);
+
+    let queryString = JSON.stringify(queries);
+    queryString = queryString.replace(/\b(gte|gt|lt|lte)\b/g, matchedEl => `$${matchedEl}`);
+    const formattedQueries = JSON.parse(queryString);
+
+    if (queries?.name_coupon) {
+        formattedQueries.name_coupon = { $regex: queries.name_coupon, $options: 'i' };
+    }
+
+    if (req.query.sort) {
+        const sortBy = req.query.sort.split(',').join(' ');
+        queryCommand = queryCommand.sort(sortBy);
+    }
+
+    if (req.query.fields) {
+        const fields = req.query.fields.split(',').join(' ');
+        queryCommand = queryCommand.select(fields);
+    }
+
+    const page = +req.query.page || 1; // Dấu + sẽ chuyển STRING sang number
+    const limit = +req.query.limit || process.env.LIMIT_PRODUCTS;
+    const skip = (page - 1) * limit;
+
+    queryCommand = queryCommand.skip(skip).limit(limit);
+
+    try {
+        const response = await queryCommand.find(formattedQueries).select('-createdAt -updatedAt').exec();
+        const counts = await Coupon.countDocuments(formattedQueries);
+        return res.status(200).json({
+            success: response ? true : false,
+            counts,
+            Coupons: response ? response : 'Cannot get Users',
+        });
+    } catch (err) {
+        throw new Error(err.message);
+    }
 })
 
 const updateCoupon = asyncHandler(async (req, res) => {
@@ -29,7 +74,7 @@ const updateCoupon = asyncHandler(async (req, res) => {
     const response = await Coupon.findByIdAndUpdate(couponId, req.body, { new: true })
     return res.json({
         success: response ? true : false,
-        updatedCoupon: response ? response : 'Cannot update coupon'
+        message: response ? 'Updated Coupon' : 'Cannot update coupon'
     })
 })
 
@@ -38,7 +83,7 @@ const deleteCoupon = asyncHandler(async (req, res) => {
     const response = await Coupon.findByIdAndDelete(couponId)
     return res.json({
         success: response ? true : false,
-        deletedCoupon: response ? response : 'Cannot delete coupon'
+        message: response ? 'Deleted this coupon!' : 'Cannot delete coupon'
     })
 })
 

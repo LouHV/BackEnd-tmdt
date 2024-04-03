@@ -150,7 +150,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
     const resetToken = user.createPasswordChangedToken()
     await user.save()
     const html = `Xin vui lòng click vào link dưới đây để thay đổi mật khẩu của bạn.Link này sẽ hết hạn sau 15 phút kể từ bây giờ. 
-    <a href=${process.env.CLIENT_URL}reset-password/${resetToken}>Click here</a>`
+    <a href=${process.env.CLIENT_URL}/reset-password/${resetToken}>Click here</a>`
     const data = {
         email,
         html
@@ -163,6 +163,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
 })
 const resetPassword = asyncHandler(async (req, res) => {
     const { password, token } = req.body
+    
     if (!password || !token) throw new Error('Missing inputs')
     const passwordResetToken = crypto.createHash('sha256').update(token).digest('hex')
     const user = await User.findOne({ passwordResetToken, passwordResetExpires: { $gt: Date.now() } })
@@ -201,7 +202,7 @@ const getUsers = asyncHandler(async (req, res) => {
 
         ]
     }
-    console.log('formattedQueries :>> ', formattedQueries);
+
 
     if (req.query.sort) {
         const sortBy = req.query.sort.split(',').join(' ');

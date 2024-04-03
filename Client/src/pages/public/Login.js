@@ -20,14 +20,17 @@ const Login = () => {
     })
 
     const [invalidFields, setinvalidFields] = useState([])
-
     const [isForgotPassword, setisForgotPassword] = useState(false)
     const [searchParams] = useSearchParams()
 
     const [email, setemail] = useState('')
     const handleForgotPassword = async () => {
+        dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }))
         const response = await apiForgotPassword({ email })
+        dispatch(showModal({ isShowModal: false, modalChildren: null }))
         if (response.success) {
+            setisForgotPassword(false)
+            setemail('')
             toast.info(response.message, { theme: 'colored' })
         } else toast.info(response.message, { theme: 'colored' })
     }
@@ -52,7 +55,7 @@ const Login = () => {
                             searchParams.get('redirect') ? navigate(searchParams.get('redirect')) : navigate(`/${path.HOME}`); // Điều hướng sang trang login
                         }
                     })
-            },500)
+            }, 500)
 
         }
 

@@ -20,7 +20,8 @@ import {
   ManageProduct,
   ManageOrder,
   CreateProduct,
-  Dashboard
+  Dashboard,
+  Coupon
 } from './pages/admin'
 import {
   MemberLayout,
@@ -38,6 +39,8 @@ import DetailCart from './pages/public/DetailCart';
 import Checkout from './pages/member/Checkout';
 import SearchPrd from './components/common/SearchPrd';
 import Notfound from './Notfound';
+import CreateCoupon from './pages/admin/CreateCoupon';
+import DetailBlogs from './pages/public/DetailBlogs';
 
 
 function App() {
@@ -54,6 +57,7 @@ function App() {
         <Route path={path.PUBLIC} element={<Public />} >
           <Route path={path.HOME} element={<Home />} />
           <Route path={path.BLOGS} element={<Blogs />} />
+          <Route path={path.DETAIL_BLOG__BID__TITLE} element={<DetailBlogs />} />
           <Route path={path.FAQS} element={<Faq />} />
           <Route path={path.DETAIL_PRODUCT__CATEGORY__PID__TITLE} element={<DetailProducts />} />
           <Route path={path.SERVICES} element={<Services />} />
@@ -79,6 +83,8 @@ function App() {
           <Route path={path.MANAGE_PRODUCTS} element={<ManageProduct />} />
           <Route path={path.MANAGE_USER} element={<ManageUser />} />
           <Route path={path.CREATE_PRODUCTS} element={<CreateProduct />} />
+          <Route path={path.COUPON} element={<Coupon />} />
+          <Route path={path.CREATE_COUPON} element={<CreateCoupon />} />
         </Route>
         {/* member */}
         {/* <Route path={path.MEMBER} element={<MemberLayout />}>

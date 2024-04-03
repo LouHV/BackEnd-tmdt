@@ -8,13 +8,20 @@ var CouponSchema = new mongoose.Schema({
         unique: true,
         uppercase: true,
     },
-    disscount: {
+    discount: {
         type: Number,
         required: true,
     },
     expiry: {
         type: Date,
         required: true,
+    },
+    start_date: {
+        type: Date,
+        required: true,
+    },
+    quantity: {
+        type: Number,
     }
 }, {
     timestamps: true,

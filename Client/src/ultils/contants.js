@@ -5,12 +5,14 @@ import { GrProductHunt } from "react-icons/gr";
 import { GrDocumentText } from "react-icons/gr";
 import { FaChartBar } from "react-icons/fa";
 import { AiOutlineHome } from "react-icons/ai";
+import { BiSolidCoupon } from "react-icons/bi";
+
 export const navigation = [
     {
         id: 0,
         value: 'Home',
         path: `/${path.HOME}`,
-        icon: <AiOutlineHome size={14}/>
+        icon: <AiOutlineHome size={14} />
     },
     {
         id: 1,
@@ -168,6 +170,22 @@ export const adminSideBar = [
     },
     {
         id: 5,
+        type: 'PARENT',
+        text: 'Manage Coupons',
+        icon: <BiSolidCoupon />,
+        submenu: [
+            {
+                text: 'Create Coupon',
+                path: `/${path.ADMIN}/${path.CREATE_COUPON}`
+            },
+            {
+                text: 'Manage Coupons',
+                path: `/${path.ADMIN}/${path.COUPON}`
+            },
+        ]
+    },
+    {
+        id: 6,
         type: 'SINGLE',
         text: 'Back to Homepage',
         path: `/${path.HOME}`,

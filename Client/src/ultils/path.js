@@ -9,12 +9,13 @@ const path = {
     SERVICES: 'services',
     FAQS: 'faqs',
     DETAIL_PRODUCT__CATEGORY__PID__TITLE: ':category/:pid/:title',
+    DETAIL_BLOG__BID__TITLE: 'blogs/:bid/:title',
     FINAL_REGISTER: 'finalregister/:status',
     RESET_PASSWORD: 'reset-password/:token',
     DETAIL_CART: 'my-cart',
     CHECKOUT: "checkout",
-    PRODUCTS:'products',
-    SEARCH:'search',
+    PRODUCTS: 'products',
+    SEARCH: 'search',
 
     //admin
     ADMIN: 'admin',
@@ -23,7 +24,8 @@ const path = {
     MANAGE_PRODUCTS: 'manage-products',
     MANAGE_ORDER: 'manage-order',
     CREATE_PRODUCTS: 'create-products',
-
+    COUPON: 'coupon',
+    CREATE_COUPON: 'create-coupon',
     //member
     MEMBER: 'member',
     PERSONAL: 'personnal',

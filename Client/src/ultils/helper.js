@@ -5,12 +5,13 @@ export const createSlug = string => string.toLowerCase().normalize("NFD").replac
 export const formatMoney = number => Number(number?.toFixed(1)).toLocaleString()
 
 export const renderStartFromNumber = (number, size) => {
-    if (!Number(number)) return null; // Nếu number không phải là một số, trả về null
+    const roundedNumber = Math.round(Number(number));
+    if (!roundedNumber) return null; // Nếu number không phải là một số, trả về null
     const stars = [];
 
-    for (let i = 0; i < number; i++) stars.push(<BsStarFill color="orange" size={size || 16} key={i} />);
-    for (let i = number; i < 5; i++) stars.push(<BsStar color="orange" size={size || 16} key={i} />);
-    if (number === 0 || number === null) { // Kiểm tra xem number có bằng 0 hoặc null không
+    for (let i = 0; i < roundedNumber; i++) stars.push(<BsStarFill color="orange" size={size || 16} key={i} />);
+    for (let i = roundedNumber; i < 5; i++) stars.push(<BsStar color="orange" size={size || 16} key={i} />);
+    if (roundedNumber === 0 || roundedNumber === null) { // Kiểm tra xem number có bằng 0 hoặc null không
         for (let i = 0; i < 5; i++) stars.push(<BsStar color="orange" size={size || 16} key={i} />);
     }
     return stars; // Trả về mảng chứa các biểu tượng sao
@@ -70,4 +71,21 @@ export const HidePhoneNumber = (phoneNumber) => {
     const lastFourDigits = cleaned.slice(-2); // Lấy 4 chữ số cuối cùng
     const hiddenPart = '*'.repeat(cleaned.length - 2); // Tạo một chuỗi dấu '*' có chiều dài bằng phần còn lại của chuỗi số điện thoại
     return hiddenPart + lastFourDigits; // Kết hợp phần đã ẩn và 4 chữ số cuối cùng
+};
+
+export const formatNumber = (number) => {
+    if (number < 1000) {
+        return number;
+    } else if (number >= 1000 && number < 1_000_000) {
+        return (number / 1000).toFixed(1) + " N";
+    } else if (number >= 1_000_000 && number < 1_000_000_000) {
+        return (number / 1_000_000).toFixed(1) + " TR";
+    }
+}
+
+export const truncateString = (str, num) => {
+    if (str.length <= num) {
+        return str;
+    }
+    return str.slice(0, num) + "...";
 };

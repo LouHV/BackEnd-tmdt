@@ -5,7 +5,7 @@ import { Button, Product } from '../../components'
 const WishList = () => {
   const { current } = useSelector(s => s.user)
   return (
-    <div className='w-full relative px-4 bg-gray-100 h-auto p-5 mt-5 rounded-lg'>
+    <div className='w-full relative px-4 bg-gray-100 min-h-[500px] p-5 mt-5 rounded-lg'>
       <header className='text-3xl py-4 border-b border-b-gray-300 '>
         My wishlist
       </header>

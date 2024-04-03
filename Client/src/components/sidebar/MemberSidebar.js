@@ -6,12 +6,14 @@ import { FaCaretDown, FaCaretUp } from 'react-icons/fa6'
 import { useSelector } from 'react-redux'
 import avartar from '../../assets/avatar-default.jpg'
 import { FaPen } from "react-icons/fa6";
+import path from '../../ultils/path'
+import withBase from '../../hocs/withBase'
 
 
 const activeStyle = 'px-4 py-2 flex items-centar gap-2 text-main '
 const notActiveStyle = 'px-4 py-2 flex items-centar gap-2 text-balck hover:bg-gray-200 hover:text-main'
 
-const MemberSidebar = () => {
+const MemberSidebar = ({ navigate }) => {
     const [actived, setActived] = useState([])
     const data = useSelector(state => state.user)
     const handleShowTabs = (tabID) => {
@@ -21,13 +23,14 @@ const MemberSidebar = () => {
     return (
         <div className=' bg-white h-full min-h-screen py-4 w-[250px]'>
             <div className='w-ful flex items-center py-4'>
-                <img src={data?.current?.avatar || avartar} alt='logo' className='w-[50px] h-[50px] object-contain rounded-full' />
+                <img onClick={() => { navigate(`/${path.MEMBER}/${path.PERSONAL}`) }}
+                    src={data?.current?.avatar || avartar} alt='logo' className='w-[50px] h-[50px] object-contain rounded-full cursor-pointer' />
 
                 <div className='flex flex-col pl-[15px]'>
                     <small className='text-sm '>{`${data?.current?.firstname} ${data?.current?.lastname}`}</small>
                     <div className='text-sm flex items-center text-gray-500 '>
                         <FaPen />
-                        <span className='text-sm pl-1'> Edit profile</span>
+                        <span onClick={() => { navigate(`/${path.MEMBER}/${path.PERSONAL}`) }} className='text-sm pl-1 cursor-pointer'> Edit profile</span>
                     </div>
                 </div>
             </div>
@@ -68,4 +71,4 @@ const MemberSidebar = () => {
     )
 }
 
-export default memo(MemberSidebar)
+export default withBase(memo(MemberSidebar))

@@ -61,7 +61,7 @@ const TopHeader = () => {
           >
             <img className='h-[25px] w-[25px] rounded-full object-contain border my-[20px] bg-white' src={current?.avatar || avartar} />
             <div
-              className='cursor-pointer relative'
+              className='cursor-pointer relative hover:text-gray-300'
               onClick={() => setIsShowOption(prev => !prev)}
               id='profile'
             >{`${current?.firstname} ${current?.lastname} `}

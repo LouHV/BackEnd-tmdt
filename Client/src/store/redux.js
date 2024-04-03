@@ -13,6 +13,7 @@ import {
   PURGE,
   REGISTER
 } from 'redux-persist'
+import blogSlice from './blogs/blogSlice';
 
 const commonConfig = {
   key: 'shop/user',
@@ -27,7 +28,8 @@ export const store = configureStore({
   reducer: {
     app: appSlice,
     products: productSlice,
-    user: persistReducer(userConfig, userSlice)
+    blogs: blogSlice,
+    user: persistReducer(userConfig, userSlice),
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
