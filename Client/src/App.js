@@ -7,7 +7,7 @@ import {
   Faq,
   DetailProducts,
   Blogs,
-  Services,
+  Coupons,
   Products,
   Register,
   ResetPassword,
@@ -21,7 +21,9 @@ import {
   ManageOrder,
   CreateProduct,
   Dashboard,
-  Coupon
+  Coupon,
+  ManageBlog,
+  CreateBlog
 } from './pages/admin'
 import {
   MemberLayout,
@@ -60,7 +62,7 @@ function App() {
           <Route path={path.DETAIL_BLOG__BID__TITLE} element={<DetailBlogs />} />
           <Route path={path.FAQS} element={<Faq />} />
           <Route path={path.DETAIL_PRODUCT__CATEGORY__PID__TITLE} element={<DetailProducts />} />
-          <Route path={path.SERVICES} element={<Services />} />
+          <Route path={path.COUPONS} element={<Coupons />} />
           <Route path={path.PRODUCTS__CATEGORY} element={<Products />} />
           <Route path={path.RESET_PASSWORD} element={<ResetPassword />} />
           <Route path={path.DETAIL_CART} element={<DetailCart />} />
@@ -85,6 +87,8 @@ function App() {
           <Route path={path.CREATE_PRODUCTS} element={<CreateProduct />} />
           <Route path={path.COUPON} element={<Coupon />} />
           <Route path={path.CREATE_COUPON} element={<CreateCoupon />} />
+          <Route path={path.MANAGE_BLOG} element={<ManageBlog />} />
+          <Route path={path.CREATE_BLOG} element={<CreateBlog />} />
         </Route>
         {/* member */}
         {/* <Route path={path.MEMBER} element={<MemberLayout />}>

@@ -132,7 +132,7 @@ const Coupon = () => {
                 <td className="py-4 border border-black">{el?.start_date ? format(new Date(el?.start_date), 'dd/MM/yyyy') : 'Invalid date'}</td>
                 <td className="py-4 border border-black"> {el?.expiry ? format(new Date(el?.expiry), 'dd/MM/yyyy') : 'Invalid date'}</td>
                 <td className="py-4 border border-black"> {
-                  Math.round(Math.round(new Date(el?.expiry).getTime() / 24 / 60 / 60 / 1000) - Math.round(new Date(el?.start_date).getTime() / 24 / 60 / 60 / 1000)) > 0
+                  new Date(el?.expiry).getTime() >= Date.now() && new Date(el?.start_date).getTime() <= Date.now()
                     ?
                     <div ><span className="bg-green-500 p-2 rounded-xl text-white ">Still expired</span></div>
                     :
@@ -156,7 +156,9 @@ const Coupon = () => {
           </tbody>
         </table>
         <div className="w-ful text-rightx">
-          <Pagination totalCount={coupons?.counts} />
+          <Pagination
+            name='Coupons'
+            totalCount={coupons?.counts} />
         </div>
       </div>
       {isModalOpen && (

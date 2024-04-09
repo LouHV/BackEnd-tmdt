@@ -6,7 +6,7 @@ const path = {
     REGISTER: 'register',
     PRODUCTS__CATEGORY: ':category', //products
     BLOGS: 'blogs',
-    SERVICES: 'services',
+    COUPONS: 'coupons',
     FAQS: 'faqs',
     DETAIL_PRODUCT__CATEGORY__PID__TITLE: ':category/:pid/:title',
     DETAIL_BLOG__BID__TITLE: 'blogs/:bid/:title',
@@ -26,6 +26,8 @@ const path = {
     CREATE_PRODUCTS: 'create-products',
     COUPON: 'coupon',
     CREATE_COUPON: 'create-coupon',
+    MANAGE_BLOG: 'manage-blog',
+    CREATE_BLOG: 'create-blog',
     //member
     MEMBER: 'member',
     PERSONAL: 'personnal',

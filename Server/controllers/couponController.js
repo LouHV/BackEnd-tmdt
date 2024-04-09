@@ -66,6 +66,26 @@ const getCoupon = asyncHandler(async (req, res) => {
         throw new Error(err.message);
     }
 })
+const getCouponByName = asyncHandler(async (req, res) => {
+    const { name_coupon } = req.body;
+    if (!name_coupon) throw new Error('Missing name_coupon');
+
+    try {
+        const coupon = await Coupon.findOne({ name_coupon: { $regex: name_coupon, $options: 'i' } });
+        if (!coupon) {
+            return res.status(404).json({
+                success: false,
+                message: 'Coupon not found'
+            });
+        }
+        return res.status(200).json({
+            success: true,
+            coupon
+        });
+    } catch (err) {
+        throw new Error(err.message);
+    }
+});
 
 const updateCoupon = asyncHandler(async (req, res) => {
     const { couponId } = req.params
@@ -91,5 +111,6 @@ module.exports = {
     createNewCoupon,
     getCoupon,
     updateCoupon,
-    deleteCoupon
+    deleteCoupon,
+    getCouponByName
 }

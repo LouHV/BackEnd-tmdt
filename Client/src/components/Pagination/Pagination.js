@@ -3,7 +3,7 @@ import usePagination from '../../hooks/usePagination'
 import PagiItem from './PagiItem'
 import { useSearchParams } from 'react-router-dom'
 
-const Pagination = ({ totalCount }) => {
+const Pagination = ({ totalCount,name }) => {
   // console.log('usePagination(66,2) :>> ', usePagination(132,4));
 
   const [params] = useSearchParams()
@@ -21,8 +21,8 @@ const Pagination = ({ totalCount }) => {
   return (
     <div className='flex w-full justify-between items-center'>
 
-      {!+params.get('page') ? <span className='text-sm italic'>{`Show products ${Math.min(totalCount, 1)} - ${Math.min(+process.env.REACT_APP_LIMIT, totalCount) } of ${totalCount}`} </span> : ''}
-      {+params.get('page') ? <span className='text-sm italic'>{`Show products ${range()} of ${totalCount}`}</span> : ''}
+      {!+params.get('page') ? <span className='text-sm italic'>{`Show ${name?name:'products'} ${Math.min(totalCount, 1)} - ${Math.min(+process.env.REACT_APP_LIMIT, totalCount) } of ${totalCount}`} </span> : ''}
+      {+params.get('page') ? <span className='text-sm italic'>{`Show ${name?name:'products'} ${range()} of ${totalCount}`}</span> : ''}
       <div className='flex items-center'>
         {pagination?.map(el => (
           <PagiItem key={el}>

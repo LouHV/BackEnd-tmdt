@@ -134,7 +134,9 @@ const ManageOrder = () => {
             ))}
           </tbody>
         </table>
-        <Pagination totalCount={counts} />
+        <Pagination 
+        name="orders"
+        totalCount={counts} />
       </div>
     </div>
   )

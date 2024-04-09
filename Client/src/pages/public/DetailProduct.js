@@ -16,6 +16,7 @@ import path from "../../ultils/path";
 import { toast } from "react-toastify";
 import { getCurrent } from "../../store/user/asyncActions";
 import { FaHeart } from "react-icons/fa6";
+import clsx from 'clsx'
 
 const settings = {
     dots: false,
@@ -34,6 +35,8 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
 
     const [product, setproduct] = useState(null)
 
+    const [varriants, setVarriants] = useState(null)
+
     const [currentImage, setCurrentImage] = useState(null)
 
     const [update, setUpdate] = useState(false)
@@ -48,6 +51,7 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
         color: '',
     })
 
+    console.log('varriants  :>> ', varriants);
     const quantityCart = (+current?.cart.find(i => i.product._id.toString() === pid.toString())?.quantity)
     var countPrd = (product?.quantity) - (+current?.cart.find(i => i.product._id.toString() === pid.toString())?.quantity)
     if (!countPrd) {
@@ -64,6 +68,19 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
 
         }
     }
+    useEffect(() => {
+        if (varriants) {
+            setCurrentProduct({
+                title: product?.varriants?.find(el => el.sku === varriants)?.title,
+                color: product?.varriants?.find(el => el.sku === varriants)?.color,
+                images: product?.varriants?.find(el => el.sku === varriants)?.images,
+                price: product?.varriants?.find(el => el.sku === varriants)?.price,
+                thumb: product?.varriants?.find(el => el.sku === varriants)?.thumb,
+
+
+            })
+        }
+    }, [varriants])
 
     //latdata see mo
     const fetchProducts = async () => {
@@ -108,7 +125,7 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
     }, [quantity])
 
 
-console.log('quantity :>> ', quantity);
+    console.log('quantity :>> ', quantity);
     const handleChangeQuantity = useCallback((flag) => {
 
         // const updateCount = (product?.quantity) - 
@@ -183,8 +200,8 @@ console.log('quantity :>> ', quantity);
         <div className="w-full ">
             <div className="h-[81px] flex justify-center items-center bg-gray-100">
                 <div className="w-main">
-                    <h3 className="font-semibold">{title}</h3>
-                    <Breadcrumbs title={title} category={category} />
+                    <h3 className="font-semibold">{currentProduct?.title || product?.title}</h3>
+                    <Breadcrumbs title={currentProduct?.title || product?.title} category={category} />
                 </div>
             </div>
             <div className="w-main m-auto mt-4 flex">
@@ -192,7 +209,7 @@ console.log('quantity :>> ', quantity);
                     <div className="h-[458px] w-[458px] overflow-hidden flex items-center justify-center object-cover-fill border">
 
 
-                        <img src={currentImage} className="w-[1800px] h-[1500px] object-contain p-2" />
+                    <img src={varriants ? currentProduct.thumb : currentImage} className="w-[1800px] h-[1500px] object-contain p-2" />
                     </div>
 
                     <div className="w-[458px]">
@@ -230,6 +247,35 @@ console.log('quantity :>> ', quantity);
                             className="text-sm"
                             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product?.description[0]) }}></div>}
                     </ul>
+                    <div className="my-4 flex items-center gap-4">
+                        <span className="font-bold">
+                            Color:
+                        </span>
+                        <div className="flex flex-wrap gap-4 items-center w-full">
+                            <div
+                                onClick={() => setVarriants(null)}
+                                className={clsx("flex items-center gap-2 p-2 border cursor-pointer", !varriants && 'border-red-500')}>
+                                <img src={product?.thumb} alt="thumb" className="w-8 h-8 object-cover rounded-md" />
+                                <span className="flex flex-col">
+                                    <span>{product?.color} </span>
+                                    <span className="text-sm">{product?.price}</span>
+                                </span>
+                            </div>
+                            {product?.varriants?.map(el => (
+                                <div
+                                    onClick={() => setVarriants(el.sku)}
+                                    className={clsx("flex items-center gap-2 p-2 border cursor-pointer", varriants === el.sku && 'border-red-500')}>
+                                    <img src={el?.thumb} alt="thumb" className="w-8 h-8 object-cover rounded-md" />
+                                    <span className="flex flex-col">
+                                        <span>{el?.color} </span>
+                                        <span className="text-sm">{el?.price}</span>
+                                    </span>
+                                </div>
+                            ))
+
+                            }
+                        </div>
+                    </div>
                     <div className="text-sm flex flex-col gap-8 ">
                         <div className="flex items-center">
                             <SelectQuantity

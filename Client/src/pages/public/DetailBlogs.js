@@ -75,6 +75,7 @@ const DetailBlogs = ({ navigate, dispatch }) => {
                     <span>{`By ${blog?.author_blog}`}</span>
 
                     <span className='ml-2'> {blog?.createdAt ? format(parseISO(blog?.createdAt), 'MMM dd, yyyy') : 'N/A'}</span>
+                    <span className='ml-2'>{`Views: ${blog?.numberViews}`}</span>
                 </div>
                 <img src={blog?.image_blog} className='w-full min-h-[780px] mb-5' />
                 <span className='mb-5'>{blog?.description_blog}</span>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { InputForm } from '../../components'
+import { CustomizeVarriants, InputForm } from '../../components'
 import { useForm } from 'react-hook-form'
 import { apiGetProducts, apiDeleteProduct } from '../../apis'
 import { toast } from 'react-toastify'
@@ -22,6 +22,8 @@ const ManageProduct = () => {
   const { register, formState: { errors }, handleSubmit, reset, watch } = useForm()
   const [products, setProducts] = useState(null)
   const [counts, setCounts] = useState(0)
+  const [customizeVarriants, setCustomizeVarriants] = useState(null)
+
   const handleSearchProducts = (data) => {
     console.log('data :>> ', data);
   }
@@ -87,6 +89,13 @@ const ManageProduct = () => {
         editProduct={editProduct} 
         setEditProduct={setEditProduct}/>
       </div>}
+
+      {customizeVarriants && <div className='absolute inset-0 bg-sky-100 min-h-screen'>
+        <CustomizeVarriants 
+        customizeVarriants={customizeVarriants} 
+        setCustomizeVarriants={setCustomizeVarriants}/>
+      </div>}
+
       <div className='flex justify-center items-center '>
         <h1 className="h-[75px] w-full flex justify-between items-center text-3xl font-bold px-4 border-b  top-0  ">
           <span>Manage Product</span>
@@ -151,6 +160,11 @@ const ManageProduct = () => {
                     className="px-2 text-orange-600 hover:underline cursor-pointer"
                     onClick={() => setEditProduct(el)}
                   >Edit
+                  </span>
+                  <span
+                    className="px-2 text-orange-600 hover:underline cursor-pointer"
+                    onClick={() => setCustomizeVarriants(el)}
+                  >Varriants
                   </span>
                   <span
                     onClick={() => handldeDeleteProduct(el._id)}

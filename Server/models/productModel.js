@@ -53,10 +53,20 @@ var productSchema = new mongoose.Schema({
             star: { type: Number },
             postedBy: { type: mongoose.Types.ObjectId, ref: 'User' },
             comment: { type: String },
-            updatedAt:{
+            updatedAt: {
                 type: Date
-                
+
             }
+        }
+    ],
+    varriants: [
+        {
+            color: String,
+            price: Number,
+            thumb: String,
+            images: Array,
+            title: String,
+            sku: String
         }
     ],
     totalRating: {

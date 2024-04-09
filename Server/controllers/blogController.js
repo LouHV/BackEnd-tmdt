@@ -4,20 +4,22 @@ const asyncHandler = require('express-async-handler')
 const createNewBlog = asyncHandler(async (req, res) => {
     const { title_blog, description_blog, category } = req.body
     if (!title_blog || !description_blog || !category) throw new Error('missing inputs')
+    if (req.file) req.body.image_blog =  req.file.path
     const response = await Blog.create(req.body)
     return res.json({
         success: response ? true : false,
-        createBlog: response ? response : 'Cannot create new Blog'
+        createBlog: response ? "Created" : 'Cannot create new Blog'
     })
 })
 
 const updateBlog = asyncHandler(async (req, res) => {
     const { blogId } = req.params
+    if (req.file) req.body.image_blog =  req.file.path
     if (Object.keys(req.body).length === 0) throw new Error('Missing inputs')
     const response = await Blog.findByIdAndUpdate(blogId, req.body, { new: true })
     return res.json({
         success: response ? true : false,
-        updatedBlog: response ? response : 'Cannot get Blog'
+        message: response ? 'Updated' : 'Cannot get Blog'
     })
 })
 
@@ -31,12 +33,27 @@ const getAllBlog = asyncHandler(async (req, res) => {
         const sortBy = req.query.sort.split(',').join(' ')
         queryCommand = queryCommand.sort(sortBy)
     }
+     //Filed limiting
+     if (req.query.fields) {
+
+        const fields = req.query.fields.split(',').join(' ')
+
+        queryCommand = queryCommand.select(fields)
+    }
+    //Pagination
+    //limit la so object lay ve trong 1 api
+    //skip: 
+    const page = +req.query.page || 1 // Dau + se chuyen STRING sang number
+    const limit = +req.query.limit || process.env.LIMIT_PRODUCTS
+    const skip = (page - 1) * limit
+    queryCommand.skip(skip).limit(limit)
 
     queryCommand.then(async (response) => {
-        
+        const counts = await Blog.find().countDocuments()
         return res.status(200).json({
             success: response ? true : false,
-        blogs: response ? response : 'Cannot update Blog'
+            counts,
+            blogs: response ? response : 'Cannot update Blog'
         })
     }).catch((err) => {
         throw new Error(err.message)

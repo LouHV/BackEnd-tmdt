@@ -2,10 +2,10 @@ const { query, response } = require("express")
 const Product = require("../models/productModel")
 const asyncHandler = require("express-async-handler")
 const slugtify = require('slugify')
+const makeSKU = require('uniqid')
 
 const createProduct = asyncHandler(async (req, res) => {
     const { title, price, description, brand, category, color } = req.body
-    console.log('req.file :>> ', req.file);
     const thumb = req.files?.thumb[0]?.path
     const images = req.files?.images?.map(el => el.path)
     if (!(title && price && description && brand && category && color)) throw new Error("Missing inputs")
@@ -178,6 +178,25 @@ const ratings = asyncHandler(async (req, res) => {
     })
 })
 
+const addVarriant = asyncHandler(async (req, res) => {
+    const { prdId } = req.params
+    const { title, price, color } = req.body
+    const thumb = req.files?.thumb[0]?.path
+    const images = req.files?.images?.map(el => el.path)
+    if (!(title && price && color)) throw new Error("Missing inputs")
+    if (!req.files) throw new Error("Missing inputs")
+    const response = await Product.findByIdAndUpdate(prdId, {
+        $push: {
+
+            varriants: { color, price, title, thumb, images, sku: makeSKU().toUpperCase() }
+        }
+    }, { new: true })
+    return res.status(200).json({
+        success: response ? true : false,
+        message: response ? "Added varriant" : 'Cannot update images product'
+    })
+})
+
 const uploadImagesPrd = asyncHandler(async (req, res) => {
     const { prdId } = req.params
     if (!req.files) throw new Error("Missing inputs")
@@ -194,5 +213,6 @@ module.exports = {
     updateProduct,
     deleteProduct,
     ratings,
-    uploadImagesPrd
+    uploadImagesPrd,
+    addVarriant
 }

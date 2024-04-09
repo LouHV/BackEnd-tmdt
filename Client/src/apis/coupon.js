@@ -19,3 +19,8 @@ export const apiDeleteCoupon = (cpid) => axios({
     method: 'DELETE',
 
 })
+export const apiGetCouponByName = (data) => axios({
+    url: '/coupon/couponByName',
+    method: 'POST',
+    data
+})

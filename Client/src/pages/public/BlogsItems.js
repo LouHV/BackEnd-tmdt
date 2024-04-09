@@ -7,11 +7,10 @@ import { truncateString } from '../../ultils/helper';
 
 
 const BlogsItems = ({ el, dispatch, navigate }) => {
-  console.log('el :>> ', el);
   return (
     <div className='w-full flex h-full mb-[30px]'>
       <div className=' min-w-[420px] min-h-[280px] '>
-        <img src={el?.image_blog} className='w-[420px] h-[280px] object-fill cursor-pointer'
+        <img src={el?.image_blog} className='w-[420px] h-[280px] object-cover cursor-pointer'
           onClick={e => navigate(`/blogs/${el?._id}/${el?.title_blog}`)} />
       </div>
       <div className='min-w-[420px] pl-[20px] flex flex-col mb-[15px] '>

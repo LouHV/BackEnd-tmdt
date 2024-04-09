@@ -6,6 +6,7 @@ import { GrDocumentText } from "react-icons/gr";
 import { FaChartBar } from "react-icons/fa";
 import { AiOutlineHome } from "react-icons/ai";
 import { BiSolidCoupon } from "react-icons/bi";
+import { FaBloggerB } from "react-icons/fa6";
 
 export const navigation = [
     {
@@ -26,8 +27,8 @@ export const navigation = [
     },
     {
         id: 3,
-        value: 'Our service',
-        path: `/${path.SERVICES}`
+        value: 'Coupon',
+        path: `/${path.COUPONS}`
     },
     {
         id: 4,
@@ -186,6 +187,22 @@ export const adminSideBar = [
     },
     {
         id: 6,
+        type: 'PARENT',
+        text: 'Manage Blogs',
+        icon: <FaBloggerB />,
+        submenu: [
+            {
+                text: 'Create Blog',
+                path: `/${path.ADMIN}/${path.CREATE_BLOG}`
+            },
+            {
+                text: 'Manage Blogs',
+                path: `/${path.ADMIN}/${path.MANAGE_BLOG}`
+            },
+        ]
+    },
+    {
+        id: 7,
         type: 'SINGLE',
         text: 'Back to Homepage',
         path: `/${path.HOME}`,

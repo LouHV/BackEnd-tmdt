@@ -8,11 +8,19 @@ import BlogsItems from "./BlogsItems";
 import { format } from "date-fns";
 const Blogs = ({ dispatch, navigate }) => {
 
+
+    const [topblog, setTopblog] = useState(null);
+
+    const { blogs } = useSelector(state => state.blogs)
+    const fectchBlogs = async () => {
+        const response = await apiGetBlogs({ sort: '-createdAt', limit: 3 })
+        if (response.success) setTopblog(response);
+    };
     useEffect(() => {
+        fectchBlogs()
         dispatch(getBlogs())
     }, [])
-    const { blogs } = useSelector(state => state.blogs)
-
+    console.log('topblog :>> ', topblog);
     return (
         <div className="w-full">
             <div className='h-[50px] flex justify-center items-center bg-gray-100 mb-[20px]'>
@@ -33,7 +41,7 @@ const Blogs = ({ dispatch, navigate }) => {
                     </div>
                     <div className="border p-[20px]">
 
-                        {blogs?.map(el => (
+                        {topblog?.blogs?.map(el => (
                             <div el={el} key={el.id} className="">
                                 <span className=" text-lg hover:text-main cursor-pointer"
                                     onClick={e => navigate(`/blogs/${el?._id}/${el?.title_blog}`)}

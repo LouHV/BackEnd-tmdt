@@ -14,7 +14,6 @@ const style = { "layout": "vertical" };
 
 // Custom component to wrap the PayPalButtons and show loading spinner
 const ButtonWrapper = ({ currency, showSpinner, amount, payload, setIsSuccess }) => {
-    console.log('payload :>> ', payload);
     const [{ isPending, options }, dispatch] = usePayPalScriptReducer();
     const navigate = useNavigate()
     useEffect(() => {
