@@ -25,7 +25,7 @@ const ManageOrder = () => {
   }
   console.log('params :>> ', params);
   const fectchOrders = async (params) => {
-    const response = await apiGetOrders({ ...params, limit: process.env.REACT_APP_LIMIT })
+    const response = await apiGetOrders({ ...params, limit: process.env.REACT_APP_LIMIT, sort: "-createdAt" })
     if (response.success) {
       console.log('response :>> ', response);
       setOrders(response.Orders)
@@ -134,9 +134,9 @@ const ManageOrder = () => {
             ))}
           </tbody>
         </table>
-        <Pagination 
-        name="orders"
-        totalCount={counts} />
+        <Pagination
+          name="orders"
+          totalCount={counts} />
       </div>
     </div>
   )

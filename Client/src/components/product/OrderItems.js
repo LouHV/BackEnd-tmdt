@@ -23,8 +23,8 @@ const OrderItems = ({ el, dispatch, navigate }) => {
         if (flag === 'minus') setquantity(prev => +prev - 1)
         if (flag === 'plus') setquantity(prev => +prev + 1)
     }, [quantity])
-    const handelClickDelete = async (pid) => {
-        const response = await apiDeleteCart(pid)
+    const handelClickDelete = async (cartId) => {
+        const response = await apiDeleteCart(cartId)
         if (response.success) {
             dispatch(getCurrent())
             toast.success(response.message)
@@ -63,7 +63,7 @@ const OrderItems = ({ el, dispatch, navigate }) => {
             </span>
             <span className='col-span-1 w-full text-center'>
                 <div
-                    onClick={() => handelClickDelete(el?.product._id)}
+                    onClick={() => handelClickDelete(el?._id)}
                     className='flex w-full h-full items-center justify-center hover:text-main hover:underline cursor-pointer'>
                     Delete
                 </div>

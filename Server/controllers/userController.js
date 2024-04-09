@@ -163,7 +163,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
 })
 const resetPassword = asyncHandler(async (req, res) => {
     const { password, token } = req.body
-    
+
     if (!password || !token) throw new Error('Missing inputs')
     const passwordResetToken = crypto.createHash('sha256').update(token).digest('hex')
     const user = await User.findOne({ passwordResetToken, passwordResetExpires: { $gt: Date.now() } })
@@ -288,6 +288,7 @@ const updateCart = asyncHandler(async (req, res) => {
     if (!pid) throw new Error('Missing inputs')
     const user = await User.findById(_id).select('cart')
     const alreadyPrd = user?.cart?.find(el => el.product?.toString() === pid)
+    console.log('alreadyPrd :>> ', alreadyPrd);
     if (alreadyPrd && alreadyPrd.color === color) {
         const updatedQuantity = alreadyPrd.quantity + +quantity
         const updatePrice = price * updatedQuantity
@@ -309,16 +310,8 @@ const updateCart = asyncHandler(async (req, res) => {
 })
 const removeProductIncart = asyncHandler(async (req, res) => {
     const { _id } = req.user
-    const { prdId } = req.params
-    const user = await User.findById(_id).select('cart')
-    const alreadyPrd = user?.cart?.find(el => el.product?.toString() === prdId)
-    if (!alreadyPrd) {
-        return res.status(200).json({
-            success: true,
-            updatedCart: "Updated your cart"
-        })
-    }
-    const response = await User.findByIdAndUpdate(_id, { $pull: { cart: { product: prdId } } }, { new: true })
+    const { cartId } = req.params
+    const response = await User.findByIdAndUpdate(_id, { $pull: { cart: { _id: cartId } } }, { new: true })
     return res.status(200).json({
         success: response ? true : false,
         message: response ? "Products removed from your cart" : "Some thing went wrong"

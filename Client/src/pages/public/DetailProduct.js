@@ -71,12 +71,11 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
     useEffect(() => {
         if (varriants) {
             setCurrentProduct({
-                title: product?.varriants?.find(el => el.sku === varriants)?.title,
-                color: product?.varriants?.find(el => el.sku === varriants)?.color,
-                images: product?.varriants?.find(el => el.sku === varriants)?.images,
-                price: product?.varriants?.find(el => el.sku === varriants)?.price,
-                thumb: product?.varriants?.find(el => el.sku === varriants)?.thumb,
-
+                title: product?.varriants?.find(el => el._id === varriants)?.title,
+                color: product?.varriants?.find(el => el._id === varriants)?.color,
+                images: product?.varriants?.find(el => el._id === varriants)?.images,
+                price: product?.varriants?.find(el => el._id === varriants)?.price,
+                thumb: product?.varriants?.find(el => el._id === varriants)?.thumb,
 
             })
         }
@@ -172,7 +171,7 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
             return toast.error("Bạn số lượng bạn có thể chọn là: " + countPrd)
         }
         else {
-            const response = await apiUpdateCart({ pid, color: currentProduct.color || product?.color, quantity, price: product.price, title: product?.title })
+            const response = await apiUpdateCart({ pid, color: varriants ? currentProduct.color : product?.color, quantity, price: currentProduct.price||product.price, title: product?.title })
 
             if (response.success) {
                 toast.success(response.message)
@@ -263,8 +262,8 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
                             </div>
                             {product?.varriants?.map(el => (
                                 <div
-                                    onClick={() => setVarriants(el.sku)}
-                                    className={clsx("flex items-center gap-2 p-2 border cursor-pointer", varriants === el.sku && 'border-red-500')}>
+                                    onClick={() => setVarriants(el._id)}
+                                    className={clsx("flex items-center gap-2 p-2 border cursor-pointer", varriants === el._id && 'border-red-500')}>
                                     <img src={el?.thumb} alt="thumb" className="w-8 h-8 object-cover rounded-md" />
                                     <span className="flex flex-col">
                                         <span>{el?.color} </span>
