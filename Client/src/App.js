@@ -44,6 +44,8 @@ import Notfound from './Notfound';
 import CreateCoupon from './pages/admin/CreateCoupon';
 import DetailBlogs from './pages/public/DetailBlogs';
 
+import ErrorBoundary from '../src/ultils/errorBoundary';
+
 
 function App() {
   const dispatch = useDispatch()
@@ -80,7 +82,11 @@ function App() {
         </Route>
         {/* admin */}
         <Route path={path.ADMIN} element={<AdminLayout />}>
-          <Route path={path.DASHBOARD} element={<Dashboard />} />
+          <Route path={path.DASHBOARD} element={
+            <ErrorBoundary>
+              <Dashboard />
+            </ErrorBoundary>}
+          />
           <Route path={path.MANAGE_ORDER} element={<ManageOrder />} />
           <Route path={path.MANAGE_PRODUCTS} element={<ManageProduct />} />
           <Route path={path.MANAGE_USER} element={<ManageUser />} />
