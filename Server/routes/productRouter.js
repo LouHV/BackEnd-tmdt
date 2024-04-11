@@ -1,16 +1,17 @@
-const express = require("express")
-const router = express.Router()
-const productController = require("../controllers/productController")
-const { verifyAccessToken, isAdmin } = require('../middlewares/verifyToken')
-const uploader = require('../config/cloundinary.config')
+'use strict';
+
+const express = require("express");
+const router = express.Router();
+const productController = require("../controllers/productController");
+const { verifyAccessToken, isAdmin } = require('../middlewares/verifyToken');
+const uploader = require('../config/cloundinary.config');
 
 router.post('/', [verifyAccessToken, isAdmin], uploader.fields([
     { name: 'images', maxCount: 10 },
     { name: 'thumb', maxCount: 1 }
-]), productController.createProduct)
-router.get('/', productController.getAllProduct)
-router.put('/ratings', verifyAccessToken, productController.ratings)
-
+]), productController.createProduct);
+router.get('/', productController.getAllProduct);
+router.put('/ratings', verifyAccessToken, productController.ratings);
 
 router.put('/varriant/:prdId', [verifyAccessToken, isAdmin], uploader.fields([
     { name: 'images', maxCount: 10 },

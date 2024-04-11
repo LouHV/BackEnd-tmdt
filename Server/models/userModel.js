@@ -1,4 +1,4 @@
-const mongoose = require('mongoose'); // Erase if already required
+const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
@@ -12,7 +12,6 @@ var userSchema = new mongoose.Schema({
     lastname: {
         type: String,
         required: true,
-
     },
     email: {
         type: String,
