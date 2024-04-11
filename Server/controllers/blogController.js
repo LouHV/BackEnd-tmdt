@@ -4,7 +4,7 @@ const asyncHandler = require('express-async-handler')
 const createNewBlog = asyncHandler(async (req, res) => {
     const { title_blog, description_blog, category } = req.body
     if (!title_blog || !description_blog || !category) throw new Error('missing inputs')
-    if (req.file) req.body.image_blog =  req.file.path
+    if (req.file) req.body.image_blog = req.file.path
     const response = await Blog.create(req.body)
     return res.json({
         success: response ? true : false,
@@ -14,7 +14,7 @@ const createNewBlog = asyncHandler(async (req, res) => {
 
 const updateBlog = asyncHandler(async (req, res) => {
     const { blogId } = req.params
-    if (req.file) req.body.image_blog =  req.file.path
+    if (req.file) req.body.image_blog = req.file.path
     if (Object.keys(req.body).length === 0) throw new Error('Missing inputs')
     const response = await Blog.findByIdAndUpdate(blogId, req.body, { new: true })
     return res.json({
@@ -28,18 +28,34 @@ const getAllBlog = asyncHandler(async (req, res) => {
     // tách các trường đặc biệt ra khỏi query
     const excludeFields = ['limit', 'sort', 'page', 'fields']
     excludeFields.forEach(el => delete queries[el])
-    let queryCommand = Blog.find()
+    //format operators cho đúng cú pháp của mongoose
+    let queryString = JSON.stringify(queries)
+    queryString = queryString.replace(/\b(gte|gt|lt|lte)\b/g, matchedEl => `$${matchedEl}`)
+    const restQueries = JSON.parse(queryString)
+    let queryObject = {}
+    if (queries?.q) {
+        delete restQueries.q
+        queryObject = {
+            $or: [
+                { title_blog: { $regex: queries?.q, $options: 'i' } },
+            ]
+        }
+    }
+
+    const qr = {...restQueries,...queryObject}
+    let queryCommand = Blog.find(qr)
     if (req.query.sort) {
         const sortBy = req.query.sort.split(',').join(' ')
         queryCommand = queryCommand.sort(sortBy)
     }
-     //Filed limiting
-     if (req.query.fields) {
+    //Filed limiting
+    if (req.query.fields) {
 
         const fields = req.query.fields.split(',').join(' ')
 
         queryCommand = queryCommand.select(fields)
     }
+   
     //Pagination
     //limit la so object lay ve trong 1 api
     //skip: 
@@ -49,20 +65,16 @@ const getAllBlog = asyncHandler(async (req, res) => {
     queryCommand.skip(skip).limit(limit)
 
     queryCommand.then(async (response) => {
-        const counts = await Blog.find().countDocuments()
+        const counts = await Blog.find(qr).countDocuments()
         return res.status(200).json({
             success: response ? true : false,
             counts,
-            blogs: response ? response : 'Cannot update Blog'
+            blogs: response ? response : 'Cannot get Blogs'
         })
     }).catch((err) => {
         throw new Error(err.message)
     })
-    // const response = await Blog.find()
-    // return res.json({
-    //     success: response ? true : false,
-    //     blogs: response ? response : 'Cannot update Blog'
-    // })
+
 })
 
 /*

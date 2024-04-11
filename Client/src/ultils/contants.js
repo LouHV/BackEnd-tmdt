@@ -7,6 +7,9 @@ import { FaChartBar } from "react-icons/fa";
 import { AiOutlineHome } from "react-icons/ai";
 import { BiSolidCoupon } from "react-icons/bi";
 import { FaBloggerB } from "react-icons/fa6";
+import { BiCategory } from "react-icons/bi";
+import { TbBrandProducthunt } from "react-icons/tb";
+
 
 export const navigation = [
     {
@@ -203,6 +206,38 @@ export const adminSideBar = [
     },
     {
         id: 7,
+        type: 'PARENT',
+        text: 'Manage Category',
+        icon: <BiCategory />,
+        submenu: [
+            {
+                text: 'Create Category',
+                path: `/${path.ADMIN}/${path.CREATE_CATEGORY}`
+            },
+            {
+                text: 'Manage Categorys',
+                path: `/${path.ADMIN}/${path.MANAGE_CATEGORY}`
+            },
+        ]
+    },
+    {
+        id: 8,
+        type: 'PARENT',
+        text: 'Manage Brand',
+        icon: <TbBrandProducthunt />,
+        submenu: [
+            {
+                text: 'Create Brand',
+                path: `/${path.ADMIN}/${path.CREATE_BRAND}`
+            },
+            {
+                text: 'Manage Brands',
+                path: `/${path.ADMIN}/${path.MANAGE_BRAND}`
+            },
+        ]
+    },
+    {
+        id:9,
         type: 'SINGLE',
         text: 'Back to Homepage',
         path: `/${path.HOME}`,
