@@ -17,7 +17,7 @@ const CreateCoupon = () => {
   const dispatch = useDispatch()
   const { register, formState: { errors }, reset, handleSubmit } = useForm();
   const [canlender, setCanlender] = useState('')
-  const [canlender2, setCanlender2] = useState('')
+  
 
   
   //tao coupon
@@ -59,9 +59,7 @@ const CreateCoupon = () => {
   const handleSelect = (date) => {
     setCanlender(format(date, 'yyyy-MM-dd'))
   }
-  const handleSelect2 = (date) => {
-    setCanlender2(format(date, 'yyyy-MM-dd'))
-  }
+  
 
   return (
     <div className='w-full'>

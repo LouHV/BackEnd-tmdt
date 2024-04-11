@@ -23,7 +23,11 @@ import {
   Dashboard,
   Coupon,
   ManageBlog,
-  CreateBlog
+  CreateBlog,
+  ManageCategory,
+  CreateCategory,
+  ManageBrand,
+  CreateBrand
 } from './pages/admin'
 import {
   MemberLayout,
@@ -89,6 +93,10 @@ function App() {
           <Route path={path.CREATE_COUPON} element={<CreateCoupon />} />
           <Route path={path.MANAGE_BLOG} element={<ManageBlog />} />
           <Route path={path.CREATE_BLOG} element={<CreateBlog />} />
+          <Route path={path.MANAGE_CATEGORY} element={<ManageCategory />} />
+          <Route path={path.CREATE_CATEGORY} element={<CreateCategory />} />
+          <Route path={path.MANAGE_BRAND} element={<ManageBrand />} />
+          <Route path={path.CREATE_BRAND} element={<CreateBrand />} />
         </Route>
         {/* member */}
         {/* <Route path={path.MEMBER} element={<MemberLayout />}>
