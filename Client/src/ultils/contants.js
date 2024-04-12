@@ -135,12 +135,28 @@ export const voteOptions = [
 ]
 export const adminSideBar = [
 
+    // {
+    //     id: 1,
+    //     type: 'SINGLE',
+    //     text: 'Dashboard',
+    //     path: `/${path.ADMIN}/${path.DASHBOARD}`,
+    //     icon: <FaChartBar />
+    // },
     {
         id: 1,
-        type: 'SINGLE',
+        type: 'PARENT',
         text: 'Dashboard',
-        path: `/${path.ADMIN}/${path.DASHBOARD}`,
-        icon: <FaChartBar />
+        icon: <FaChartBar />,
+        submenu: [
+            {
+                text: 'Revenue Statistic',
+                path: `/${path.ADMIN}/${path.DASHBOARD}`
+            },
+            {
+                text: 'Manage Statistic',
+                path: `/${path.ADMIN}/${path.MANAGE_PRODUCTS}`
+            },
+        ]
     },
     {
         id: 2,
@@ -237,7 +253,7 @@ export const adminSideBar = [
         ]
     },
     {
-        id:9,
+        id: 9,
         type: 'SINGLE',
         text: 'Back to Homepage',
         path: `/${path.HOME}`,

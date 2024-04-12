@@ -10,8 +10,44 @@ import moment from 'moment';
 import avadf from '../../assets/avatar-default.jpg'
 import { formatMoney, formatPrice } from '../../ultils/helper';
 
+import { FaPen } from 'react-icons/fa';
+import Tooltip from '../../../src/ultils/tooltip';
+
+
 const ManageOrder = () => {
+
+  const STATUS = [
+    {
+      id: 1,
+      name: "Chưa thanh toán"
+    },
+    {
+      id: 2,
+      name: "Đã thanh toán"
+    },
+    {
+      id: 3,
+      name: "Xác nhận đơn"
+    },
+    {
+      id: 4,
+      name: "Shipper đã nhận hàng và đang giao"
+    },
+    {
+      id: 5,
+      name: "Hoàn thành"
+    },
+    {
+      id: 6,
+      name: "Huỷ đơn"
+    }
+  ]
+
   const [editProduct, setEditProduct] = useState(null);
+
+  // const [showOptions, setShowOptions] = useState(false);
+  // const [selectedOrder, setSelectedOrder] = useState(null);
+
 
 
   const navigate = useNavigate()
@@ -33,6 +69,33 @@ const ManageOrder = () => {
     }
   }
   const queryDecounce = useDebounce(watch('q'), 800)
+
+  const updateOrderStatus = async (orderId, status) => {
+    // Gọi API để cập nhật trạng thái
+    // Ví dụ:
+    // const response = await apiUpdateOrderStatus(orderId, status);
+    // if (response.success) {
+    //   toast.success('Cập nhật trạng thái thành công');
+    //   fectchOrders(searchParams); // Làm mới danh sách đơn hàng
+    // } else {
+    //   toast.error('Cập nhật trạng thái thất bại');
+    // }
+  };
+
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+
+  const handleEditClick = (e) => {
+    setShowTooltip(true);
+    setTooltipPosition({ x: e.clientX, y: e.clientY });
+  };
+
+  const handleOptionSelect = (order_id, status) => {
+    // Logic để cập nhật trạng thái
+    setShowTooltip(false);
+  };
+
+
 
 
   //search
@@ -112,7 +175,25 @@ const ManageOrder = () => {
                   </span>
                 </td>
                 <td className="p-2 border border-black text-center">{`${el?.total}$ = ${formatMoney(formatPrice(Math.round(+el?.total * 24761)))} VND`}</td>
-                <td className="p-2 border border-black text-center">{el?.status}</td>
+                {/* <td className="p-2 border border-black text-center">{el?.status}</td> */}
+                <td className="p-2 border border-black text-center">
+                  {el?.status}
+                  <FaPen onClick={handleEditClick} />
+                  <Tooltip
+                    content={
+                      <div>
+                        {STATUS.map((option, index) => (
+                          <div key={index} onClick={() => handleOptionSelect(el._id, option.id)}>
+                            {option.name}
+                          </div>
+                        ))}
+                      </div>
+                    }
+                    isVisible={showTooltip}
+                    style={{ left: tooltipPosition.x, top: tooltipPosition.y }}
+                  />
+                </td>
+
                 <td className="p-2 border border-black text-center">{moment(el?.createdAt).format('DD/MM/YYYY')}</td>
                 <td className="p-2 border border-black text-center">
                   <div className='flex items-center gap-2'><img src={el?.orderBy?.avatar || avadf} className='h-[30px] w-[30px] rounded-full object-contain' />

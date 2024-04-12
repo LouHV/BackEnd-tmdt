@@ -20,6 +20,9 @@ const path = {
     //admin
     ADMIN: 'admin',
     DASHBOARD: 'dasboard',
+
+    DASHBOARD: 'dasboard',
+    
     MANAGE_USER: 'manage-user',
     MANAGE_PRODUCTS: 'manage-products',
     MANAGE_ORDER: 'manage-order',

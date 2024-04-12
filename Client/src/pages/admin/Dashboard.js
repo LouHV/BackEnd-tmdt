@@ -28,18 +28,36 @@ const Dashboard = () => {
         const data = result.data;
 
         if (Array.isArray(data)) {
-          // Tạo một mảng labels với tất cả các tháng trong khoảng thời gian đã chọn
-          const allLabels = Array.from({ length: selectedDays }, (_, i) => {
-            const date = new Date();
-            date.setMonth(date.getMonth() - selectedDays + i + 1);
-            return `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}`; // Trả về tháng dưới dạng 'YYYY-MM'
-          });
+          let allLabels = [];
+          let allData = [];
 
-          // Tạo một mảng data với doanh thu tương ứng với mỗi tháng
-          const allData = allLabels.map(label => {
-            const item = data.find(item => item.time === label);
-            return item ? item.revenue : 0; // Nếu không có doanh thu cho tháng đó, trả về 0
-          });
+          if (selectedDays == 12 || selectedDays == 6) {
+            allLabels = Array.from({ length: selectedDays }, (_, i) => {
+              const date = new Date();
+              date.setMonth(date.getMonth() - selectedDays + i + 1);
+              return `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}`;
+            });
+
+            allData = allLabels.map(label => {
+              const item = data.find(item => item.time.slice(0, 7) === label);
+              return item ? Number(item.revenue) * 1000 : 0;
+            });
+          }
+          else if (selectedDays == 7 || selectedDays == 14) {
+            const startDate = new Date();
+            startDate.setDate(startDate.getDate() - selectedDays + 1);
+            for (let i = 0; i < selectedDays; i++) {
+              const date = new Date(startDate);
+              date.setDate(date.getDate() + i);
+              const label = `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
+              allLabels.push(label);
+              const item = data.find(item => item.time === label);
+              allData.push(item ? Number(item.revenue) * 1000 : 0);
+            }
+
+            // allLabels = data.map(item => item.time);
+            // allData = data.map(item => item.revenue);
+          }
 
           setChartData({
             labels: allLabels,
@@ -54,28 +72,31 @@ const Dashboard = () => {
             ],
           });
         } else {
-          console.log('Dữ liệu không phải là một mảng');
+          console.log('Not Array...');
         }
       } catch (error) {
-        console.error('Lỗi khi tải dữ liệu:', error);
+        console.error('Fail when call API...', error);
       }
     };
 
     fetchData();
   }, [selectedDays]);
 
+
   const handleSelectChange = (event) => {
     setSelectedDays(event.target.value);
   };
 
   return (
-    <div>
-      <h2>Doanh thu</h2>
+    <div className="m-[20px]">
+      <h1 className="h-[75px] w-full flex justify-between items-center text-3xl font-bold px-4 border-b  top-0  ">
+        <span>Revenue Statistic</span>
+      </h1>
       <select value={selectedDays} onChange={handleSelectChange}>
         <option value="7">7 ngày gần đây</option>
         <option value="14">14 ngày gần đây</option>
         <option value="6">6 tháng gần nhất</option>
-        <option value="12">1 năm gần đây</option>
+        <option value="12">12 tháng gần đây</option>
       </select>
       <Bar
         data={chartData}
@@ -84,7 +105,8 @@ const Dashboard = () => {
             y: {
               beginAtZero: true,
               min: 0,
-              max: Math.max(...chartData.datasets[0].data) * 1.1, // Tính toán giá trị tối đa dựa trên dữ liệu hiện tại
+              // max: Math.max(...chartData.datasets[0].data) * 1.1,
+              max: Math.round(Math.max(...chartData.datasets[0].data) * 100) / 100 * 1.2,
             },
             x: {
               type: 'category',
@@ -96,12 +118,14 @@ const Dashboard = () => {
                 label: function (context) {
                   const label = context.dataset.label || '';
                   const value = context.parsed.y;
-                  return `Doanh thu: ${value} (Tháng: ${label})`;
+                  const formattedValue = value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+                  return `Doanh thu: ${formattedValue} (Tháng: ${label})`;
                 },
               },
             },
           },
         }}
+
       />
     </div>
   );
