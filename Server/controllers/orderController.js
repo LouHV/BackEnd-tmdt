@@ -37,11 +37,11 @@ const createNewOrder = asyncHandler(async (req, res) => {
     if (status) data.status = status
     const rs = await Order.create(data)
     const orderedProducts = rs.products;
-    console.log('orderedProducts :>> ', orderedProducts);
+    // console.log('orderedProducts :>> ', orderedProducts);
     for (const product of orderedProducts) {
         // Truy cập vào bảng Product để lấy thông tin sản phẩm
         const productInfo = await Product.findById(product.product);
-        console.log('productInfo :>> ', productInfo);
+        // console.log('productInfo :>> ', productInfo);
         // Trừ đi số lượng đã đặt hàng từ quantity hiện tại
         const newQuantity = productInfo.quantity - product.quantity;
 
