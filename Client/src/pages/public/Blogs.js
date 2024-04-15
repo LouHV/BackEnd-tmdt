@@ -1,17 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { Breadcrumbs } from "../../components";
+import { Breadcrumbs, Pagination } from "../../components";
 import { useSelector } from "react-redux";
 import { apiGetBlogs } from "../../apis";
 import withBase from "../../hocs/withBase";
 import { getBlogs } from "../../store/blogs/asyncActions";
 import BlogsItems from "./BlogsItems";
 import { format } from "date-fns";
+import { useSearchParams } from "react-router-dom";
 const Blogs = ({ dispatch, navigate }) => {
 
 
     const [topblog, setTopblog] = useState(null);
 
-    const { blogs } = useSelector(state => state.blogs)
+
+    const [params] = useSearchParams()
+
+    const [blogs, setBlogs] = useState(null)
+    const [counts, setCounts] = useState(0)
+    const fectchBlog = async (params) => {
+        const response = await apiGetBlogs({ sort: '-createdAt', ...params, limit: process.env.REACT_APP_LIMIT })
+        if (response.success) {
+            setBlogs(response)
+            setCounts(response.counts)
+        }
+    }
+
     const fectchBlogs = async () => {
         const response = await apiGetBlogs({ sort: '-createdAt', limit: 3 })
         if (response.success) setTopblog(response);
@@ -20,7 +33,14 @@ const Blogs = ({ dispatch, navigate }) => {
         fectchBlogs()
         dispatch(getBlogs())
     }, [])
+
+    useEffect(() => {
+        const searchParams = Object.fromEntries([...params])
+
+        fectchBlog(searchParams)
+    }, [params])
     console.log('topblog :>> ', topblog);
+    console.log('blogs :>> ', blogs);
     return (
         <div className="w-full">
             <div className='h-[50px] flex justify-center items-center bg-gray-100 mb-[20px]'>
@@ -31,7 +51,7 @@ const Blogs = ({ dispatch, navigate }) => {
             </div>
             <div className="w-main mx-auto grid grid-cols-10 gap-4">
                 <div className="m-auto col-span-7">
-                    {blogs?.map(el => (
+                    {blogs?.blogs?.map(el => (
                         <BlogsItems el={el} key={el.id} />
                     ))}
                 </div>
@@ -54,6 +74,11 @@ const Blogs = ({ dispatch, navigate }) => {
                         ))}
                     </div>
                 </div>
+                {blogs?.blogs?.length > 0 && <div className=" w-main m-auto my-4 flex justify-center">
+                    <Pagination
+                        totalCount={blogs?.counts}
+                    />
+                </div>}
             </div>
 
         </div>

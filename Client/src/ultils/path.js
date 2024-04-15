@@ -38,6 +38,7 @@ const path = {
     MY_CART: 'my-cart',
     HISTORY: 'buy-history',
     WISHLIST: 'wishlist',
+    CHANGEPASS: 'change-password'
 }
 
 export default path

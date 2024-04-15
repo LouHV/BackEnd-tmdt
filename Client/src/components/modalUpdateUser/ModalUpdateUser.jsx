@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 const ModalUpdateUser = ({ onClose, updateUser, setUpdateUser, handleUpdate }) => {
     const [userData, setUserData] = useState(updateUser);
-    
+
     const handleSubmit = (event) => {
         event.preventDefault();
         // Thực hiện xử lý cập nhật thông tin người dùng ở đây
@@ -17,10 +17,10 @@ const ModalUpdateUser = ({ onClose, updateUser, setUpdateUser, handleUpdate }) =
         setUserData({ ...userData, [name]: value });
         setUpdateUser({ ...userData, [name]: value }); // Cập nhật state ở ngoài component
     };
-
-    return ( 
+    console.log('userData :>> ', userData);
+    return (
         <div className="modal">
-            <form className="modal-content"on onSubmit={handleSubmit}> 
+            <form className="modal-content" on onSubmit={handleSubmit}>
                 <div className="modal-header">
                     <h1>Update User</h1>
                 </div>
@@ -45,14 +45,30 @@ const ModalUpdateUser = ({ onClose, updateUser, setUpdateUser, handleUpdate }) =
                         <label htmlFor="mobile">Phone:</label>
                         <input type="text" id="mobile" name="mobile" value={userData.mobile} onChange={handleInputChange} />
                     </div>
-                </div> 
+                    <div className="form-group flex gap-2 items-center">
+                        <label htmlFor="role">Role:</label>
+                        <select className='rounded border border-gray-300' name="role" value={userData.role} onChange={handleInputChange}>
+                            <option value="0">Admin</option>
+                            <option value="1">User</option>
+                        </select>
+                    </div>
+
+                    <div className="form-group flex gap-2 items-center">
+                        <label htmlFor="isBlocked">Status:</label>
+                        <select className='rounded border border-gray-300' name="isBlocked" value={userData.isBlocked} onChange={handleInputChange}>
+                            <option value={false}>Active</option>
+                            <option value={true}>Blocked</option>
+                        </select>
+                    </div>
+                </div>
                 <div className="modal-footer">
                     <button className="submit-btn" onClick={handleUpdate}>Update</button>
                     <button className="cancel-btn" onClick={onClose}>Cancel</button>
                 </div>
+
             </form>
         </div>
-     );
+    );
 }
- 
+
 export default ModalUpdateUser;

@@ -9,9 +9,10 @@ import { useSearchParams, useParams, createSearchParams, useNavigate, useLocatio
 import { Pagination } from '../../components'
 import useDebounce from '../../hooks/useDebounce'
 import UpdateProduct from './UpdateProduct'
-import { formatMoney, formatPrice } from '../../ultils/helper'
-
-
+import { formatMoney, formatPrice, truncateString } from '../../ultils/helper'
+import { MdDeleteForever } from 'react-icons/md'
+import { FaRegEdit } from 'react-icons/fa'
+import DOMPurify from 'dompurify'
 const ManageProduct = () => {
   const [editProduct, setEditProduct] = useState(null);
 
@@ -85,15 +86,16 @@ const ManageProduct = () => {
   return (
     <div className='w-full relative'>
       {editProduct && <div className='absolute inset-0 bg-sky-100 min-h-screen'>
-        <UpdateProduct 
-        editProduct={editProduct} 
-        setEditProduct={setEditProduct}/>
+        <UpdateProduct
+          editProduct={editProduct}
+          setEditProduct={setEditProduct}
+          fectchProducts={fectchProducts} />
       </div>}
 
       {customizeVarriants && <div className='absolute inset-0 bg-sky-100 min-h-screen'>
-        <CustomizeVarriants 
-        customizeVarriants={customizeVarriants} 
-        setCustomizeVarriants={setCustomizeVarriants}/>
+        <CustomizeVarriants
+          customizeVarriants={customizeVarriants}
+          setCustomizeVarriants={setCustomizeVarriants} />
       </div>}
 
       <div className='flex justify-center items-center '>
@@ -119,16 +121,15 @@ const ManageProduct = () => {
           <thead className="font-bold  text-[13px] border border-black text-center bg-sky-700 text-white">
             <tr>
               <th className="px-4 py-2 border border-black">Stt</th>
-              <th className="px-4 py-2 border border-black">Title</th>
-              <th className="px-4 py-2 border border-black">Description</th>
-              <th className="px-4 py-2 border border-black">Brand</th>
               <th className="px-4 py-2 border border-black">Thumb</th>
-              <th className="px-4 py-2 border border-black">Price</th>
+              <th className="px-4 py-2 border border-black">Title</th>
               <th className="px-4 py-2 border border-black">Category</th>
+              <th className="px-4 py-2 border border-black">Brand</th>
+              <th className="px-4 py-2 border border-black">Description</th>
+              <th className="px-4 py-2 border border-black">Price</th>
               <th className="px-4 py-2 border border-black">Quantity</th>
               <th className="px-4 py-2 border border-black">Sold</th>
               <th className="px-4 py-2 border border-black">Color</th>
-              <th className="px-4 py-2 border border-black">Ratings</th>
               <th className="px-4 py-2 border border-black">CreatedAt</th>
               <th className="px-4 py-2 border border-black">Actions</th>
 
@@ -139,36 +140,44 @@ const ManageProduct = () => {
             {products?.map((el, idx) => (
               <tr key={el._id} className="text-center border border-black">
                 <td className="p-2 border border-black text-center">{((+params.get('page') > 1 ? +params.get('page') - 1 : 0) * process.env.REACT_APP_LIMIT) + idx + 1}</td>
-                <td className="p-2 border border-black text-center">{el?.title}</td>
-                <td className="p-2 border border-black text-center">{el?.description}</td>
-                <td className="p-2 border border-black text-center">{el?.brand}</td>
                 <td className="p-2 border border-black text-center ">
-                  <img src={el?.thumb} alt='thumb' className=' w-12 h-12 object-cover' />
+                  <img src={el?.thumb} alt='thumb' className=' w-12 h-12 object-cover'  />
                 </td>
-                <td className="p-2 border border-black text-center ">{`${formatMoney(formatPrice(el?.price))} VND`}</td>
+                <td className="p-2 border border-black text-center">{el?.title}</td>
                 <td className="p-2 border border-black text-center">{el?.category}</td>
+                <td className="p-2 border border-black text-center">{el?.brand}</td>
+                <td className="p-2 border border-black text-center">
+                  {el?.description?.length > 1 && el?.description?.map(el => (<li key={el} className=" leading-6 list-disc">{el}</li>))}
+                  {el?.description?.length === 1 && <div
+                            className="text-sm"
+                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(el?.description[0]) }}></div>}
+                  </td>
+                <td className="p-2 border border-black text-center ">{`${formatMoney(formatPrice(el?.price))} VND`}</td>
                 <td className="p-2 border border-black text-center">{el?.quantity}</td>
                 <td className="p-2 border border-black text-center">{el?.slod}</td>
                 <td className="p-2 border border-black text-center">{el?.color}</td>
-                <td className="p-2 border border-black text-center">{el?.rating?.length}</td>
                 <td className="p-2 border border-black text-center">{moment(el?.createdAt).format('DD/MM/YYYY')}</td>
 
 
 
-                <td className="py-4">
+                <td className="py-4 flex flex-col items-center gap-2">
                   <span
-                    className="px-2 text-orange-600 hover:underline cursor-pointer"
+                    className="px-2 text-sky-600 hover:underline cursor-pointer"
                     onClick={() => setEditProduct(el)}
-                  >Edit
+                    title='edit'
+                  ><FaRegEdit size={24} />
                   </span>
+                  
                   <span
+                    onClick={() => handldeDeleteProduct(el._id)}
+                    className='px-2 text-orange-600 hover:underline cursor-pointer'
+                    title='Delete'
+                    ><MdDeleteForever size={24} /></span>
+                     <span
                     className="px-2 text-orange-600 hover:underline cursor-pointer"
                     onClick={() => setCustomizeVarriants(el)}
                   >Varriants
                   </span>
-                  <span
-                    onClick={() => handldeDeleteProduct(el._id)}
-                    className='px-2 text-orange-600 hover:underline cursor-pointer'>Remove</span>
                 </td>
               </tr>
             ))}

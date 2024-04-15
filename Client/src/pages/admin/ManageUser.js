@@ -3,14 +3,15 @@ import { apiGetUsers, apiUpdateUsers, apiDeleteUsers } from '../../apis'
 
 import moment from "moment";
 import { roles } from "../../ultils/contants";
-import { InputField, Pagination, Select } from "../../components/index";
+import { InputField, Pagination } from "../../components/index";
 import useDebounce from "../../hooks/useDebounce";
 import { useSearchParams } from "react-router-dom";
-import { InputForm } from "../../components";
-import { useForm } from "react-hook-form";
+
 import ModalUpdateUser from "../../components/modalUpdateUser/ModalUpdateUser";
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
+import { MdDeleteForever } from 'react-icons/md'
+import { FaRegEdit } from 'react-icons/fa'
 
 const ManageUser = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -148,19 +149,25 @@ const ManageUser = () => {
                   </span>
                 </td>
                 <td className="py-4 border border-black">
-                  <span>{el.isBlocked ? "Blocked" : "Active"}</span>
+                  {el.isBlocked
+                    ? <span className="bg-red-500 p-2 rounded-xl text-white">Blocked</span>
+                    : <span className="bg-green-500 p-2 rounded-xl text-white ">Active</span>}
                 </td>
                 <td className="py-4 border border-black">
                   {moment(el.createdAt).format("DD/MM/YYYY")}
                 </td>
-                <td className="py-4 border border-black">
+
+                <td className="py-4 flex flex-col items-center gap-2">
                   <span
-                    className="px-2 text-orange-600 hover:underline cursor-pointer"
+                    className="px-2 text-sky-600 hover:underline cursor-pointer"
                     onClick={() => handleOpenModal(el)}
-                  >
-                    Edit
+                    title='edit'
+                  ><FaRegEdit size={24} />
                   </span>
-                  <span onClick={() => handldeDeleteUser(el._id)} className='px-2 text-orange-600 hover:underline cursor-pointer'>Delete</span>
+                  <span onClick={() => handldeDeleteUser(el._id)}
+                    className='px-2 text-orange-600 hover:underline cursor-pointer'
+                    title='Delete'
+                  ><MdDeleteForever size={24} /></span>
                 </td>
               </tr>
             ))}

@@ -55,7 +55,7 @@ const CreateBlog = () => {
         if (invalids === 0) {
             
             const finalPayload = { ...data, ...payload }
-console.log('finalPayload :>> ', finalPayload);
+            console.log('finalPayload :>> ', finalPayload);
             const formData = new FormData()
             for (let i of Object.entries(finalPayload)) formData.append(i[0], i[1])
             if (finalPayload.image_blog) formData.append('image_blog', finalPayload.image_blog[0])

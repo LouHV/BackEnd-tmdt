@@ -29,9 +29,12 @@ export { default as Pagination } from './Pagination/Pagination'
 export { default as PagiItem } from './Pagination/PagiItem'
 export { default as Loading } from './common/Loading'
 export { default as Paypal } from './common/PayPal'
+export { default as Cash } from './common/Cash'
 
 export { default as SidebarAdmin } from './sidebar/SidebarAdmin'
 export { default as MemberSidebar } from './sidebar/MemberSidebar'
 export { default as InputForm } from './input/inputForm'
 export { default as Select } from './input/Select'
+export { default as CheckboxGroup } from './input/CheckboxGroup'
+
 export { default as MarkdownEditor } from './input/MarkdownEditor'

@@ -55,7 +55,7 @@ input[type="number"] {
 
 /* Nút cập nhật */
 .submit-btn {
-    background-color: #ee3131;
+    background-color: #3b82f6;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -64,8 +64,8 @@ input[type="number"] {
 }
 
 .cancel-btn {
-    background-color: white;
-    color: black;
+    background-color: #ee3131;
+    color: white;
     padding: 10px 20px;
     border: solid 1px #ccc;
     border-radius: 4px;

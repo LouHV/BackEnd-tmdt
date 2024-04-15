@@ -149,7 +149,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
     if (!user) throw new Error('User not found')
     const resetToken = user.createPasswordChangedToken()
     await user.save()
-    const html = `Xin vui lòng click vào link dưới đây để thay đổi mật khẩu của bạn.Link này sẽ hết hạn sau 15 phút kể từ bây giờ. 
+    const html = `Xin vui lòng click vào link dưới đây để thay đổi mật khẩu của bạn.Link này sẽ hết hạn sau 1 phút kể từ bây giờ. 
     <a href=${process.env.CLIENT_URL}/reset-password/${resetToken}>Click here</a>`
     const data = {
         email,
@@ -179,6 +179,31 @@ const resetPassword = asyncHandler(async (req, res) => {
 
     })
 })
+const changePassword = asyncHandler(async (req, res) => {
+    const { currentPassword, newPassword } = req.body;
+   const { _id } = req.user
+   console.log('currentPassword :>> ', currentPassword);
+   console.log('newPassword :>> ', newPassword);
+    // Lấy thông tin người dùng hiện tại từ req.user
+    const user = await User.findById(_id).select('+password');
+
+    // Kiểm tra mật khẩu hiện tại
+    if (!user || !(await user.isCorrectPassword(currentPassword))) {
+        return res.status(400).json({
+            success: false,
+            message: 'Current password is incorrect',
+        });
+    }
+
+    // Cập nhật mật khẩu mới
+    user.password = newPassword;
+    await user.save();
+
+    return res.status(200).json({
+        success: true,
+        message: 'Password changed successfully',
+    });
+});
 const getUsers = asyncHandler(async (req, res) => {
     let queryCommand = User.find();
     const queries = { ...req.query };
@@ -358,5 +383,6 @@ module.exports = {
     updateUserAddress,
     updateCart,
     updateWishlist,
-    removeProductIncart
+    removeProductIncart,
+    changePassword
 }

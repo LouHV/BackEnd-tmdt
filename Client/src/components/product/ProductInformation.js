@@ -18,7 +18,6 @@ const ProductInformation = ({ totalRating, rating, nameProduct, pid, rerender })
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { isLoggedIn } = useSelector(state => state.user)
-  console.log('rating :>> ', rating);
   const handleSubmitVoteOption = async ({ comment, score }) => {
 
     if (!comment || !pid || !score) {

@@ -10,7 +10,7 @@ import { showModal } from '../../store/app/appSlice';
 import { apiUpdateProducts } from '../../apis';
 
 
-const UpdateProduct = ({ editProduct, setEditProduct }) => {
+const UpdateProduct = ({ editProduct, setEditProduct,fectchProducts }) => {
     
     const dispatch = useDispatch()
 
@@ -39,7 +39,7 @@ const UpdateProduct = ({ editProduct, setEditProduct }) => {
             brand: editProduct?.brand?.toLowerCase() || '',
             category: editProduct?.category || '',
             sold: editProduct?.sold || '',
-            color: editProduct?.title || '',
+            color: editProduct?.color || '',
 
         })
         setPayload({ description: typeof editProduct?.description === 'object' ? editProduct?.description?.join(', ') : editProduct?.description })
@@ -125,6 +125,7 @@ const UpdateProduct = ({ editProduct, setEditProduct }) => {
                     images: ''
                 })
                 setEditProduct(null)
+                fectchProducts()
             } else {
                 toast.error(response.message)
             }
@@ -266,9 +267,10 @@ const UpdateProduct = ({ editProduct, setEditProduct }) => {
                             ))}
                         </div>
                     }
-                    <div className='mt-4'>
-                        <Button type='submit'>Update</Button>
-                        <Button handleOnClick={() => setEditProduct(null)}>Cancel</Button>
+                
+                    <div className='mt-4 gap-2 flex'>
+                        <Button type='submit' style='px-4 py-2 rounded-md text-white my-2 bg-blue-500 text-semibold hover:bg-blue-400'>Update</Button>
+                        <Button style='px-4 py-2 rounded-md text-white my-2 bg-main text-semibold hover:bg-red-400' handleOnClick={() => setEditProduct(null)}>Cancel</Button>
                     </div>
                 </form>
             </div>
