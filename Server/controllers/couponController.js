@@ -2,8 +2,8 @@ const Coupon = require('../models/couponModel')
 const asyncHandler = require('express-async-handler')
 
 const createNewCoupon = asyncHandler(async (req, res) => {
-    const { name_coupon, discount, expiry, quanity, start_date } = req.body;
-    if (!name_coupon || !discount || !expiry || !start_date) throw new Error('Missing inputs');
+    const { name_coupon, coupon_code, discount, expiry, quanity, start_date } = req.body;
+    if (!name_coupon || !coupon_code || !discount || !expiry || !start_date) throw new Error('Missing inputs');
 
     // Convert start_date to a Date object
     const startDate = new Date(start_date);
@@ -66,12 +66,13 @@ const getCoupon = asyncHandler(async (req, res) => {
         throw new Error(err.message);
     }
 })
+
 const getCouponByName = asyncHandler(async (req, res) => {
-    const { name_coupon } = req.body;
-    if (!name_coupon) throw new Error('Missing name_coupon');
+    const { coupon_code } = req.body;
+    if (!coupon_code) throw new Error('Missing coupon_code');
 
     try {
-        const coupon = await Coupon.findOne({ name_coupon: { $regex: name_coupon, $options: 'i' } });
+        const coupon = await Coupon.findOne({ coupon_code: { $regex: coupon_code, $options: 'i' } });
         if (!coupon) {
             return res.status(404).json({
                 success: false,
@@ -106,6 +107,8 @@ const deleteCoupon = asyncHandler(async (req, res) => {
         message: response ? 'Deleted this coupon!' : 'Cannot delete coupon'
     })
 })
+
+
 
 module.exports = {
     createNewCoupon,

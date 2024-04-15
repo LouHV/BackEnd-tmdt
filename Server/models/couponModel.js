@@ -8,6 +8,7 @@ var CouponSchema = new mongoose.Schema({
         unique: true,
         uppercase: true,
     },
+    coupon_code: { type: String, required: true },
     discount: {
         type: Number,
         required: true,
@@ -22,6 +23,11 @@ var CouponSchema = new mongoose.Schema({
     },
     quantity: {
         type: Number,
+    },
+    type_coupon: {
+        type: String,
+        default: 'Percent',
+        enum: ['Percent', 'Amount']
     }
 }, {
     timestamps: true,

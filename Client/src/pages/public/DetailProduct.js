@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 //HOOKS REACT -router-dom
 import { createSearchParams, useParams } from 'react-router-dom'
-import { apiGetroduct, apiGetProducts, apiUpdateCart, apiUpdateWishlist } from "../../apis";
+import { apiGetroduct, apiGetProducts, apiGetCart, apiUpdateWishlist, addProductToCart } from "../../apis";
 import { Breadcrumbs, Button, SelectQuantity, ProductInformation, CustomSlider, SelectOptions } from "../../components";
 import Slider from "react-slick/lib";
 import "slick-carousel/slick/slick.css";
@@ -17,6 +17,8 @@ import { toast } from "react-toastify";
 import { getCurrent } from "../../store/user/asyncActions";
 import { FaHeart } from "react-icons/fa6";
 import clsx from 'clsx'
+
+import { getCart } from "../../store/cart/cartSlice";
 
 const settings = {
     dots: false,
@@ -124,15 +126,13 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
     }, [quantity])
 
 
-    console.log('quantity :>> ', quantity);
+    // console.log('quantity :>> ', quantity);
     const handleChangeQuantity = useCallback((flag) => {
 
         // const updateCount = (product?.quantity) - 
         if (flag === 'minus' && quantity === 1) return
         if (flag === 'minus') setquantity(prev => +prev - 1)
         if (flag === 'plus') {
-
-
             setquantity(prev => {
 
                 if (+prev >= countPrd) {
@@ -150,6 +150,54 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
         e.stopPropagation()
         setCurrentImage(el)
     }
+    // const handleAddToCart = async () => {
+    //     if (!current) return Swal.fire({
+    //         title: 'Almost...',
+    //         text: 'Please login first!',
+    //         icon: 'info',
+    //         cancelButtonText: 'Not now!',
+    //         showCancelButton: true,
+    //         confirmButtonText: 'Go login page'
+    //     }).then((rs) => {
+    //         if (rs.isConfirmed) navigate({
+    //             pathname: `/${path.LOGIN}`,
+    //             search: createSearchParams({ redirect: location.pathname }).toString()
+
+    //         })
+
+    //     })
+    //     if (quantity > countPrd) {
+    //         setquantity(countPrd)
+    //         return toast.error("Bạn số lượng bạn có thể chọn là: " + countPrd)
+    //     }
+    //     else {
+    //         const response = await apiUpdateCart({ pid, color: varriants ? currentProduct.color : product?.color, quantity, price: currentProduct.price || product.price, title: product?.title })
+
+    //         if (response.success) {
+    //             toast.success(response.message)
+    //             dispatch(getCurrent())
+    //         }
+    //         else
+    //             toast.error(response.message)
+    //     }
+
+    // }
+
+
+    // useEffect(() => {
+    //     const fetchCart = async () => {
+    //         try {
+    //             const cartData = await apiGetCart();
+    //             console.log("XXX:::cartDatacartData", cartData);
+    //             dispatch(getCart(cartData));
+    //         } catch (error) {
+    //             console.error("Failed to fetch cart:", error);
+    //         }
+    //     };
+
+    //     fetchCart();
+    // }, []);
+
     const handleAddToCart = async () => {
         if (!current) return Swal.fire({
             title: 'Almost...',
@@ -162,26 +210,33 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
             if (rs.isConfirmed) navigate({
                 pathname: `/${path.LOGIN}`,
                 search: createSearchParams({ redirect: location.pathname }).toString()
-
             })
-
         })
         if (quantity > countPrd) {
             setquantity(countPrd)
             return toast.error("Bạn số lượng bạn có thể chọn là: " + countPrd)
         }
         else {
-            const response = await apiUpdateCart({ pid, color: varriants ? currentProduct.color : product?.color, quantity, price: currentProduct.price||product.price, title: product?.title })
+            try {
+                const response = await addProductToCart({
+                    userId: current._id,
+                    productId: pid,
+                    quantity: quantity,
+                    color: varriants ? currentProduct.color : product?.color,
+                });
+                console.log("response:::XXXX", response);
 
-            if (response.success) {
-                toast.success(response.message)
-                dispatch(getCurrent())
+                dispatch(getCart());
+                toast.success('The product was added successfully');
+            } catch (error) {
+                console.error(error);
+                toast.error("Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng.");
             }
-            else
-                toast.error(response.message)
         }
+    };
 
-    }
+
+
     const handleClickOptions = async (e, flag) => {
         e.stopPropagation()
         if (flag === 'WISHLIST') {
@@ -208,7 +263,7 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
                     <div className="h-[458px] w-[458px] overflow-hidden flex items-center justify-center object-cover-fill border">
 
 
-                    <img src={varriants ? currentProduct.thumb : currentImage} className="w-[1800px] h-[1500px] object-contain p-2" />
+                        <img src={varriants ? currentProduct.thumb : currentImage} className="w-[1800px] h-[1500px] object-contain p-2" />
                     </div>
 
                     <div className="w-[458px]">

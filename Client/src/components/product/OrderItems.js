@@ -1,28 +1,50 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import SelectQuantity from '../common/SelectQuantity'
 import { formatMoney, formatPrice } from '../../ultils/helper'
-import { apiDeleteCart } from '../../apis';
+import { apiDeleteCart, updateCartQuantity } from '../../apis';
 import { toast } from 'react-toastify';
 import { getCurrent } from '../../store/user/asyncActions';
 import withBase from '../../hocs/withBase';
 
 const OrderItems = ({ el, dispatch, navigate }) => {
-    console.log('el :>> ', el);
-    const [quantity, setquantity] = useState(1)
-    const handleQuantity = useCallback((number) => {
 
+
+    console.log("elelelelelelelelelelel", el);
+
+    const [quantity, setQuantity] = useState(el?.quantity || 1);
+
+    const handleQuantity = useCallback((number) => {
         if (!Number(number) || Number(number) < 1) {
-            return
+            return;
         } else {
-            setquantity(number)
+            setQuantity(number);
         }
-    }, [quantity])
+    }, []);
 
     const handleChangeQuantity = useCallback((flag) => {
-        if (flag === 'minus' && quantity === 1) return
-        if (flag === 'minus') setquantity(prev => +prev - 1)
-        if (flag === 'plus') setquantity(prev => +prev + 1)
-    }, [quantity])
+        if (flag === 'minus' && quantity === 1) return;
+        if (flag === 'minus') setQuantity(prev => +prev - 1);
+        if (flag === 'plus') setQuantity(prev => +prev + 1);
+    }, [quantity]);
+
+    const handleQuantityChange = useCallback(async (productId, newQuantity) => {
+        await updateCartQuantity(productId, newQuantity)
+            .then(data => {
+                console.log('Cart quantity updated successfully:', data);
+                // toast.success('Cart quantity updated successfully:');
+            })
+            .catch(error => {
+                console.error('Failed to update cart quantity:', error);
+                toast.error(error);
+            });
+    }, []);
+
+    // useEffect(() => {
+    //     if (el && el.product) {
+    //         handleQuantityChange(el.product._id, quantity);
+    //     }
+    // }, [quantity, el, handleQuantityChange]);
+
     const handelClickDelete = async (cartId) => {
         const response = await apiDeleteCart(cartId)
         if (response.success) {

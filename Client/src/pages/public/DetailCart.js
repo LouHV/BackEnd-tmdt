@@ -10,10 +10,13 @@ import emptyCart from '../../assets/cart-empty.png'
 
 const DetailCart = ({ navigate }) => {
     const { isLoggedIn, current } = useSelector(state => state.user)
+    const { cart } = useSelector(state => state.cart);;
     const handleCheckout = () => {
         navigate('/checkout')
     }
+
     if (!isLoggedIn) return <Navigate to={`/${path.LOGIN}`} replace={true} />
+
     return (
         <div className='w-full'>
             <div className='h-[81px] flex justify-center items-center bg-gray-100'>
@@ -37,14 +40,16 @@ const DetailCart = ({ navigate }) => {
                         Action
                     </span>
                 </div>
-                {current?.cart?.map(el => (
+                {cart?.cart_products?.map(el => (
                     <OrderItems el={el} key={el.id} />
                 ))}
 
                 <div className='w-main mx-auto flex flex-col mb-12 justify-center items-end gap-3'>
                     <span className='flex items-center gap-4 text-xl'>
-                        <span>{`Subtotal (${current?.cart?.length || 0} items): `}</span>
-                        <span className='text-main'>{`${formatMoney(formatPrice(current?.cart?.reduce((sum, el) => +el.price + sum, 0)))} VND`}</span>
+                        {/* <span>{`Subtotal (${current?.cart?.length || 0} items): `}</span> */}
+                        <span>{`Subtotal (${cart?.cart_count_product || 0} items): `}</span>
+                        {/* <span className='text-main'>{`${formatMoney(formatPrice(current?.cart?.reduce((sum, el) => +el.price + sum, 0)))} VND`}</span> */}
+                        <span className='text-main'>{`${formatMoney(formatPrice(cart?.cart_products.reduce((sum, el) => +el.price + sum, 0)))} VND`}</span>
                         <Button
                             handleOnClick={handleCheckout}
                         >Check out</Button>
@@ -52,7 +57,7 @@ const DetailCart = ({ navigate }) => {
                 </div>
             </div>}
 
-            {current?.cart?.length <= 0 && <div className='min-h-[450px] flex  justify-center items-center flex-col gap-2'>
+            {cart?.cart_count_product <= 0 && <div className='min-h-[450px] flex  justify-center items-center flex-col gap-2'>
                 <img src={emptyCart} alt='logo' className='w-[98px] h-[108px] object-contain rounded-full' />
                 <span className='text-gray-400 text-xl'>Your shopping cart is empty!</span>
                 <Button

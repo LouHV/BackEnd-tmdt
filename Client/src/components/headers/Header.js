@@ -3,7 +3,7 @@ import logo from '../../assets/logo.png'
 import icons from '../../ultils/icons'
 import { Link, createSearchParams } from "react-router-dom";
 import path from "../../ultils/path";
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import withBase from "../../hocs/withBase";
 import Swal from "sweetalert2";
 import useDebounce from "../../hooks/useDebounce";
@@ -11,10 +11,22 @@ import useDebounce from "../../hooks/useDebounce";
 import InputForm from "../input/inputForm";
 import { useForm } from "react-hook-form";
 
+import { getCart } from '../../store/cart/asyncActions'
+
 const Header = ({ navigate }) => {
-    const { FaCartShopping, FaRegHeart, IoSearch } = icons
-    const [inputSearch, setInputSearch] = useState('')
-    const { current } = useSelector(state => state.user)
+    const { FaCartShopping, FaRegHeart, IoSearch } = icons;
+    const [inputSearch, setInputSearch] = useState('');
+
+    const dispatch = useDispatch();
+    const { current } = useSelector(state => state.user);
+    const { cart } = useSelector((state) => state.cart);
+
+    useEffect(() => {
+        dispatch(getCart());
+        console.log("cart::", cart);
+    }, []);
+
+
     // const { register, formState: { errors }, handleSubmit, reset, watch } = useForm()
     const handleOnclick = () => {
         if (!current) return Swal.fire({
@@ -102,8 +114,8 @@ const Header = ({ navigate }) => {
                         handleOnclick()
                     }}>
                     <FaCartShopping color="red" size={24} />
-                    <span>{`${current?.cart?.length || 0} item(s)`}</span>
-
+                    {/* <span>{`${current?.cart?.length || 0} item(s)`}</span> */}
+                    <span>{`${cart?.cart_count_product || 0} item(s)`}</span>
                 </div>
 
             </div>

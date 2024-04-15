@@ -23,7 +23,7 @@ export const productSlice = createSlice({
         builder.addCase(actions.getNewproducts.fulfilled, (state, action) => {
             // Tắt trạng thái loading, lưu thông tin user vào store
             state.isLoading = false;
-            state.newProducts = action.payload;
+            state.newProduct = action.payload;
         });
 
         // Khi thực hiện action login thất bại (Promise rejected)

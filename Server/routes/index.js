@@ -12,6 +12,7 @@ const insert = require("./insert");
 
 const statisticRouter = require("./statistic");
 const brandCategoryRouter = require("./brand")
+const cart = require("./cart")
 
 
 const { notFound, errHandler } = require("../middlewares/errHander");
@@ -30,6 +31,8 @@ const routes = (app) => {
     app.use('/api/order', order);
     app.use('/api/insert', insert);
     app.use('/api/brandCategory', brandCategoryRouter)
+
+    app.use('/api/cart', cart)
 
 
     app.use(notFound);

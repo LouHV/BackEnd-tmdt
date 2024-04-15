@@ -40,7 +40,6 @@ const TopHeader = () => {
     if (message) Swal.fire('Opp!', message, 'info').then(() => {
       dispatch(clearMessage())
       navigate(`/${path.LOGIN}`)
-
     })
   }, [])
 

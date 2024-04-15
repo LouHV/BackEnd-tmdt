@@ -31,7 +31,7 @@ const ManageOrder = () => {
     },
     {
       id: 4,
-      name: "Shipper đã nhận hàng và đang giao"
+      name: "Đang giao"
     },
     {
       id: 5,
@@ -44,11 +44,8 @@ const ManageOrder = () => {
   ]
 
   const [editProduct, setEditProduct] = useState(null);
-
   // const [showOptions, setShowOptions] = useState(false);
   // const [selectedOrder, setSelectedOrder] = useState(null);
-
-
 
   const navigate = useNavigate()
   const location = useLocation()
@@ -56,10 +53,10 @@ const ManageOrder = () => {
   const { register, formState: { errors }, handleSubmit, reset, watch } = useForm()
   const [orders, setOrders] = useState(null)
   const [counts, setCounts] = useState(0)
+
+
   const handleSearchProducts = (data) => {
-    console.log('data :>> ', data);
   }
-  console.log('params :>> ', params);
   const fectchOrders = async (params) => {
     const response = await apiGetOrders({ ...params, limit: process.env.REACT_APP_LIMIT, sort: "-createdAt" })
     if (response.success) {
@@ -71,29 +68,66 @@ const ManageOrder = () => {
   const queryDecounce = useDebounce(watch('q'), 800)
 
   const updateOrderStatus = async (orderId, status) => {
-    // Gọi API để cập nhật trạng thái
-    // Ví dụ:
-    // const response = await apiUpdateOrderStatus(orderId, status);
-    // if (response.success) {
-    //   toast.success('Cập nhật trạng thái thành công');
-    //   fectchOrders(searchParams); // Làm mới danh sách đơn hàng
-    // } else {
-    //   toast.error('Cập nhật trạng thái thất bại');
-    // }
+    const requestOptions = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: status })
+      // body: { status: status }
+    };
+    const response = await fetch(`http://localhost:8080/api/order/status/${orderId}`, requestOptions);
+    const result = await response.json();
+    // const data = result.data;
+
+    if (result.success) {
+      toast.success('Cập nhật trạng thái thành công');
+
+      const searchParams = Object.fromEntries([...params]);
+      fectchOrders(searchParams);
+
+    } else {
+      toast.error('Cập nhật trạng thái thất bại');
+    }
   };
 
   const [showTooltip, setShowTooltip] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
 
-  const handleEditClick = (e) => {
-    setShowTooltip(true);
-    setTooltipPosition({ x: e.clientX, y: e.clientY });
+  const [tooltipStates, setTooltipStates] = useState({});
+
+
+
+  const handleEditClick = (e, orderId) => {
+    setTooltipStates(prev => ({
+      ...prev,
+      [orderId]: {
+        show: true,
+        position: { x: e.clientX, y: e.clientY }
+      }
+    }));
   };
 
-  const handleOptionSelect = (order_id, status) => {
-    // Logic để cập nhật trạng thái
-    setShowTooltip(false);
+  const handleOptionSelect = (orderId, status) => {
+    updateOrderStatus(orderId, status);
+
+    setTooltipStates(prev => ({
+      ...prev,
+      [orderId]: {
+        show: false,
+        position: { x: 0, y: 0 }
+      }
+    }));
   };
+
+  const handleCloseTooltip = (orderId) => {
+    setTooltipStates(prev => ({
+      ...prev,
+      [orderId]: {
+        show: false,
+        position: { x: 0, y: 0 }
+      }
+    }));
+  };
+
 
 
 
@@ -114,9 +148,8 @@ const ManageOrder = () => {
   }, [queryDecounce])
   //nosear
   useEffect(() => {
-    const searchParams = Object.fromEntries([...params])
-    console.log('object :>> ', searchParams);
-    fectchOrders(searchParams)
+    const searchParams = Object.fromEntries([...params]);
+    fectchOrders(searchParams);
   }, [params])
 
 
@@ -177,21 +210,46 @@ const ManageOrder = () => {
                 <td className="p-2 border border-black text-center">{`${el?.total}$ = ${formatMoney(formatPrice(Math.round(+el?.total * 24761)))} VND`}</td>
                 {/* <td className="p-2 border border-black text-center">{el?.status}</td> */}
                 <td className="p-2 border border-black text-center">
-                  {el?.status}
-                  <FaPen onClick={handleEditClick} />
-                  <Tooltip
+                  {STATUS.find(status => status.id == el.status)?.name || 'Unknown'}
+                  <FaPen onClick={(e) => handleEditClick(e, el._id)} />
+                  {/* <Tooltip
                     content={
-                      <div>
-                        {STATUS.map((option, index) => (
-                          <div key={index} onClick={() => handleOptionSelect(el._id, option.id)}>
+                      <div className="tooltip">
+                        {STATUS.map((option) => (
+                          <div
+                            key={option.id}
+                            onClick={() => handleOptionSelect(el._id, option.id)}
+                            className="option-item"
+                          >
                             {option.name}
                           </div>
                         ))}
                       </div>
                     }
-                    isVisible={showTooltip}
-                    style={{ left: tooltipPosition.x, top: tooltipPosition.y }}
+                    isVisible={tooltipStates[el._id]?.show}
+                    onClickOutside={() => handleCloseTooltip()}
+                    style={{ left: tooltipStates[el._id]?.position.x, top: tooltipStates[el._id]?.position.y }}
+                  /> */}
+                  <Tooltip
+                    content={
+                      <div className="tooltip">
+                        {STATUS.map((option) => (
+                          <div
+                            key={option.id}
+                            onClick={() => handleOptionSelect(el._id, option.id)}
+                            className="option-item"
+                          >
+                            {option.name}
+                          </div>
+                        ))}
+                      </div>
+                    }
+                    isVisible={tooltipStates[el._id]?.show}
+                    onMouseLeave={() => handleCloseTooltip(el._id)}
+                    style={{ left: tooltipStates[el._id]?.position.x, top: tooltipStates[el._id]?.position.y }}
                   />
+
+
                 </td>
 
                 <td className="p-2 border border-black text-center">{moment(el?.createdAt).format('DD/MM/YYYY')}</td>

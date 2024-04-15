@@ -8,27 +8,6 @@ const asyncHandler = require('express-async-handler')
 
 const createNewOrder = asyncHandler(async (req, res) => {
     const { _id } = req.user
-    // const { coupon } = req.body
-    // const userCart = await User.findById(_id).select('cart').populate('cart.product', 'title price')
-    // const products = userCart?.cart?.map(el => ({
-    //     product: el.product._id,
-    //     count: el.quantity,
-    //     color: el.color
-    // }))
-    // let total = userCart?.cart?.reduce((sum, el) => el.product.price * el.quantity + sum, 0)
-    // const createData = { products, total, oderBy: _id }
-    // if (coupon) {
-    //     const selectedCoupon = await Coupon.findById(coupon)
-    //     total = Math.round(total * (1 - +selectedCoupon?.disscount / 100) / 1000) * 1000 || total
-    //     createData.total = total
-    //     createData.coupon = coupon
-    // }
-    // const rs = await Order.create(createData)
-    // return res.json({
-    //     success: rs ? true : false,
-    //     createdOrder: rs ? rs : 'Cannot create new Order',
-    //     userCart
-    // })
     const { products, total, address, status } = req.body
     if (address) {
         await User.findByIdAndUpdate(_id, { address, cart: [] })
@@ -37,18 +16,13 @@ const createNewOrder = asyncHandler(async (req, res) => {
     if (status) data.status = status
     const rs = await Order.create(data)
     const orderedProducts = rs.products;
-    // console.log('orderedProducts :>> ', orderedProducts);
     for (const product of orderedProducts) {
-        // Truy cập vào bảng Product để lấy thông tin sản phẩm
         const productInfo = await Product.findById(product.product);
-        // console.log('productInfo :>> ', productInfo);
-        // Trừ đi số lượng đã đặt hàng từ quantity hiện tại
         const newQuantity = productInfo.quantity - product.quantity;
 
         // Tăng sold lên
         const newSold = +productInfo.sold + +product.quantity;
 
-        // Cập nhật thông tin sản phẩm trong bảng Product
         await Product.findByIdAndUpdate(product.product, {
             quantity: newQuantity,
             sold: newSold
@@ -68,20 +42,8 @@ const updateStatus = asyncHandler(async (req, res) => {
     return res.json({
         success: response ? true : false,
         createdOrder: response ? response : 'Something went wrong',
-        userCart
     })
 })
-
-// const getUserOder = asyncHandler(async (req, res) => {
-//     const { _id } = req.user
-//     const response = await Order.find({ oderBy: _id })
-//     return res.json({
-//         success: response ? true : false,
-//         createdOrder: response ? response : 'Something went wrong',
-//         userCart
-//     })
-// })
-
 
 const getUserOder = asyncHandler(async (req, res) => {
     let queryCommand = Order.find();
@@ -228,10 +190,42 @@ const getOrdersCountByDate = asyncHandler(async (req, res) => {
         throw new Error(err.message);
     }
 });
+
+
+const applyCouponToOrder = asyncHandler(async (req, res) => {
+    const { _id } = req.user;
+    const { couponCode } = req.body;
+
+    const coupon = await Coupon.findOne({ coupon_code: couponCode, expiry: { $gte: new Date() } });
+    if (!coupon) {
+        return res.status(400).json({ success: false, message: 'Invalid or expired coupon code' });
+    }
+
+    const order = await Order.findOne({ orderBy: _id, status: 1 });
+    if (!order) {
+        return res.status(404).json({ success: false, message: 'Order not found' });
+    }
+
+    let discountedTotal = order.total;
+    if (coupon.type_coupon === 'Percent') {
+        discountedTotal -= order.total * (coupon.discount / 100);
+    } else if (coupon.type_coupon === 'Amount') {
+        discountedTotal -= coupon.discount;
+    }
+
+
+    order.total = discountedTotal;
+    await order.save();
+
+    return res.status(200).json({ success: true, message: 'Coupon applied successfully', order });
+});
+
+
 module.exports = {
     createNewOrder,
     updateStatus,
     getUserOder,
     getOders,
-    getOrdersCountByDate
+    getOrdersCountByDate,
+    applyCouponToOrder
 }
