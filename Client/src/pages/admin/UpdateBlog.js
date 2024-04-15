@@ -149,9 +149,10 @@ const UpdateBlog = ({ editBlog, setEditBlog,fectchBlogs }) => {
                         </div>
                     }
 
-                    <div className='mt-4'>
-                        <Button type='submit'>Update</Button>
-                        <Button handleOnClick={() => setEditBlog(null)}>Cancel</Button>
+                    
+                    <div className='mt-4 gap-2 flex'>
+                        <Button type='submit' style='px-4 py-2 rounded-md text-white my-2 bg-blue-500 text-semibold hover:bg-blue-400'>Update</Button>
+                        <Button style='px-4 py-2 rounded-md text-white my-2 bg-main text-semibold hover:bg-red-400' handleOnClick={() => setEditBlog(null)}>Cancel</Button>
                     </div>
                 </form>
             </div>

@@ -93,7 +93,7 @@ const Coupon = () => {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full max-w-screen">
       <h1 className="h-[75px] flex justify-between items-center text-3xl font-bold px-4 border-b">
         <span>Manage Coupons</span>
       </h1>

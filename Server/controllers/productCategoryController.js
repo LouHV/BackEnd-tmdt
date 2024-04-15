@@ -1,13 +1,19 @@
 const ProductCategory = require('../models/productCategoryModel')
 const asyncHandler = require('express-async-handler')
 const createCategory = asyncHandler(async (req, res) => {
-    const response = await ProductCategory.create(req.body)
+    if (req.file) req.body.image = req.file.path;
+    // Chuyển đổi chuỗi thành mảng
+    const brandArray = req.body.brand.split(',');
+
+    // Lưu mảng vào req.body hoặc thực hiện các thao tác khác với mảng
+    req.body.brand = brandArray;
+
+    const response = await ProductCategory.create(req.body);
     return res.json({
         success: response ? true : false,
-        createCategory: response ? response : 'Cannot create new Product-category'
-    })
-
-})
+        message: response ? "Created" : 'Cannot create new Product-category'
+    });
+});
 const getAllCategory = asyncHandler(async (req, res) => {
     const queries = { ...req.query }
     // tách các trường đặc biệt ra khỏi query
@@ -64,6 +70,11 @@ const getAllCategory = asyncHandler(async (req, res) => {
 
 const updateCategory = asyncHandler(async (req, res) => {
     const { prdcId } = req.params
+    if (req.file) req.body.image = req.file.path;
+    // Chuyển đổi chuỗi thành mảng
+    const brandArray = req.body.brand.split(',');
+    // Lưu mảng vào req.body hoặc thực hiện các thao tác khác với mảng
+    req.body.brand = brandArray;
     const response = await ProductCategory.findByIdAndUpdate(prdcId, req.body, { new: true })
     return res.json({
         success: response ? true : false,

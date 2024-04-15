@@ -35,6 +35,7 @@ import {
   MyCart,
   History,
   WishList,
+  ChangePass,
 } from './pages/member'
 import { getCategories } from './store/app/asyncActions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -76,6 +77,7 @@ function App() {
           {/* //mememe */}
           <Route path={path.MEMBER} element={<MemberLayout />}>
             <Route path={path.PERSONAL} element={<Personal />} />
+            <Route path={path.CHANGEPASS} element={<ChangePass />} />
             <Route path={path.HISTORY} element={<History />} />
             <Route path={path.WISHLIST} element={<WishList />} />
             <Route path={path.MY_CART} element={<MyCart />} />

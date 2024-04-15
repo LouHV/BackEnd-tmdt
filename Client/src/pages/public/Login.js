@@ -32,7 +32,7 @@ const Login = () => {
             setisForgotPassword(false)
             setemail('')
             toast.info(response.message, { theme: 'colored' })
-        } else toast.info(response.message, { theme: 'colored' })
+        } else {toast.error(response?.data?.message, { theme: 'colored' })}
     }
     //
 
@@ -76,7 +76,7 @@ const Login = () => {
 
                         <Button handleOnClick={handleForgotPassword}
                             style='px-4 py-2 rounded-md text-white bg-blue-500 text-semibold my-2'>
-                            Submit
+                            Send
                         </Button>
                         <Button
                             handleOnClick={() => { setisForgotPassword(false) }} >Back

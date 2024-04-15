@@ -360,7 +360,7 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
                 <h3 className="text-[20px] uppercase font-semibold py-[15px] border-2 border-t-main">OTHER CUSTINERS ALSO BUY:</h3>
                 <CustomSlider normal={true} products={relatedProduct} />
             </div>
-            <div className="h-[500px]"></div>
+
         </div>
     )
 }

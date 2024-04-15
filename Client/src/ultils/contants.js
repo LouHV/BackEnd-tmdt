@@ -288,16 +288,16 @@ export const memberSidebar = [
     {
         id: 1,
         type: 'PARENT',
-        text: 'Thông tin cá nhân',
+        text: 'Personal information',
         submenu: [
             {
-                text: 'Hồ Sơ',
+                text: 'User information',
                 path: `/${path.MEMBER}/${path.PERSONAL}`
             },
-            // {
-            //     text: 'Địa chỉ',
-            //     path: `/${path.ADMIN}/${path.MANAGE_PRODUCTS}`
-            // },
+            {
+                text: 'Change Password',
+                path: `/${path.MEMBER}/${path.CHANGEPASS}`
+            },
         ]
     },
     {

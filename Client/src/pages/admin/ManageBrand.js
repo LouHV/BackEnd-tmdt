@@ -7,11 +7,13 @@ import { apiDeleteBrand, apiGetBrand, apiUpdateBrands } from '../../apis';
 import Swal from 'sweetalert2'
 import { format } from 'date-fns';
 import ModalUpdateBrand from './modalUpdateBrand/ModalUpdateBrand';
+import { MdDeleteForever } from 'react-icons/md';
+import { FaRegEdit } from 'react-icons/fa';
 
 const ManageBrand = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [coupons, setBrands] = useState(null);
+    const [brands, setBrands] = useState(null);
     const [updateBrands, setUpdateBrands] = useState(null);
     const [queries, setQueries] = useState({
         q: "",
@@ -34,7 +36,7 @@ const ManageBrand = () => {
         });
         if (response.success) setBrands(response);
     };
-    console.log('coupons :>> ', coupons);
+    console.log('brands :>> ', brands);
     const queriesDebounce = useDebounce(queries.q, 800);
     useEffect(() => {
         const queries = Object.fromEntries([...params]);
@@ -119,21 +121,21 @@ const ManageBrand = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {coupons?.Brands?.map((el, idx) => (
+                        {brands?.Brands?.map((el, idx) => (
                             <tr key={el._id} className="text-center border border-black">
                                 <td className="py-4 border border-black">{idx + 1}</td>
                                 <td className="py-4 border border-black">{el?.title}</td>
                                 <td className="py-4 border border-black">{el?.createdAt ? format(new Date(el?.createdAt), 'dd/MM/yyyy') : 'Invalid date'}</td>
-                                <td className="py-4 border border-black ">
+                                <td className="py-4 flex flex-col items-center gap-2">
                                     <span
-                                        className="px-3 text-orange-600 hover:underline cursor-pointer border-r border-r-gray-700"
-                                        onClick={() => handleOpenModal(el)}>
-                                        Edit
+                                        className="px-2 text-sky-600 hover:underline cursor-pointer"
+                                        onClick={() => handleOpenModal(el)} title='edit'
+                                        ><FaRegEdit size={24} />
                                     </span>
                                     <span
                                         onClick={() => handldeDeleteBrand(el._id)}
-                                        className='px-2 text-orange-600 hover:underline cursor-pointer'>
-                                        Delete
+                                        className='px-2 text-orange-600 hover:underline cursor-pointer'title='Delete'
+                                        ><MdDeleteForever size={24} />
                                     </span>
                                 </td>
                             </tr>
@@ -143,7 +145,7 @@ const ManageBrand = () => {
                 <div className="w-ful text-rightx">
                     <Pagination
                         name='Brands'
-                        totalCount={coupons?.counts} />
+                        totalCount={brands?.counts} />
                 </div>
             </div>
             {isModalOpen && (
