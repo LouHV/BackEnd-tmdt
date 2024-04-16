@@ -13,19 +13,23 @@ const getCart = asyncHandler(async (req, res) => {
     if (!cart) {
         return res.status(404).json({ success: false, message: 'Cart not found' });
     }
-    res.status(200).json({ success: true, cart });
-    // return res.json({
-    //     success: cart ? true : false,
-    //     cart: cart ? cart : 'Something went wrong'
-    // })
+    // res.status(200).json({ success: true, cart });
+    return res.json({
+        success: cart ? true : false,
+        cart: cart ? cart : 'Something went wrong'
+    })
 });
 
 const deleteCart = asyncHandler(async (req, res) => {
+    console.log('req :>> ', req);
     const { _id } = req.user;
-    const result = await Carts.deleteOne({ cart_userId: _id });
-    if (result.deletedCount === 0) {
-        return res.status(404).json({ success: false, message: 'Cart not found' });
-    }
+    const { cartId } = req.params
+    const response = await Carts.findByIdAndUpdate(_id, { $pull: { cart_products: { _id: cartId } } }, { new: true })
+    console.log('response :>> ', response);
+    // const result = await Carts.deleteOne({ cart_userId: _id });
+    // if (result.deletedCount === 0) {
+    //     return res.status(404).json({ success: false, message: 'Cart not found' });
+    // }
     res.status(200).json({ success: true, message: 'Cart deleted successfully' });
 });
 

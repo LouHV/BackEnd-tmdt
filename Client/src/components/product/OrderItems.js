@@ -57,10 +57,10 @@ const OrderItems = ({ el, dispatch, navigate }) => {
         <div className='w-main mx-auto grid my-8 p-3 border grid-cols-10 '>
             <span className='col-span-5  w-full text-center cursor-pointer'>
                 <div className='flex gap-2'
-                    onClick={e => navigate(`/${el.product?.category}/${el.product?._id}/${el.product?.title}`)}>
-                    <img src={el.product?.thumb} alt='thumb' className='w-[80px] h-[80px] object-cover' />
+                    onClick={e => navigate(`/${el?.category}/${el?.product}/${el?.title}`)}>
+                    <img src={el?.thumb} alt='thumb' className='w-[80px] h-[80px] object-cover' />
                     <div className='flex flex-col gap-1'>
-                        <span className='text-sm text-main'>{el.product?.title}</span>
+                        <span className='text-sm text-main'>{el?.title}</span>
                         <span className='text-[10px]'>{el.color}</span>
                         {/* <span className='text-sm'>{formatMoney(el.product?.price) + ' VND'}</span> */}
                     </div>
