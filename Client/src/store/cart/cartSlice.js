@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { addProductToCart } from '../../apis';
 import * as actions from '../cart/asyncActions'
 
-
 const cartSlice = createSlice({
     name: 'cart',
     initialState: {
