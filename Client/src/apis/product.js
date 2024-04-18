@@ -53,20 +53,23 @@ export const apiGetUserOrders = (params) => axios({
 })
 
 export const addProductToCart = (data) => axios({
-    url: '/cart',
+    url: '/cart/',
     method: 'Post',
     data
 })
 
-export const apiGetCart = () => {
+export const apiGetCart = () => 
     axios({
-        url: '/cart',
-        method: 'Get'
-    })
-}
+        url: '/cart/detail-cart',
+        method: 'Get',    
+    })  
 
 export const updateCartQuantity = (data) => axios({
     url: '/cart/quantity',
     method: 'Put',
     data
+})
+export const apiDeleteCart = (cartId) => axios({
+    url: '/cart/' + cartId,
+    method: 'DELETE',
 })

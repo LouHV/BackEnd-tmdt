@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Breadcrumbs, Button, SelectQuantity } from '../../components'
 import withBase from '../../hocs/withBase'
@@ -7,14 +7,17 @@ import { Navigate } from 'react-router-dom'
 import path from '../../ultils/path'
 import OrderItems from '../../components/product/OrderItems'
 import emptyCart from '../../assets/cart-empty.png'
+import { getCart } from '../../store/cart/asyncActions'
+import { apiGetCart } from '../../apis'
 
-const DetailCart = ({ navigate }) => {
+const DetailCart = ({ navigate,dispatch }) => {
     const { isLoggedIn, current } = useSelector(state => state.user)
-    const { cart } = useSelector(state => state.cart);;
+    const { cart } = useSelector(state => state.cart);
+    
     const handleCheckout = () => {
         navigate('/checkout')
     }
-
+ 
     if (!isLoggedIn) return <Navigate to={`/${path.LOGIN}`} replace={true} />
 
     return (

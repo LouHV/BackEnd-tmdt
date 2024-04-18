@@ -13,6 +13,7 @@ var cartSchema = new Schema({
 
     cart_products: [{
         product: { type: Schema.Types.ObjectId, ref: 'Product' },
+        category: String,
         quantity: Number,
         color: String,
         price: Number,

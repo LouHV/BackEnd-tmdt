@@ -5,9 +5,9 @@ const CartController = require("../controllers/cartController")
 const { verifyAccessToken } = require('../middlewares/verifyToken')
 const uploader = require('../config/cloundinary.config')
 
+router.get('/detail-cart', [verifyAccessToken], CartController.getCart)
 router.post('/', [verifyAccessToken], CartController.addProductToCart)
-router.get('/', [verifyAccessToken], CartController.getCart)
 router.put('/quantity', [verifyAccessToken], CartController.updateCartQuantity);
-router.delete('/', [verifyAccessToken], CartController.deleteCart);
+router.delete('/:cartId', [verifyAccessToken], CartController.deleteCart);
 
 module.exports = router;

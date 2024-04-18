@@ -227,6 +227,7 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
                 console.log("response:::XXXX", response);
 
                 dispatch(getCart());
+                dispatch(getCurrent());
                 toast.success('The product was added successfully');
             } catch (error) {
                 console.error(error);

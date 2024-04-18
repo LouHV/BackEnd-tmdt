@@ -193,7 +193,7 @@ const deleteBlog = asyncHandler(async (req, res) => {
     const blog = await Blog.findByIdAndDelete(blogId)
     return res.json({
         success: blog ? true : false,
-        result: blo || 'Something went wrong'
+        result: blog || 'Something went wrong'
     })
 })
 
