@@ -84,11 +84,11 @@ const Personal = () => {
             <span className='ml-2'>{HideEmail(current?.email)}</span>
           </div>
 
-          <div className='flex items-center'>
+          {/* <div className='flex items-center'>
             <span className='text-gray-500'>Phone:</span>
             <span className='ml-2'>{HidePhoneNumber(current?.mobile)}</span>
             <span className='ml-4 underline text-blue-500 cursor-pointer'>Change</span>
-          </div>
+          </div> */}
           <InputForm
             label='Phone:'
             register={register}

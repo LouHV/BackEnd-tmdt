@@ -29,7 +29,7 @@ const Coupon = () => {
 
   const fectchCoupon = async (params) => {
     const response = await apiGetCoupon({
-      ...params,
+      sort: '-createdAt', ...params,
       limit: process.env.REACT_APP_LIMIT,
     });
     if (response.success) setCoupons(response);

@@ -6,9 +6,9 @@ import Button from '../buttons/Button';
 
 const Cash = ({ navigate, amount, payload, setIsSuccess }) => {
     const handleSaveOrder = async () => {
+        console.log('response :>> ', payload);
 
         const response = await apiCreateOrder(payload)
-        console.log('response :>> ', payload);
         if (response.success) {
             setIsSuccess(true)
             setTimeout(() => {

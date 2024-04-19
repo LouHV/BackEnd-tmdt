@@ -2,6 +2,7 @@ const Order = require('../models/oderModel')
 const User = require("../models/userModel")
 const Coupon = require("../models/couponModel")
 const Product = require("../models/productModel")
+const Carts = require('../models/cart')
 
 const asyncHandler = require('express-async-handler')
 
@@ -28,6 +29,7 @@ const createNewOrder = asyncHandler(async (req, res) => {
             sold: newSold
         });
     }
+    await Carts.deleteOne({ cart_userId: _id });
     return res.json({
         success: rs ? true : false,
         rs: rs ? rs : 'Something went wrong'

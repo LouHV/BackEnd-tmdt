@@ -5,6 +5,7 @@ import { apiDeleteCart, updateCartQuantity } from '../../apis';
 import { toast } from 'react-toastify';
 import { getCurrent } from '../../store/user/asyncActions';
 import withBase from '../../hocs/withBase';
+import { MdDeleteForever } from 'react-icons/md';
 
 const OrderItems = ({ el, dispatch, navigate }) => {
 
@@ -86,8 +87,8 @@ const OrderItems = ({ el, dispatch, navigate }) => {
             <span className='col-span-1 w-full text-center'>
                 <div
                     onClick={() => handelClickDelete(el?._id)}
-                    className='flex w-full h-full items-center justify-center hover:text-main hover:underline cursor-pointer'>
-                    Delete
+                    className='flex w-full h-full items-center justify-center text-gray-500 hover:text-main hover:underline cursor-pointer'>
+                    <MdDeleteForever size={24} />
                 </div>
             </span>
         </div>

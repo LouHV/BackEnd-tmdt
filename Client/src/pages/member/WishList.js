@@ -6,7 +6,7 @@ const WishList = () => {
   const { current } = useSelector(s => s.user);
   const { cart } = useSelector(state => state.cart)
   return (
-    <div className='w-full relative px-4 bg-gray-100 min-h-[500px] p-5 mt-5 rounded-lg'>
+    <div className='w-full relative px-4 bg-gray-100 min-h-[500px] p-5 mt-5 rounded-lg mb-2'>
       <header className='text-3xl py-4 border-b border-b-gray-300 '>
         My wishlist
       </header>

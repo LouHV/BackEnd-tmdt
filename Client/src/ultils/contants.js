@@ -33,11 +33,7 @@ export const navigation = [
         value: 'Coupon',
         path: `/${path.COUPONS}`
     },
-    {
-        id: 4,
-        value: 'FAQs',
-        path: `/${path.FAQS}`
-    }
+   
 ]
 
 export const productInforTabs = [
@@ -319,3 +315,29 @@ export const memberSidebar = [
         path: `/${path.MEMBER}/${path.WISHLIST}`
     },
 ]
+export const STATUS = [
+    {
+      id: 1,
+      name: "Chưa thanh toán"
+    },
+    {
+      id: 2,
+      name: "Đã thanh toán"
+    },
+    {
+      id: 3,
+      name: "Xác nhận đơn"
+    },
+    {
+      id: 4,
+      name: "Đang giao"
+    },
+    {
+      id: 5,
+      name: "Hoàn thành"
+    },
+    {
+      id: 6,
+      name: "Huỷ đơn"
+    }
+  ]

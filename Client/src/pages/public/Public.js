@@ -12,7 +12,7 @@ const Public = () => {
                 <Outlet />
 
             </div>
-            <div className="fixed bottom-0 right-0  p-2 m-2 bg-red-500">Chat</div>
+            {/* <div className="fixed bottom-0 right-0  p-2 m-2 bg-red-500">Chat</div> */}
             <Footer />
         </div>
 

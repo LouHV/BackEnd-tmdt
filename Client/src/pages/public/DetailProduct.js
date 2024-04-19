@@ -221,8 +221,10 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
                 const response = await addProductToCart({
                     userId: current._id,
                     productId: pid,
-                    quantity: quantity,
+                    quantity: varriants ? currentProduct.quantity : quantity,
                     color: varriants ? currentProduct.color : product?.color,
+                    thumb: varriants ? currentProduct.thumb : product?.thumb,
+                    price: varriants ? currentProduct.price : product?.price,
                 });
                 console.log("response:::XXXX", response);
 

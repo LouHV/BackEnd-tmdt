@@ -88,7 +88,7 @@ const SearchPrd = () => {
                 </div>
                 <div className="w-main border p-4 flex justify-between mt-4 m-auto">
                     <div className="w-4/5 flex-auto flex items-center gap-2">
-                        <span className="font-semibold text-sm">Filter by</span>
+                        
                     </div>
                     <div className="w-1/5 flex flex-col items-center gap-2">
                         <span className="font-semibold text-sm">Sort by</span>
