@@ -51,7 +51,6 @@ const addProductToCart = asyncHandler(async (req, res) => {
         cart.cart_products[productIndex].price += price;
     } else {
         const product = await Product.findById(productId);
-        console.log('product :>> ', product);
         if (!product) {
             return res.status(404).json({ success: false, message: 'Product not found' });
         }
