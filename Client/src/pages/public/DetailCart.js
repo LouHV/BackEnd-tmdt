@@ -60,7 +60,7 @@ const DetailCart = ({ navigate, dispatch }) => {
                 </div>
             </div>}
 
-            {cart?.cart_count_product <= 0 && <div className='min-h-[450px] flex  justify-center items-center flex-col gap-2'>
+            {cart?.cart_products?.length == null && <div className='min-h-[450px] flex  justify-center items-center flex-col gap-2'>
                 <img src={emptyCart} alt='logo' className='w-[98px] h-[108px] object-contain rounded-full' />
                 <span className='text-gray-400 text-xl'>Your shopping cart is empty!</span>
                 <Button

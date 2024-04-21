@@ -5,6 +5,8 @@ import InputForm from '../../components/input/inputForm';
 import { Pagination } from '../../components';
 import { useSearchParams } from 'react-router-dom';
 import moment from 'moment';
+import { formatMoney, formatPrice } from '../../ultils/helper';
+import { STATUS } from '../../ultils/contants';
 
 const History = () => {
   const [orders, setOrders] = useState(null)
@@ -43,7 +45,7 @@ const History = () => {
       </div>
       <div className="w-ful text-rightx">
         <table className="table-auto mb-6 w-full">
-          <thead className="font-bold  text-[13px] border border-black text-center bg-sky-700 text-white">
+          <thead className="font-bold  text-[13px] border border-black text-center bg-main text-white">
             <tr>
               <th className="px-4 py-2 border border-black">Stt</th>
               <th className="px-4 py-2 border border-black">Products</th>
@@ -62,12 +64,13 @@ const History = () => {
                 <td className="p-2 border border-black text-center">
                   <span className='flex flex-col text-left'>
                     {el?.products.map(item => <span key={item._id}>
-                      {`${item?.title} - ${item.color} - ${item.price} VND`}
+                      {`${item?.title} - ${item.color} - ${item.price} VNĐ`}
                     </span>)}
                   </span>
                 </td>
-                <td className="p-2 border border-black text-center">{`${el?.total}$`}</td>
-                <td className="p-2 border border-black text-center">{el?.status}</td>
+                <td className="p-2 border border-black text-center">{`${formatMoney(formatPrice(el?.total))} VNĐ`}</td>
+                <td className="p-2 border border-black text-center"> {STATUS.find(status => status.id == el.status)?.name || 'Unknown'}
+                </td>
 
                 <td className="p-2 border border-black text-center">{moment(el?.createdAt).format('DD/MM/YYYY')}</td>
 

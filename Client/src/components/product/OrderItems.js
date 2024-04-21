@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { getCurrent } from '../../store/user/asyncActions';
 import { updateCartQuantity, deleteCartProduct } from '../../store/cart/asyncActions';
 import withBase from '../../hocs/withBase';
+import { MdDeleteForever } from 'react-icons/md';
 
 const OrderItems = ({ el, dispatch, navigate }) => {
     console.log(el, "el::XX");

@@ -14,6 +14,8 @@ const style = { "layout": "vertical" };
 
 // Custom component to wrap the PayPalButtons and show loading spinner
 const ButtonWrapper = ({ currency, showSpinner, amount, payload, setIsSuccess }) => {
+    console.log('response :>> ', payload);
+
     const [{ isPending, options }, dispatch] = usePayPalScriptReducer();
     const navigate = useNavigate()
     useEffect(() => {
@@ -27,9 +29,8 @@ const ButtonWrapper = ({ currency, showSpinner, amount, payload, setIsSuccess })
 
     }, [currency, showSpinner])
     const handleSaveOrder = async () => {
-        
+        payload.total *= 23500; 
         const response = await apiCreateOrder(payload)
-        console.log('response :>> ', payload);
         if (response.success) {
             setIsSuccess(true)
             setTimeout(() => {
@@ -50,7 +51,7 @@ const ButtonWrapper = ({ currency, showSpinner, amount, payload, setIsSuccess })
                 fundingSource={undefined}
                 createOrder={(data, actions) => actions.order.create({
                     purchase_units: [
-                        { amount: { currency_code: currency, value: amount } }
+                        { amount: { currency_code: currency, value: amount} }
                     ]
                 }).then(orderId => orderId)
 

@@ -16,6 +16,9 @@ const Checkout = ({ dispatch, navigate }) => {
 
     const { current } = useSelector(state => state.user)
 
+    const { cart } = useSelector(state => state.cart);
+    
+
     const totalOrder = Math.round(current?.cart?.reduce((sum, el) => +el.price + sum, 0) / 24761)
 
     const [paymentMethod, setPaymentMethod] = useState('');
@@ -80,8 +83,8 @@ const Checkout = ({ dispatch, navigate }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {current?.cart.map(el => (<tr className='border w-full ' key={el._id}>
-                                <td className='p-2 text-left '>{el?.product.title}</td>
+                            {cart?.cart_products?.map(el => (<tr className='border w-full ' key={el._id}>
+                                <td className='p-2 text-left '>{el?.title}</td>
                                 <td className='p-2 text-center'>{el.quantity}</td>
                                 <td className='p-2 text-right'>{`${formatMoney(el.price)} VND`}</td>
                             </tr>))}
@@ -122,8 +125,8 @@ const Checkout = ({ dispatch, navigate }) => {
 
                 <div className='w-main mx-auto flex flex-col mb-12 justify-center items-end gap-3'>
                     <span className='flex items-center gap-4 text-xl'>
-                        <span className='font-medium'>{`Subtotal (${current?.cart?.length || 0} items): `}</span>
-                        <span className='text-main'>{!haveCoupon ? `${formatMoney(formatPrice(current?.cart?.reduce((sum, el) => (+el.price + sum), 0)))} ${haveCoupon} VND` : `${formatMoney(formatPrice(current?.cart?.reduce((sum, el) => (+el.price + sum) * haveCoupon, 0)))} ${haveCoupon} VND`}</span>
+                        <span className='font-medium'>{`Subtotal (${cart?.cart_products?.length || 0} items): `}</span>
+                        <span className='text-main'>{!haveCoupon ? `${formatMoney(formatPrice(cart?.cart_products?.reduce((sum, el) => (+el.price + sum), 0)))} ${haveCoupon} VND` : `${formatMoney(formatPrice(current?.cart?.reduce((sum, el) => (+el.price + sum) * haveCoupon, 0)))} ${haveCoupon} VND`}</span>
 
                     </span>
                 </div>
@@ -132,18 +135,18 @@ const Checkout = ({ dispatch, navigate }) => {
                     <select className='rounded border border-gray-300' name="paymentMethod" onChange={handleInputChange}>
                         <option value="">Cash</option>
                         <option value="paypal">Paypal</option>
-                        <option value="vnpay">VNPay</option>
+                        <option value="momo">Momo</option>
                     </select>
                 </div>
 
                 {paymentMethod.paymentMethod === "" && <div className='w-full justify-center'>
                     <Cash
                         payload={{
-                            products: current?.cart,
-                            total: Math.round(current?.cart?.reduce((sum, el) => +el.price + sum, 0) ),
+                            products: cart?.cart_products,
+                            total: Math.round(cart?.cart_products?.reduce((sum, el) => +el.price + sum, 0) ),
                             orderBy: current?._id,
                             address: current?.address,
-                            status: 0
+                            status: 1
                         }}
                         setIsSuccess={setIsSuccess}
                         />
@@ -151,14 +154,15 @@ const Checkout = ({ dispatch, navigate }) => {
                 {paymentMethod.paymentMethod === "paypal" && <div className='w-full justify-center'>
                     <Paypal
                         payload={{
-                            products: current?.cart,
-                            total: Math.round(current?.cart?.reduce((sum, el) => +el.price + sum, 0) / 24761),
+                            products:cart?.cart_products,
+                            total: Math.round(cart?.cart_products?.reduce((sum, el) => +el.price + sum, 0) / 24761),
                             orderBy: current?._id,
                             address: current?.address,
+                            status: 2
                             
                         }}
                         setIsSuccess={setIsSuccess}
-                        amount={Math.round(current?.cart?.reduce((sum, el) => +el.price + sum, 0) / 24761)} />
+                        amount={Math.round(cart?.cart_products?.reduce((sum, el) => +el.price + sum, 0) / 24761)} />
                 </div>}
             </div>
         </div>

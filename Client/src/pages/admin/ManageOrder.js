@@ -186,12 +186,12 @@ const ManageOrder = () => {
           <thead className="font-bold  text-[13px] border border-black text-center bg-sky-700 text-white">
             <tr>
               <th className="px-4 py-2 border border-black">Stt</th>
-              <th className="px-4 py-2 border border-black">Products</th>
-              <th className="px-4 py-2 border border-black">Total</th>
-              <th className="px-4 py-2 border border-black">Status</th>
               <th className="px-4 py-2 border border-black">CreatedAt</th>
               <th className="px-4 py-2 border border-black">Order By</th>
-              <th className="px-4 py-2 border border-black">Actions</th>
+              <th className="px-4 py-2 border border-black">Products</th>
+              <th className="px-4 py-2 border border-black">Total</th>
+              <th className="px-4 py-2 border border-black">Coupon</th>
+              <th className="px-4 py-2 border border-black">Status</th>
 
 
             </tr>
@@ -200,15 +200,19 @@ const ManageOrder = () => {
             {orders?.map((el, idx) => (
               <tr key={el._id} className="text-center border border-black">
                 <td className="p-2 border border-black text-center">{((+params.get('page') > 1 ? +params.get('page') - 1 : 0) * process.env.REACT_APP_LIMIT) + idx + 1}</td>
+
+                <td className="p-2 border border-black text-center">{moment(el?.createdAt).format('DD/MM/YYYY')}</td>
                 <td className="p-2 border border-black text-center">
+                  <div className='flex items-center gap-2'><img src={el?.orderBy?.avatar || avadf} className='h-[30px] w-[30px] rounded-full object-contain' />
+                    {`${el?.orderBy?.firstname} ${el?.orderBy?.lastname}`}</div></td><td className="p-2 border border-black text-center">
                   <span className='flex flex-col text-left'>
                     {el?.products.map(item => <span key={item._id}>
-                      {`${item?.title} - ${item.color} - sl: ${item.quantity} - ${item.price} VND`}
+                      {`${item?.title} - ${item.color} - sl: ${item.quantity} - ${item.price} VNĐ`}
                     </span>)}
                   </span>
                 </td>
-                <td className="p-2 border border-black text-center">{`${el?.total}$ = ${formatMoney(formatPrice(Math.round(+el?.total * 24761)))} VND`}</td>
-                {/* <td className="p-2 border border-black text-center">{el?.status}</td> */}
+                <td className="p-2 border border-black text-center">{`${formatMoney(formatPrice(Math.round(el?.total)))} VNĐ`}</td>
+                <td className="p-2 border border-black text-center"></td>
                 <td className="p-2 border border-black text-center">
                   {STATUS.find(status => status.id == el.status)?.name || 'Unknown'}
                   <FaPen onClick={(e) => handleEditClick(e, el._id)} />
@@ -252,23 +256,7 @@ const ManageOrder = () => {
 
                 </td>
 
-                <td className="p-2 border border-black text-center">{moment(el?.createdAt).format('DD/MM/YYYY')}</td>
-                <td className="p-2 border border-black text-center">
-                  <div className='flex items-center gap-2'><img src={el?.orderBy?.avatar || avadf} className='h-[30px] w-[30px] rounded-full object-contain' />
-                    {`${el?.orderBy?.firstname} ${el?.orderBy?.lastname}`}</div></td>
 
-
-
-                {/* <td className="py-4">
-                  <span
-                    className="px-2 text-orange-600 hover:underline cursor-pointer"
-                    onClick={() => setEditProduct(el)}
-                  >Edit
-                  </span>
-                  <span
-                    onClick={() => handldeDeleteProduct(el._id)}
-                    className='px-2 text-orange-600 hover:underline cursor-pointer'>Remove</span>
-                </td> */}
               </tr>
             ))}
           </tbody>

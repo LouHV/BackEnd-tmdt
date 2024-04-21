@@ -103,7 +103,7 @@ const ManageCategory = () => {
                   </div>
                 </td>
                 <td className="py-2 border border-black">{el?.title}</td>
-                <td className="py-2 border border-black">{el?.brand}</td>
+                <td className="py-2 border border-black">{Array.isArray(el.brand) ? el.brand.join(', ') : el.brand}</td>
 
                 <td className="py-2 border border-black">{el?.createdAt ? format(new Date(el?.createdAt), 'dd/MM/yyyy') : 'Invalid date'}</td>
                 <td className="py-2 flex flex-col items-center gap-2">

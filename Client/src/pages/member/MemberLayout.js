@@ -11,7 +11,7 @@ const MemberLayout = () => {
   return (
     <div className=' flex container w-main '>
       <MemberSidebar />
-      <div className='flex-auto text-black bg-white min-h-700px pb-10 '><Outlet /></div>
+      <div className='flex-auto text-black bg-white min-h-screen pb-10 '><Outlet /></div>
     </div>
   )
 }

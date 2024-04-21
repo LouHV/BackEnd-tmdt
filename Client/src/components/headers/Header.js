@@ -24,7 +24,7 @@ const Header = ({ navigate }) => {
     useEffect(() => {
         dispatch(getCart());
         console.log("cart::", cart);
-    }, []);
+    }, [current]);
 
 
     // const { register, formState: { errors }, handleSubmit, reset, watch } = useForm()
