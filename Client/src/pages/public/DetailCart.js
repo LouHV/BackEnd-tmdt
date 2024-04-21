@@ -10,14 +10,14 @@ import emptyCart from '../../assets/cart-empty.png'
 import { getCart } from '../../store/cart/asyncActions'
 import { apiGetCart } from '../../apis'
 
-const DetailCart = ({ navigate,dispatch }) => {
+const DetailCart = ({ navigate, dispatch }) => {
     const { isLoggedIn, current } = useSelector(state => state.user)
     const { cart } = useSelector(state => state.cart);
-    
+
     const handleCheckout = () => {
         navigate('/checkout')
     }
- 
+
     if (!isLoggedIn) return <Navigate to={`/${path.LOGIN}`} replace={true} />
 
     return (
@@ -28,7 +28,7 @@ const DetailCart = ({ navigate,dispatch }) => {
                     <Breadcrumbs />
                 </div>
             </div>
-            {current?.cart?.length > 0 && <div>
+            {cart && <div>
                 <div className='w-main mx-auto font-bold grid my-8 py-3 border grid-cols-10'>
                     <span className='col-span-5 w-full text-center'>
                         Product

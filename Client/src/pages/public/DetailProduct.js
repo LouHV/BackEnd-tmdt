@@ -18,7 +18,9 @@ import { getCurrent } from "../../store/user/asyncActions";
 import { FaHeart } from "react-icons/fa6";
 import clsx from 'clsx'
 
-import { getCart } from "../../store/cart/cartSlice";
+// import { getCart, addToCart } from "../../store/cart/cartSlice";
+import { addToCart } from '../../store/cart/asyncActions';
+
 
 const settings = {
     dots: false,
@@ -128,8 +130,6 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
 
     // console.log('quantity :>> ', quantity);
     const handleChangeQuantity = useCallback((flag) => {
-
-        // const updateCount = (product?.quantity) - 
         if (flag === 'minus' && quantity === 1) return
         if (flag === 'minus') setquantity(prev => +prev - 1)
         if (flag === 'plus') {
@@ -150,53 +150,6 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
         e.stopPropagation()
         setCurrentImage(el)
     }
-    // const handleAddToCart = async () => {
-    //     if (!current) return Swal.fire({
-    //         title: 'Almost...',
-    //         text: 'Please login first!',
-    //         icon: 'info',
-    //         cancelButtonText: 'Not now!',
-    //         showCancelButton: true,
-    //         confirmButtonText: 'Go login page'
-    //     }).then((rs) => {
-    //         if (rs.isConfirmed) navigate({
-    //             pathname: `/${path.LOGIN}`,
-    //             search: createSearchParams({ redirect: location.pathname }).toString()
-
-    //         })
-
-    //     })
-    //     if (quantity > countPrd) {
-    //         setquantity(countPrd)
-    //         return toast.error("Bạn số lượng bạn có thể chọn là: " + countPrd)
-    //     }
-    //     else {
-    //         const response = await apiUpdateCart({ pid, color: varriants ? currentProduct.color : product?.color, quantity, price: currentProduct.price || product.price, title: product?.title })
-
-    //         if (response.success) {
-    //             toast.success(response.message)
-    //             dispatch(getCurrent())
-    //         }
-    //         else
-    //             toast.error(response.message)
-    //     }
-
-    // }
-
-
-    // useEffect(() => {
-    //     const fetchCart = async () => {
-    //         try {
-    //             const cartData = await apiGetCart();
-    //             console.log("XXX:::cartDatacartData", cartData);
-    //             dispatch(getCart(cartData));
-    //         } catch (error) {
-    //             console.error("Failed to fetch cart:", error);
-    //         }
-    //     };
-
-    //     fetchCart();
-    // }, []);
 
     const handleAddToCart = async () => {
         if (!current) return Swal.fire({
@@ -218,16 +171,19 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
         }
         else {
             try {
-                const response = await addProductToCart({
-                    userId: current._id,
-                    productId: pid,
-                    quantity: quantity,
-                    color: varriants ? currentProduct.color : product?.color,
-                });
-                console.log("response:::XXXX", response);
+                console.log("productproductproduct", product);
+                await dispatch(addToCart(
+                    {
+                        userId: current._id,
+                        productId: pid,
+                        quantity: quantity,
+                        color: varriants ? currentProduct.color : product?.color,
+                        thumb: product?.thumb,
+                        title: product?.title,
+                        price: product?.price * quantity
+                    }
+                ));
 
-                dispatch(getCart());
-                dispatch(getCurrent());
                 toast.success('The product was added successfully');
             } catch (error) {
                 console.error(error);

@@ -97,7 +97,7 @@ const Header = ({ navigate }) => {
 
                 style={{ border: '2px solid red', borderRadius: '4px 0px 0px 4px' }}>
                 <input type="text" placeholder="Search..." className="w-[100%] h-[100%] px-[5px]"
-                    value={inputSearch} // Gán giá trị từ trạng thái vào trường input
+                    value={inputSearch}
                     onChange={(e) => setInputSearch(e.target.value)
 
                     } />
@@ -115,7 +115,7 @@ const Header = ({ navigate }) => {
                     }}>
                     <FaCartShopping color="red" size={24} />
                     {/* <span>{`${current?.cart?.length || 0} item(s)`}</span> */}
-                    <span>{`${cart?.cart_products?.length || 0} item(s)`}</span>
+                    <span>{`${cart?.cart_count_product || 0} item(s)`}</span>
                 </div>
 
             </div>

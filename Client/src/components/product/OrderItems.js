@@ -1,17 +1,16 @@
 import React, { useCallback, useState, useEffect } from 'react'
 import SelectQuantity from '../common/SelectQuantity'
 import { formatMoney, formatPrice } from '../../ultils/helper'
-import { apiDeleteCart, updateCartQuantity } from '../../apis';
 import { toast } from 'react-toastify';
 import { getCurrent } from '../../store/user/asyncActions';
+import { updateCartQuantity, deleteCartProduct } from '../../store/cart/asyncActions';
 import withBase from '../../hocs/withBase';
 
 const OrderItems = ({ el, dispatch, navigate }) => {
-
-
-    console.log("elelelelelelelelelelel", el);
-
+    console.log(el, "el::XX");
     const [quantity, setQuantity] = useState(el?.quantity || 1);
+    const [price, setPrice] = useState(el?.price || 1);
+    const [prevQuantity, setPrevQuantity] = useState(quantity);
 
     const handleQuantity = useCallback((number) => {
         if (!Number(number) || Number(number) < 1) {
@@ -22,35 +21,36 @@ const OrderItems = ({ el, dispatch, navigate }) => {
     }, []);
 
     const handleChangeQuantity = useCallback((flag) => {
-        if (flag === 'minus' && quantity === 1) return;
-        if (flag === 'minus') setQuantity(prev => +prev - 1);
-        if (flag === 'plus') setQuantity(prev => +prev + 1);
-    }, [quantity]);
+        let newQuantity = quantity;
+        // if (flag === 'minus' && quantity === 1) return;
+        if (flag === 'minus') newQuantity -= 1;
+        if (flag === 'plus') newQuantity += 1;
 
-    const handleQuantityChange = useCallback(async (productId, newQuantity) => {
-        await updateCartQuantity(productId, newQuantity)
-            .then(data => {
-                console.log('Cart quantity updated successfully:', data);
-                // toast.success('Cart quantity updated successfully:');
-            })
-            .catch(error => {
-                console.error('Failed to update cart quantity:', error);
-                toast.error(error);
-            });
-    }, []);
+        setQuantity(newQuantity);
 
-    // useEffect(() => {
-    //     if (el && el.product) {
-    //         handleQuantityChange(el.product._id, quantity);
-    //     }
-    // }, [quantity, el, handleQuantityChange]);
+        if (newQuantity === 0) {
+            dispatch(deleteCartProduct({ productId: el.product }));
+            toast.success('Product removed from cart');
+        }
+    }, [quantity, dispatch, el.product]);
 
-    const handelClickDelete = async (cartId) => {
-        const response = await apiDeleteCart(cartId)
-        if (response.success) {
-            dispatch(getCurrent())
-            toast.success(response.message)
-        } else toast.error(response.message)
+
+    useEffect(() => {
+        if (quantity !== prevQuantity) {
+            const newPrice = price * quantity / prevQuantity;
+            setPrice(newPrice);
+            setPrevQuantity(quantity);
+
+            dispatch(updateCartQuantity({ productId: el.product, quantity: quantity, price: newPrice }));
+        }
+    }, [quantity, prevQuantity, price, dispatch, el.product]);
+
+
+
+
+    const handelClickDelete = async (productId) => {
+        dispatch(deleteCartProduct({ productId }));
+        toast.success('Success');
     }
 
     return (
@@ -80,12 +80,12 @@ const OrderItems = ({ el, dispatch, navigate }) => {
             </div>
             <span className='col-span-3 w-full text-center'>
                 <span className='flex w-full h-full items-center justify-center text-orange-500'>
-                    {`${formatMoney(formatPrice(el?.price))} VND`}
+                    {`${formatMoney((el?.price))} VND`}
                 </span>
             </span>
             <span className='col-span-1 w-full text-center'>
                 <div
-                    onClick={() => handelClickDelete(el?._id)}
+                    onClick={() => handelClickDelete(el?.product)}
                     className='flex w-full h-full items-center justify-center hover:text-main hover:underline cursor-pointer'>
                     Delete
                 </div>
