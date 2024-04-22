@@ -147,12 +147,17 @@ const ManageProduct = () => {
                 <td className="p-2 border border-black text-center">{el?.category}</td>
                 <td className="p-2 border border-black text-center">{el?.brand}</td>
                 <td className="p-2 border border-black text-center">
-                  {el?.description?.length > 1 && el?.description?.map(el => (<li key={el} className=" leading-6 list-disc">{el}</li>))}
+                  {/* {el?.description?.length > 1 && el?.description?.map(el => (<div key={el} className=" leading-6 list-disc">{el}</div>))} */}
+                  {el?.description?.length > 1 && 
+                  <div key={el} className=" leading-6 list-disc cursor-pointer"
+                  title={el?.description}
+                  >{truncateString(el?.description[0],10)}</div>}
                   {el?.description?.length === 1 && <div
-                            className="text-sm"
-                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(el?.description[0]) }}></div>}
+                            className="text-sm cursor-pointer"
+                            title={el?.description[0]}
+                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(truncateString(el?.description[0],10)) }}></div>}
                   </td>
-                <td className="p-2 border border-black text-center ">{`${formatMoney(formatPrice(el?.price))} VND`}</td>
+                <td className="p-2 border border-black text-center ">{`${formatMoney(formatPrice(el?.price))} VNĐ`}</td>
                 <td className="p-2 border border-black text-center">{el?.quantity}</td>
                 <td className="p-2 border border-black text-center">{el?.slod}</td>
                 <td className="p-2 border border-black text-center">{el?.color}</td>

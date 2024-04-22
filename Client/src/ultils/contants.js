@@ -33,7 +33,7 @@ export const navigation = [
         value: 'Coupon',
         path: `/${path.COUPONS}`
     },
-   
+
 ]
 
 export const productInforTabs = [
@@ -296,20 +296,15 @@ export const memberSidebar = [
             },
         ]
     },
+
     {
         id: 2,
-        type: 'SINGLE',
-        text: 'My Cart',
-        path: `/${path.MEMBER}/${path.MY_CART}`
-    },
-    {
-        id: 3,
         type: 'SINGLE',
         text: 'Buy History',
         path: `/${path.MEMBER}/${path.HISTORY}`
     },
     {
-        id: 4,
+        id: 3,
         type: 'SINGLE',
         text: 'Wishlist',
         path: `/${path.MEMBER}/${path.WISHLIST}`
@@ -317,27 +312,38 @@ export const memberSidebar = [
 ]
 export const STATUS = [
     {
-      id: 1,
-      name: "Chưa thanh toán"
+        id: 1,
+        name: "Chưa thanh toán"
     },
     {
-      id: 2,
-      name: "Đã thanh toán"
+        id: 2,
+        name: "Đã thanh toán"
     },
     {
-      id: 3,
-      name: "Xác nhận đơn"
+        id: 3,
+        name: "Xác nhận đơn"
     },
     {
-      id: 4,
-      name: "Đang giao"
+        id: 4,
+        name: "Đang giao"
     },
     {
-      id: 5,
-      name: "Hoàn thành"
+        id: 5,
+        name: "Hoàn thành"
     },
     {
-      id: 6,
-      name: "Huỷ đơn"
+        id: 6,
+        name: "Huỷ đơn"
     }
-  ]
+]
+export const TYPECOUPON = [
+    {
+        enum: "Percent",
+        name: "Percent"
+    },
+    {
+        enum: "Amount",
+        name: "Amount"
+    },
+
+]

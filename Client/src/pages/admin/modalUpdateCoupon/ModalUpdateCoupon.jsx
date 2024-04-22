@@ -1,13 +1,21 @@
+import { format, isBefore } from 'date-fns';
 import './modalUpdateCoupon.css';
 import React, { useState } from 'react';
 
 const ModalUpdateCoupon = ({ onClose, updateCoupons, setUpdateCoupons, handleUpdate }) => {
     const [couponData, setCouponData] = useState(updateCoupons);
-
+    const [errorMessage, setErrorMessage] = useState('');
     const handleSubmit = (event) => {
         event.preventDefault();
         // Thực hiện xử lý cập nhật thông tin người dùng ở đây
         // Ví dụ: Gửi dữ liệu đến API hoặc thực hiện các hành động cập nhật khác
+        const startDate = new Date(couponData.start_date);
+        const expiryDate = new Date(couponData.expiry);
+
+        if (isBefore(expiryDate, startDate)) {
+            setErrorMessage('Expiry date cannot be before start date.');
+            return; // Ngăn chặn việc gửi dữ liệu nếu có lỗi
+        }
         handleUpdate(couponData);
         onClose();
     };
@@ -39,11 +47,12 @@ const ModalUpdateCoupon = ({ onClose, updateCoupons, setUpdateCoupons, handleUpd
                     </div>
                     <div className="form-group">
                         <label htmlFor="start_date">Start Day:</label>
-                        <input type="text" id="start_date" name="start_date" value={couponData.start_date} onChange={handleInputChange} />
+                        <input type="date" id="start_date" name="start_date" value={format(couponData.start_date,"yyyy-MM-dd")} onChange={handleInputChange} />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="expiry">Expiry:(số nguyên dương)</label>
-                        <input type="number" id="expiry" name="expiry" value={hsd} />
+                        <label htmlFor="expiry">Expiry:</label>
+                        <input type="date" id="expiry" name="expiry" value={format(couponData.expiry,"yyyy-MM-dd")} onChange={handleInputChange} />
+                        {errorMessage && <div className="error-message text-main text-sm">{errorMessage}</div>}
                     </div>
                 </div>
                 <div className="modal-footer">

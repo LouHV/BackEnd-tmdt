@@ -10,7 +10,8 @@ router.post('/', [verifyAccessToken, isAdmin], uploader.fields([
     { name: 'images', maxCount: 10 },
     { name: 'thumb', maxCount: 1 }
 ]), productController.createProduct);
-router.get('/', productController.getAllProduct);
+router.get('/', productController.getAllProduct); 
+// :valueSearch?
 router.put('/ratings', verifyAccessToken, productController.ratings);
 
 router.put('/varriant/:prdId', [verifyAccessToken, isAdmin], uploader.fields([

@@ -84,6 +84,7 @@ const Coupon = () => {
         if (response.success) {
           render()
           toast.success(response.message)
+          fectchCoupon()
         }
         else {
           toast.error(response.message)

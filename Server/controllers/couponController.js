@@ -91,7 +91,7 @@ const getCouponByName = asyncHandler(async (req, res) => {
 const updateCoupon = asyncHandler(async (req, res) => {
     const { couponId } = req.params
     if (Object.keys(req.body).length === 0) throw new Error('Missing inputs')
-    if (req.body.expiry) req.body.expiry = Date.now() + +req.body.expiry * 24 * 60 * 60 * 1000
+    if (req.body.expiry) req.body.expiry = req.body.expiry
     const response = await Coupon.findByIdAndUpdate(couponId, req.body, { new: true })
     return res.json({
         success: response ? true : false,

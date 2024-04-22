@@ -58,20 +58,7 @@ const getUserOder = asyncHandler(async (req, res) => {
     queryString = queryString.replace(/\b(gte|gt|lt|lte)\b/g, matchedEl => `$${matchedEl}`);
     const formattedQueries = JSON.parse(queryString);
 
-    // if (queries?.name) {
-    //     formattedQueries.name = { $regex: queries.name, $options: 'i' };
-    // }
-
-    // if (req.query.q) {
-    //     delete formattedQueries.q
-    //     formattedQueries['$or'] = [
-    //         { firstname: { $regex: req.query.q, $options: 'i' } },
-    //         { lastname: { $regex: req.query.q, $options: 'i' } },
-    //         { email: { $regex: req.query.q, $options: 'i' } }
-
-    //     ]
-    // }
-    // console.log('formattedQueries :>> ', formattedQueries);
+   
     const qr = { ...formattedQueries, orderBy: _id }
 
     if (req.query.sort) {
@@ -114,20 +101,6 @@ const getOders = asyncHandler(async (req, res) => {
     queryString = queryString.replace(/\b(gte|gt|lt|lte)\b/g, matchedEl => `$${matchedEl}`);
     const formattedQueries = JSON.parse(queryString);
 
-    // if (queries?.name) {
-    //     formattedQueries.name = { $regex: queries.name, $options: 'i' };
-    // }
-
-    // if (req.query.q) {
-    //     delete formattedQueries.q
-    //     formattedQueries['$or'] = [
-    //         { firstname: { $regex: req.query.q, $options: 'i' } },
-    //         { lastname: { $regex: req.query.q, $options: 'i' } },
-    //         { email: { $regex: req.query.q, $options: 'i' } }
-
-    //     ]
-    // }
-    // console.log('formattedQueries :>> ', formattedQueries);
     const qr = { ...formattedQueries }
 
     if (req.query.sort) {
@@ -203,7 +176,7 @@ const applyCouponToOrder = asyncHandler(async (req, res) => {
         return res.status(400).json({ success: false, message: 'Invalid or expired coupon code' });
     }
 
-    const order = await Order.findOne({ orderBy: _id, status: 1 });
+    const order = await Order.findOne({ orderBy: _id, status: 1 }); //doi thanh cart
     if (!order) {
         return res.status(404).json({ success: false, message: 'Order not found' });
     }
