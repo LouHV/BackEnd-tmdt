@@ -18,10 +18,7 @@ var OrderSchema = new mongoose.Schema({
         enum: [1, 2, 3, 4, 5, 6]
     },
     total: Number,
-    // coupon: {
-    //     type: mongoose.Types.ObjectId,
-    //     ref: 'Coupon'
-    // },
+    discountedTotal: Number,
     orderBy: {
         type: mongoose.Types.ObjectId,
         ref: 'User'

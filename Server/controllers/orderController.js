@@ -9,12 +9,13 @@ const asyncHandler = require('express-async-handler')
 
 const createNewOrder = asyncHandler(async (req, res) => {
     const { _id } = req.user
-    const { products, total, address, status } = req.body
+    const { products, total, address, status, discountedTotal } = req.body
     if (address) {
         await User.findByIdAndUpdate(_id, { address, cart: [] })
     }
     const data = { products, total, orderBy: _id }
     if (status) data.status = status
+    if (discountedTotal) data.discountedTotal = discountedTotal
     const rs = await Order.create(data)
     const orderedProducts = rs.products;
     for (const product of orderedProducts) {

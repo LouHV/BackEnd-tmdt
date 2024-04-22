@@ -74,3 +74,9 @@ export const apiDeleteCart = (data) => axios({
     method: 'Delete',
     data
 })
+
+export const apiApplyCouponToOrder = (data) => axios({
+    url: '/cart/apply-coupon',
+    method: 'Post',
+    data
+})

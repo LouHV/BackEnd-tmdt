@@ -5,7 +5,7 @@ import { Button, Cash, Congrat, InputForm, Paypal } from '../../components'
 import { useForm } from 'react-hook-form'
 import withBase from '../../hocs/withBase'
 import { getCurrent } from '../../store/user/asyncActions'
-import { apiGetCouponByName } from '../../apis'
+import { apiGetCouponByName, apiApplyCouponToOrder } from '../../apis'
 import { toast } from 'react-toastify'
 import { IoIosArrowRoundBack } from "react-icons/io";
 import path from '../../ultils/path'
@@ -30,12 +30,14 @@ const Checkout = ({ dispatch, navigate }) => {
     useEffect(() => {
         setValue('address', current?.address)
     }, [current.address])
+
     useEffect(() => {
         if (isSuccess) {
             dispatch(getCurrent())
         }
 
     }, [isSuccess, paymentMethod])
+
     const handleGetCouponByName = async (data) => {
 
         const response = await apiGetCouponByName(data)
@@ -58,12 +60,28 @@ const Checkout = ({ dispatch, navigate }) => {
             toast.error(response.message)
         }
     };
+
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setPaymentMethod({ [name]: value });
 
     };
+
+    const applyCouponToOrder = async (couponCode) => {
+        try {
+            const response = await apiApplyCouponToOrder({ couponCode });
+            if (response.data.success) {
+                toast.success('Mã giảm giá đã được áp dụng thành công');
+            } else {
+                toast.error(response.data.message);
+            }
+        } catch (error) {
+            toast.error('Có lỗi xảy ra khi áp mã giảm giá');
+        }
+    };
+
     console.log('paymentMethod :>> ', paymentMethod);
+
     return (
         <div className='w-full'>
             <div className='flex justify-start items-center text-xl m-8 hover:text-main cursor-pointer w-[85px] h-auto '
@@ -105,7 +123,7 @@ const Checkout = ({ dispatch, navigate }) => {
 
                 </div>
                 <div className='w-full flex'>
-                    <form onSubmit={handleSubmit(handleGetCouponByName)}>
+                    {/* <form onSubmit={handleSubmit(handleGetCouponByName)}>
 
                         <InputForm
                             label='Coupon'
@@ -119,7 +137,22 @@ const Checkout = ({ dispatch, navigate }) => {
                             placeholder='Name of new coupon'
                         />
                         <Button type='submit'>Appy</Button>
+                    </form> */}
+                    <form onSubmit={handleSubmit((data) => applyCouponToOrder(data.name_coupon))}>
+                        <InputForm
+                            label='Coupon'
+                            register={register}
+                            errors={errors}
+                            id='name_coupon'
+                            validate={{
+                                required: null
+                            }}
+                            fullWidth
+                            placeholder='Name of new coupon'
+                        />
+                        <Button type='submit'>Apply</Button>
                     </form>
+
                 </div>
 
                 <div className='w-main mx-auto flex flex-col mb-12 justify-center items-end gap-3'>
@@ -158,7 +191,6 @@ const Checkout = ({ dispatch, navigate }) => {
                             orderBy: current?._id,
                             address: current?.address,
                             status: 2
-
                         }}
                         setIsSuccess={setIsSuccess}
                         amount={Math.round(cart?.cart_products?.reduce((sum, el) => +el.price + sum, 0) / 24761)} />

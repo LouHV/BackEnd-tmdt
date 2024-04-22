@@ -164,11 +164,12 @@ const applyCouponToOrder = asyncHandler(async (req, res) => {
 
     let discountedTotal = cart.cart_products.reduce((acc, product) => acc + product.price, 0);
 
-    // let discountedTotal = order.total;
     if (coupon.type_coupon === 'Percent') {
         discountedTotal -= discountedTotal * (coupon.discount / 100);
     } else if (coupon.type_coupon === 'Amount') {
         discountedTotal -= coupon.discount;
+    } else {
+        discountedTotal = discountedTotal;
     }
 
     return res.json({
