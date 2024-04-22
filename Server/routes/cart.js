@@ -10,4 +10,7 @@ router.post('/add-cart', [verifyAccessToken], CartController.addProductToCart)
 router.put('/quantity', [verifyAccessToken], CartController.updateCartQuantity);
 router.delete('/delete-cart', [verifyAccessToken], CartController.deleteCart);
 
+router.post('/apply-coupon', [verifyAccessToken], CartController.applyCouponToOrder);
+
+
 module.exports = router;

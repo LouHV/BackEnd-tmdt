@@ -193,41 +193,10 @@ const getOrdersCountByDate = asyncHandler(async (req, res) => {
     }
 });
 
-
-const applyCouponToOrder = asyncHandler(async (req, res) => {
-    const { _id } = req.user;
-    const { couponCode } = req.body;
-
-    const coupon = await Coupon.findOne({ coupon_code: couponCode, expiry: { $gte: new Date() } });
-    if (!coupon) {
-        return res.status(400).json({ success: false, message: 'Invalid or expired coupon code' });
-    }
-
-    const order = await Order.findOne({ orderBy: _id, status: 1 });
-    if (!order) {
-        return res.status(404).json({ success: false, message: 'Order not found' });
-    }
-
-    let discountedTotal = order.total;
-    if (coupon.type_coupon === 'Percent') {
-        discountedTotal -= order.total * (coupon.discount / 100);
-    } else if (coupon.type_coupon === 'Amount') {
-        discountedTotal -= coupon.discount;
-    }
-
-
-    order.total = discountedTotal;
-    await order.save();
-
-    return res.status(200).json({ success: true, message: 'Coupon applied successfully', order });
-});
-
-
 module.exports = {
     createNewOrder,
     updateStatus,
     getUserOder,
     getOders,
-    getOrdersCountByDate,
-    applyCouponToOrder
+    getOrdersCountByDate
 }
