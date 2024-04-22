@@ -17,7 +17,7 @@ const Checkout = ({ dispatch, navigate }) => {
     const { current } = useSelector(state => state.user)
 
     const { cart } = useSelector(state => state.cart);
-    
+
 
     const totalOrder = Math.round(current?.cart?.reduce((sum, el) => +el.price + sum, 0) / 24761)
 
@@ -57,7 +57,6 @@ const Checkout = ({ dispatch, navigate }) => {
             setHaveCoupon(1)
             toast.error(response.message)
         }
-
     };
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -143,23 +142,23 @@ const Checkout = ({ dispatch, navigate }) => {
                     <Cash
                         payload={{
                             products: cart?.cart_products,
-                            total: Math.round(cart?.cart_products?.reduce((sum, el) => +el.price + sum, 0) ),
+                            total: Math.round(cart?.cart_products?.reduce((sum, el) => +el.price + sum, 0)),
                             orderBy: current?._id,
                             address: current?.address,
                             status: 1
                         }}
                         setIsSuccess={setIsSuccess}
-                        />
+                    />
                 </div>}
                 {paymentMethod.paymentMethod === "paypal" && <div className='w-full justify-center'>
                     <Paypal
                         payload={{
-                            products:cart?.cart_products,
+                            products: cart?.cart_products,
                             total: Math.round(cart?.cart_products?.reduce((sum, el) => +el.price + sum, 0) / 24761),
                             orderBy: current?._id,
                             address: current?.address,
                             status: 2
-                            
+
                         }}
                         setIsSuccess={setIsSuccess}
                         amount={Math.round(cart?.cart_products?.reduce((sum, el) => +el.price + sum, 0) / 24761)} />

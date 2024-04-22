@@ -148,9 +148,40 @@ const deleteCart = asyncHandler(async (req, res) => {
     });
 });
 
+const applyCouponToOrder = asyncHandler(async (req, res) => {
+    const { _id } = req.user;
+    const { couponCode } = req.body;
+
+    const coupon = await Coupon.findOne({ coupon_code: couponCode, expiry: { $gte: new Date() } });
+    if (!coupon) {
+        return res.status(400).json({ success: false, message: 'Invalid or expired coupon code' });
+    }
+
+    const cart = await Carts.findOne({ cart_userId: _id, cart_state: 'active' });
+    if (!cart) {
+        return res.status(404).json({ success: false, message: 'Cart not found ...' });
+    }
+
+    let discountedTotal = cart.cart_products.reduce((acc, product) => acc + product.price, 0);
+
+    // let discountedTotal = order.total;
+    if (coupon.type_coupon === 'Percent') {
+        discountedTotal -= discountedTotal * (coupon.discount / 100);
+    } else if (coupon.type_coupon === 'Amount') {
+        discountedTotal -= coupon.discount;
+    }
+
+    return res.json({
+        success: true,
+        message: 'Coupon applied successfully',
+        discountedTotal
+    });
+});
+
 module.exports = {
     getCart,
     deleteCart,
     addProductToCart,
     updateCartQuantity,
+    applyCouponToOrder
 }

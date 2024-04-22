@@ -11,8 +11,6 @@ router.put('/status/:orderId', [], OrderController.updateStatus);
 router.get('/admin', [verifyAccessToken, isAdmin], OrderController.getOders)
 router.get('/', [verifyAccessToken], OrderController.getUserOder)
 
-router.post('/apply-coupon', [verifyAccessToken], OrderController.applyCouponToOrder);
-
 
 
 

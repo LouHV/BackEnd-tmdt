@@ -176,7 +176,7 @@ const applyCouponToOrder = asyncHandler(async (req, res) => {
         return res.status(400).json({ success: false, message: 'Invalid or expired coupon code' });
     }
 
-    const order = await Order.findOne({ orderBy: _id, status: 1 }); //doi thanh cart
+    const order = await Order.findOne({ orderBy: _id, status: 1 });
     if (!order) {
         return res.status(404).json({ success: false, message: 'Order not found' });
     }
@@ -201,6 +201,5 @@ module.exports = {
     updateStatus,
     getUserOder,
     getOders,
-    getOrdersCountByDate,
-    applyCouponToOrder
+    getOrdersCountByDate
 }
