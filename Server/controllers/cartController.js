@@ -150,9 +150,9 @@ const deleteCart = asyncHandler(async (req, res) => {
 
 const applyCouponToOrder = asyncHandler(async (req, res) => {
     const { _id } = req.user;
-    const { couponCode } = req.body;
-
-    const coupon = await Coupon.findOne({ coupon_code: couponCode, expiry: { $gte: new Date() } });
+    const { coupon_code } = req.body;
+console.log('couponCode :>> ', coupon_code);
+    const coupon = await Coupon.findOne({ coupon_code, expiry: { $gte: new Date() } });
     if (!coupon) {
         return res.status(400).json({ success: false, message: 'Invalid or expired coupon code' });
     }

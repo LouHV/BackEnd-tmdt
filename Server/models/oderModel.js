@@ -22,7 +22,8 @@ var OrderSchema = new mongoose.Schema({
     orderBy: {
         type: mongoose.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    discountedTotal: Number,
 }, {
     timestamps: true
 });

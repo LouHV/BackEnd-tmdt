@@ -213,9 +213,11 @@ const ManageOrder = () => {
                 </td>
                 <td className="p-2 border border-black text-center">{`${formatMoney(formatPrice(Math.round(el?.total)))} VNĐ`}</td>
                 <td className="p-2 border border-black text-center"></td>
-                <td className="p-2 border border-black text-center">
+                <td className="p-2 border border-black text-center ">
                   {STATUS.find(status => status.id == el.status)?.name || 'Unknown'}
-                  <FaPen onClick={(e) => handleEditClick(e, el._id)} />
+                  <div className='hover:text-main cursor-pointer'>
+                    <FaPen onClick={(e) => handleEditClick(e, el._id)} />
+                  </div>
                   {/* <Tooltip
                     content={
                       <div className="tooltip">
@@ -252,8 +254,6 @@ const ManageOrder = () => {
                     onMouseLeave={() => handleCloseTooltip(el._id)}
                     style={{ left: tooltipStates[el._id]?.position.x, top: tooltipStates[el._id]?.position.y }}
                   />
-
-
                 </td>
 
 

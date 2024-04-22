@@ -32,17 +32,7 @@ const History = () => {
       <header className='text-3xl py-4 border-b border-b-gray-300 '>
         History
       </header>
-      <div className='flex justify-end justify-center px-4'>
-        <form className='w-[45%] px-4  justify-center items-center ' >
-          <InputForm
-            id='q'
-            register={register}
-            errors={errors}
-            fullwidth
-            placeholder='search by title, desscription'
-          />
-        </form>
-      </div>
+      
       <div className="w-ful text-rightx">
         <table className="table-auto mb-6 w-full">
           <thead className="font-bold  text-[13px] border border-black text-center bg-main text-white">

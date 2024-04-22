@@ -6,9 +6,11 @@ import { useForm } from 'react-hook-form'
 import withBase from '../../hocs/withBase'
 import { getCurrent } from '../../store/user/asyncActions'
 import { apiGetCouponByName, apiApplyCouponToOrder } from '../../apis'
+import { apiApplyCoupon } from '../../apis'
 import { toast } from 'react-toastify'
 import { IoIosArrowRoundBack } from "react-icons/io";
 import path from '../../ultils/path'
+import { getCart } from '../../store/cart/asyncActions'
 
 const Checkout = ({ dispatch, navigate }) => {
     const { register, formState: { errors }, watch, setValue, reset, handleSubmit } = useForm()
@@ -19,13 +21,24 @@ const Checkout = ({ dispatch, navigate }) => {
     const { cart } = useSelector(state => state.cart);
 
 
-    const totalOrder = Math.round(current?.cart?.reduce((sum, el) => +el.price + sum, 0) / 24761)
+    const totalOrder = Math.round(current?.cart?.reduce((sum, el) => +el.price + sum, 0) / 23500)
 
     const [paymentMethod, setPaymentMethod] = useState('');
+
+    const [total, setTotal] = useState('');
+
+    const [reduce, setReduce] = useState(0);
+
+    const [discountedTotal, setDiscountedTotal] = useState('');
 
     const [isSuccess, setIsSuccess] = useState(false)
 
     const [haveCoupon, setHaveCoupon] = useState('')
+    console.log('cart :>> ', cart);
+    useEffect(() => {
+        const total = Math.round(cart?.cart_products?.reduce((sum, el) => +el.price + sum, 0));
+        setTotal(total);
+    }, [cart]);
 
     useEffect(() => {
         setValue('address', current?.address)
@@ -34,32 +47,31 @@ const Checkout = ({ dispatch, navigate }) => {
     useEffect(() => {
         if (isSuccess) {
             dispatch(getCurrent())
+
         }
+
 
     }, [isSuccess, paymentMethod])
 
     const handleGetCouponByName = async (data) => {
+    const handleApplyCoupon = async (data) => {
 
-        const response = await apiGetCouponByName(data)
-        console.log('response :>> ', response.coupon);
-        const expiryDate = new Date(response?.coupon?.expiry);
-        const expiryTime = expiryDate.getTime();
-        const startDate = new Date(response?.coupon?.start_date)
-        const startTime = startDate.getTime();
+        const response = await apiApplyCoupon(data)
+        console.log('response :>> ', response);
+        // const expiryDate = new Date(response?.coupon?.expiry);
+        // const expiryTime = expiryDate.getTime();
+        // const startDate = new Date(response?.coupon?.start_date)
+        // const startTime = startDate.getTime();
 
         if (response.success) {
-            if (Date.now() <= expiryTime && Date.now() >= startTime) {
-                setHaveCoupon(response.coupon.discount)
-                reset()
-            }
-            else {
-                toast.error('Mã giảm giá nằm ngoài hạn sử dụng.')
-            }
+            setDiscountedTotal(response.discountedTotal)
+            setReduce(Math.round(total - response.discountedTotal))
         } else {
             setHaveCoupon(1)
             toast.error(response.message)
         }
     };
+
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -82,6 +94,7 @@ const Checkout = ({ dispatch, navigate }) => {
 
     console.log('paymentMethod :>> ', paymentMethod);
 
+    console.log('total :>> ', total);
     return (
         <div className='w-full'>
             <div className='flex justify-start items-center text-xl m-8 hover:text-main cursor-pointer w-[85px] h-auto '
@@ -124,12 +137,13 @@ const Checkout = ({ dispatch, navigate }) => {
                 </div>
                 <div className='w-full flex'>
                     {/* <form onSubmit={handleSubmit(handleGetCouponByName)}>
+                    <form onSubmit={handleSubmit(handleApplyCoupon)}>
 
                         <InputForm
                             label='Coupon'
                             register={register}
                             errors={errors}
-                            id='name_coupon'
+                            id='coupon_code'
                             validate={{
                                 required: null
                             }}
@@ -158,8 +172,20 @@ const Checkout = ({ dispatch, navigate }) => {
                 <div className='w-main mx-auto flex flex-col mb-12 justify-center items-end gap-3'>
                     <span className='flex items-center gap-4 text-xl'>
                         <span className='font-medium'>{`Subtotal (${cart?.cart_products?.length || 0} items): `}</span>
-                        <span className='text-main'>{!haveCoupon ? `${formatMoney(formatPrice(cart?.cart_products?.reduce((sum, el) => (+el.price + sum), 0)))} ${haveCoupon} VND` : `${formatMoney(formatPrice(current?.cart?.reduce((sum, el) => (+el.price + sum) * haveCoupon, 0)))} ${haveCoupon} VND`}</span>
-
+                        <span className='text-main'>{`${formatMoney(cart?.cart_products?.reduce((sum, el) => (+el.price + sum), 0))} VNĐ`}</span>
+                    </span>
+                    <span className='flex items-center gap-4 text-xl'>
+                        <span className='font-medium'>{`Reduce: `}</span>
+                        <span className='text-main'>{`- ${formatMoney(reduce)} VNĐ`}</span>
+                    </span>
+                    <span className='flex items-center gap-4 text-xl'>
+                        <span className='font-medium'>{`DiscountedTotal (${cart?.cart_products?.length || 0} items): `}</span>
+                        <span className='text-main'>
+                            {discountedTotal ?
+                                `${formatMoney(discountedTotal)} VNĐ` :
+                                `${formatMoney(cart?.cart_products?.reduce((sum, el) => (+el.price + sum), 0))} VNĐ`
+                            }
+                        </span>
                     </span>
                 </div>
                 <div className='w-main mx-auto flex flex-col mb-12 justify-center items-end gap-3'>
@@ -178,7 +204,8 @@ const Checkout = ({ dispatch, navigate }) => {
                             total: Math.round(cart?.cart_products?.reduce((sum, el) => +el.price + sum, 0)),
                             orderBy: current?._id,
                             address: current?.address,
-                            status: 1
+                            status: 1,
+                            discountedTotal: discountedTotal || total
                         }}
                         setIsSuccess={setIsSuccess}
                     />
@@ -187,13 +214,15 @@ const Checkout = ({ dispatch, navigate }) => {
                     <Paypal
                         payload={{
                             products: cart?.cart_products,
-                            total: Math.round(cart?.cart_products?.reduce((sum, el) => +el.price + sum, 0) / 24761),
+                            total: Math.round(total/ 23500),
                             orderBy: current?._id,
                             address: current?.address,
                             status: 2
+                            status: 2,
+                            discountedTotal: discountedTotal || total
                         }}
                         setIsSuccess={setIsSuccess}
-                        amount={Math.round(cart?.cart_products?.reduce((sum, el) => +el.price + sum, 0) / 24761)} />
+                        amount={Math.round(discountedTotal / 23500) || Math.round(total / 23500)} />
                 </div>}
             </div>
         </div>

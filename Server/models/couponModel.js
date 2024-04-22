@@ -23,6 +23,7 @@ var CouponSchema = new mongoose.Schema({
     },
     quantity: {
         type: Number,
+        default: 0
     },
     type_coupon: {
         type: String,

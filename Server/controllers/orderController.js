@@ -59,20 +59,7 @@ const getUserOder = asyncHandler(async (req, res) => {
     queryString = queryString.replace(/\b(gte|gt|lt|lte)\b/g, matchedEl => `$${matchedEl}`);
     const formattedQueries = JSON.parse(queryString);
 
-    // if (queries?.name) {
-    //     formattedQueries.name = { $regex: queries.name, $options: 'i' };
-    // }
-
-    // if (req.query.q) {
-    //     delete formattedQueries.q
-    //     formattedQueries['$or'] = [
-    //         { firstname: { $regex: req.query.q, $options: 'i' } },
-    //         { lastname: { $regex: req.query.q, $options: 'i' } },
-    //         { email: { $regex: req.query.q, $options: 'i' } }
-
-    //     ]
-    // }
-    // console.log('formattedQueries :>> ', formattedQueries);
+   
     const qr = { ...formattedQueries, orderBy: _id }
 
     if (req.query.sort) {
@@ -115,20 +102,6 @@ const getOders = asyncHandler(async (req, res) => {
     queryString = queryString.replace(/\b(gte|gt|lt|lte)\b/g, matchedEl => `$${matchedEl}`);
     const formattedQueries = JSON.parse(queryString);
 
-    // if (queries?.name) {
-    //     formattedQueries.name = { $regex: queries.name, $options: 'i' };
-    // }
-
-    // if (req.query.q) {
-    //     delete formattedQueries.q
-    //     formattedQueries['$or'] = [
-    //         { firstname: { $regex: req.query.q, $options: 'i' } },
-    //         { lastname: { $regex: req.query.q, $options: 'i' } },
-    //         { email: { $regex: req.query.q, $options: 'i' } }
-
-    //     ]
-    // }
-    // console.log('formattedQueries :>> ', formattedQueries);
     const qr = { ...formattedQueries }
 
     if (req.query.sort) {
@@ -193,6 +166,36 @@ const getOrdersCountByDate = asyncHandler(async (req, res) => {
         throw new Error(err.message);
     }
 });
+
+
+const applyCouponToOrder = asyncHandler(async (req, res) => {
+    const { _id } = req.user;
+    const { couponCode } = req.body;
+
+    const coupon = await Coupon.findOne({ coupon_code: couponCode, expiry: { $gte: new Date() } });
+    if (!coupon) {
+        return res.status(400).json({ success: false, message: 'Invalid or expired coupon code' });
+    }
+
+    const order = await Order.findOne({ orderBy: _id, status: 1 });
+    if (!order) {
+        return res.status(404).json({ success: false, message: 'Order not found' });
+    }
+
+    let discountedTotal = order.total;
+    if (coupon.type_coupon === 'Percent') {
+        discountedTotal -= order.total * (coupon.discount / 100);
+    } else if (coupon.type_coupon === 'Amount') {
+        discountedTotal -= coupon.discount;
+    }
+
+
+    order.total = discountedTotal;
+    await order.save();
+
+    return res.status(200).json({ success: true, message: 'Coupon applied successfully', order });
+});
+
 
 module.exports = {
     createNewOrder,

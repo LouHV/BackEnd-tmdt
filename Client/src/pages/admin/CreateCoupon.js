@@ -11,26 +11,30 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { Calendar, DateRange } from 'react-date-range';
 import { format } from 'date-fns'
+import { TYPECOUPON } from '../../ultils/contants'
 
 
 const CreateCoupon = () => {
   const dispatch = useDispatch()
-  const { register, formState: { errors }, reset, handleSubmit } = useForm();
+  const { register, formState: { errors }, reset, handleSubmit,watch } = useForm();
   const [canlender, setCanlender] = useState('')
-  
-
+  const couponType = watch('type_coupon'); 
+  const [isLoading, setIsLoading] = useState(false);
   
   //tao coupon
   const handleCreateCoupon = async (data) => {
-    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }))
+   console.log(' data.start_date :>> ',  data.start_date);
+    // dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }))
+    setIsLoading(true);
     const response = await apiCreateCoupon(data)
-    dispatch(showModal({ isShowModal: false, modalChildren: null }))
+    setIsLoading(false);
+    // dispatch(showModal({ isShowModal: false, modalChildren: null }))
 
     if (response.success) {
-      toast.success(response.message)
+      toast.success(response?.message)
       reset()
     } else {
-      toast.error(response.message)
+      toast.error(response?.message)
     }
 
   };
@@ -66,9 +70,10 @@ const CreateCoupon = () => {
       <h1 className='h-[75px] flex justify-between items-center text-3xl font-bold px-4 border-b'>
         <span>Create new Coupon</span>
       </h1>
-      <div className='p-4'>
+      <div className='p-4 '>
         <form onSubmit={handleSubmit(handleCreateCoupon)}>
 
+          <div className='flex flex-col gap-6'>
 
           <InputForm
             label='Name coupon'
@@ -81,6 +86,28 @@ const CreateCoupon = () => {
             fullWidth
             placeholder='Name of new coupon'
           />
+          <InputForm
+            label='Coupon code'
+            register={register}
+            errors={errors}
+            id='coupon_code'
+            validate={{
+              required: 'Need fill this filed'
+            }}
+            fullWidth
+            placeholder='Coupon code'
+          />
+          <Select
+              label='Type coupon'
+              options={TYPECOUPON?.map(el => ({ code: el?.enum, value: el?.name }))}
+              register={register}
+              id='type_coupon'
+              validate={{ required: 'Need fill this filed' }}
+              style='flex-auto'
+              errors={errors}
+              fullWidth
+            />
+          </div>
           <div className='w-full my-6 flex gap-4'>
             <InputForm
               label='Discount'
@@ -88,7 +115,12 @@ const CreateCoupon = () => {
               errors={errors}
               id='discount'
               validate={{
-                required: 'Need fill this filed'
+                required: 'Need fill this filed',
+                min: { value: 0, message: 'Discount must be greater than 0' },
+                ...(couponType === 'Percent' && {
+                  min: { value: 0, message: 'Discount must be greater than 0' },
+                  max: { value: 100, message: 'Discount must be less than 100' },
+                 })
               }}
               style='flex-auto'
               placeholder='Discount of new coupon'
@@ -124,7 +156,7 @@ const CreateCoupon = () => {
                 /></div>
 
               <div ref={refOne}>
-                {open && <DateRange
+                {open && <Calendar
                   date={new Date()}
                   onChange={handleSelect}
                   className='calendarElement'
@@ -149,6 +181,7 @@ const CreateCoupon = () => {
           </div>
         </form>
       </div>
+      {isLoading && <Loading />}
     </div>
   )
 }

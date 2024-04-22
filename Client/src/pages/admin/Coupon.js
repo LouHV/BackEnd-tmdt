@@ -84,6 +84,7 @@ const Coupon = () => {
         if (response.success) {
           render()
           toast.success(response.message)
+          fectchCoupon()
         }
         else {
           toast.error(response.message)
@@ -114,6 +115,7 @@ const Coupon = () => {
             <tr>
               <th className="px-4 py-2 border border-black">Stt</th>
               <th className="px-4 py-2 border border-black">Name Coupon</th>
+              <th className="px-4 py-2 border border-black">Coupon Code</th>
               <th className="px-4 py-2 border border-black">Discount(%)</th>
               <th className="px-4 py-2 border border-black">Quantity</th>
               <th className="px-4 py-2 border border-black">Start Day</th>
@@ -127,6 +129,7 @@ const Coupon = () => {
               <tr key={el._id} className="text-center border border-black">
                 <td className="py-4 border border-black">{idx + 1}</td>
                 <td className="py-4 border border-black">{el?.name_coupon}</td>
+                <td className="py-4 border border-black">{el?.coupon_code}</td>
                 <td className="py-4 border border-black">{el?.discount}</td>
                 <td className="py-4 border border-black">{el?.quantity}</td>
                 <td className="py-4 border border-black">{el?.start_date ? format(new Date(el?.start_date), 'dd/MM/yyyy') : 'Invalid date'}</td>
