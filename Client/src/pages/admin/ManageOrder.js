@@ -128,10 +128,6 @@ const ManageOrder = () => {
     }));
   };
 
-
-
-
-
   //search
   useEffect(() => {
     if (queryDecounce) {
@@ -146,7 +142,8 @@ const ManageOrder = () => {
       })
     }
   }, [queryDecounce])
-  //nosear
+
+  
   useEffect(() => {
     const searchParams = Object.fromEntries([...params]);
     fectchOrders(searchParams);
@@ -189,8 +186,9 @@ const ManageOrder = () => {
               <th className="px-4 py-2 border border-black">CreatedAt</th>
               <th className="px-4 py-2 border border-black">Order By</th>
               <th className="px-4 py-2 border border-black">Products</th>
+              <th className="px-4 py-2 border border-black">Coupon Code</th>
               <th className="px-4 py-2 border border-black">Total</th>
-              <th className="px-4 py-2 border border-black">Coupon</th>
+              <th className="px-4 py-2 border border-black">DiscountedTotal </th>
               <th className="px-4 py-2 border border-black">Status</th>
 
 
@@ -211,8 +209,9 @@ const ManageOrder = () => {
                     </span>)}
                   </span>
                 </td>
+                <td className="p-2 border border-black text-center">{el?.coupon_code}</td>
                 <td className="p-2 border border-black text-center">{`${formatMoney(formatPrice(Math.round(el?.total)))} VNĐ`}</td>
-                <td className="p-2 border border-black text-center"></td>
+                <td className="p-2 border border-black text-center">{`${formatMoney(formatPrice(Math.round(el?.discountedTotal)))} VNĐ`}</td>   
                 <td className="p-2 border border-black text-center ">
                   {STATUS.find(status => status.id == el.status)?.name || 'Unknown'}
                   <div className='hover:text-main cursor-pointer'>

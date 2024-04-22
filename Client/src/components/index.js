@@ -29,6 +29,7 @@ export { default as Pagination } from './Pagination/Pagination'
 export { default as PagiItem } from './Pagination/PagiItem'
 export { default as Loading } from './common/Loading'
 export { default as Paypal } from './common/PayPal'
+export { default as MoMo } from './common/Momo'
 export { default as Cash } from './common/Cash'
 
 export { default as SidebarAdmin } from './sidebar/SidebarAdmin'

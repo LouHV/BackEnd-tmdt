@@ -95,7 +95,6 @@ const getCurrent = asyncHandler(async (req, res) => {
     const user = await User.findById({ _id })
         .select('-refreshToken -password ')
         .populate("wishlist", 'title thumb price color')
-        console.log('user :>> ', user);
     return res.status(200).json({
         success: user ? true : false,
         rs: user ? user : 'User not found'
@@ -175,9 +174,9 @@ const resetPassword = asyncHandler(async (req, res) => {
 })
 const changePassword = asyncHandler(async (req, res) => {
     const { currentPassword, newPassword } = req.body;
-   const { _id } = req.user
-   console.log('currentPassword :>> ', currentPassword);
-   console.log('newPassword :>> ', newPassword);
+    const { _id } = req.user
+    console.log('currentPassword :>> ', currentPassword);
+    console.log('newPassword :>> ', newPassword);
     // Lấy thông tin người dùng hiện tại từ req.user
     const user = await User.findById(_id).select('+password');
 

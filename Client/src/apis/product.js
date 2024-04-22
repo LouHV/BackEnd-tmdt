@@ -69,6 +69,7 @@ export const updateCartQuantity = (data) => axios({
     method: 'Put',
     data
 })
+
 export const apiDeleteCart = (data) => axios({
     url: '/cart/delete-cart',
     method: 'Delete',

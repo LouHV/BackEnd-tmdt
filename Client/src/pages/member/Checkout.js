@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { formatMoney, formatPrice } from '../../ultils/helper'
-import { Button, Cash, Congrat, InputForm, Paypal } from '../../components'
+import { Button, Cash, Congrat, InputForm, Paypal, MoMo } from '../../components'
 import { useForm } from 'react-hook-form'
 import withBase from '../../hocs/withBase'
 import { getCurrent } from '../../store/user/asyncActions'
-import { apiGetCouponByName, apiApplyCouponToOrder } from '../../apis'
 import { apiApplyCoupon } from '../../apis'
 import { toast } from 'react-toastify'
 import { IoIosArrowRoundBack } from "react-icons/io";
@@ -15,26 +14,18 @@ import { getCart } from '../../store/cart/asyncActions'
 const Checkout = ({ dispatch, navigate }) => {
     const { register, formState: { errors }, watch, setValue, reset, handleSubmit } = useForm()
     const address = watch('address')
-
     const { current } = useSelector(state => state.user)
-
     const { cart } = useSelector(state => state.cart);
-
 
     const totalOrder = Math.round(current?.cart?.reduce((sum, el) => +el.price + sum, 0) / 23500)
 
     const [paymentMethod, setPaymentMethod] = useState('');
-
     const [total, setTotal] = useState('');
-
+    const [couponcode, setCouponcode] = useState('');
     const [reduce, setReduce] = useState(0);
-
     const [discountedTotal, setDiscountedTotal] = useState('');
-
     const [isSuccess, setIsSuccess] = useState(false)
 
-    const [haveCoupon, setHaveCoupon] = useState('')
-    console.log('cart :>> ', cart);
     useEffect(() => {
         const total = Math.round(cart?.cart_products?.reduce((sum, el) => +el.price + sum, 0));
         setTotal(total);
@@ -43,35 +34,23 @@ const Checkout = ({ dispatch, navigate }) => {
     useEffect(() => {
         setValue('address', current?.address)
     }, [current.address])
-
     useEffect(() => {
         if (isSuccess) {
             dispatch(getCurrent())
-
         }
-
-
     }, [isSuccess, paymentMethod])
-
-    const handleGetCouponByName = async (data) => {
     const handleApplyCoupon = async (data) => {
-
+        setCouponcode(data.coupon_code)
         const response = await apiApplyCoupon(data)
-        console.log('response :>> ', response);
-        // const expiryDate = new Date(response?.coupon?.expiry);
-        // const expiryTime = expiryDate.getTime();
-        // const startDate = new Date(response?.coupon?.start_date)
-        // const startTime = startDate.getTime();
 
         if (response.success) {
             setDiscountedTotal(response.discountedTotal)
             setReduce(Math.round(total - response.discountedTotal))
+            toast.success(response.message)
         } else {
-            setHaveCoupon(1)
-            toast.error(response.message)
+            toast.error(response.data.message)
         }
     };
-
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -79,25 +58,9 @@ const Checkout = ({ dispatch, navigate }) => {
 
     };
 
-    const applyCouponToOrder = async (couponCode) => {
-        try {
-            const response = await apiApplyCouponToOrder({ couponCode });
-            if (response.data.success) {
-                toast.success('Mã giảm giá đã được áp dụng thành công');
-            } else {
-                toast.error(response.data.message);
-            }
-        } catch (error) {
-            toast.error('Có lỗi xảy ra khi áp mã giảm giá');
-        }
-    };
-
-    console.log('paymentMethod :>> ', paymentMethod);
-
-    console.log('total :>> ', total);
     return (
         <div className='w-full'>
-            <div className='flex justify-start items-center text-xl m-8 hover:text-main cursor-pointer w-[85px] h-auto '
+            <div className='flex justify-start items-center text-xl m-8 hover:text-main cursor-pointer w-[85px] h-auto'
                 onClick={() => navigate(`/${path.DETAIL_CART}`)}
             ><IoIosArrowRoundBack size={25} />Back</div>
             <div className='w-main mx-auto flex flex-col items-center justify-center py-8'>
@@ -136,7 +99,6 @@ const Checkout = ({ dispatch, navigate }) => {
 
                 </div>
                 <div className='w-full flex'>
-                    {/* <form onSubmit={handleSubmit(handleGetCouponByName)}>
                     <form onSubmit={handleSubmit(handleApplyCoupon)}>
 
                         <InputForm
@@ -151,22 +113,7 @@ const Checkout = ({ dispatch, navigate }) => {
                             placeholder='Name of new coupon'
                         />
                         <Button type='submit'>Appy</Button>
-                    </form> */}
-                    <form onSubmit={handleSubmit((data) => applyCouponToOrder(data.name_coupon))}>
-                        <InputForm
-                            label='Coupon'
-                            register={register}
-                            errors={errors}
-                            id='name_coupon'
-                            validate={{
-                                required: null
-                            }}
-                            fullWidth
-                            placeholder='Name of new coupon'
-                        />
-                        <Button type='submit'>Apply</Button>
                     </form>
-
                 </div>
 
                 <div className='w-main mx-auto flex flex-col mb-12 justify-center items-end gap-3'>
@@ -175,11 +122,11 @@ const Checkout = ({ dispatch, navigate }) => {
                         <span className='text-main'>{`${formatMoney(cart?.cart_products?.reduce((sum, el) => (+el.price + sum), 0))} VNĐ`}</span>
                     </span>
                     <span className='flex items-center gap-4 text-xl'>
-                        <span className='font-medium'>{`Reduce: `}</span>
-                        <span className='text-main'>{`- ${formatMoney(reduce)} VNĐ`}</span>
+                        <span className='font-medium'>{`Discount: `}</span>
+                        <span className='text-main'>{`${formatMoney(reduce)} VNĐ`}</span>
                     </span>
                     <span className='flex items-center gap-4 text-xl'>
-                        <span className='font-medium'>{`DiscountedTotal (${cart?.cart_products?.length || 0} items): `}</span>
+                        <span className='font-medium'>{`Total amount (${cart?.cart_products?.length || 0} items): `}</span>
                         <span className='text-main'>
                             {discountedTotal ?
                                 `${formatMoney(discountedTotal)} VNĐ` :
@@ -205,7 +152,8 @@ const Checkout = ({ dispatch, navigate }) => {
                             orderBy: current?._id,
                             address: current?.address,
                             status: 1,
-                            discountedTotal: discountedTotal || total
+                            discountedTotal: discountedTotal || total,
+                            coupon_code: couponcode
                         }}
                         setIsSuccess={setIsSuccess}
                     />
@@ -214,12 +162,27 @@ const Checkout = ({ dispatch, navigate }) => {
                     <Paypal
                         payload={{
                             products: cart?.cart_products,
-                            total: Math.round(total/ 23500),
+                            total: Math.round(total / 23500),
                             orderBy: current?._id,
                             address: current?.address,
-                            status: 2
                             status: 2,
-                            discountedTotal: discountedTotal || total
+                            discountedTotal: discountedTotal || total,
+                            coupon_code: couponcode
+                        }}
+                        setIsSuccess={setIsSuccess}
+                        amount={Math.round(discountedTotal / 23500) || Math.round(total / 23500)} />
+                </div>}
+
+                {paymentMethod.paymentMethod === "momo" && <div className='w-full justify-center'>
+                    <MoMo
+                        payload={{
+                            products: cart?.cart_products,
+                            total: Math.round(total / 23500),
+                            orderBy: current?._id,
+                            address: current?.address,
+                            status: 2,
+                            discountedTotal: discountedTotal || total,
+                            coupon_code: couponcode
                         }}
                         setIsSuccess={setIsSuccess}
                         amount={Math.round(discountedTotal / 23500) || Math.round(total / 23500)} />

@@ -19,11 +19,11 @@ var OrderSchema = new mongoose.Schema({
     },
     total: Number,
     discountedTotal: Number,
+    coupon_code:{ type: String },
     orderBy: {
         type: mongoose.Types.ObjectId,
         ref: 'User'
-    },
-    discountedTotal: Number,
+    }
 }, {
     timestamps: true
 });
