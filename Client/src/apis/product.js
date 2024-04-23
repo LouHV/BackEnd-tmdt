@@ -81,3 +81,9 @@ export const apiApplyCouponToOrder = (data) => axios({
     method: 'Post',
     data
 })
+
+export const createPayment = (data) => axios({
+    url: '/payment/create-payment',
+    method: 'Post',
+    data
+})

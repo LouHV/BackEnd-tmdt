@@ -1,16 +1,13 @@
 const { MomoPayment } = require('momo-payment-gateway');
 
 /* HOST_WEBHOOK => Partner API. Used by MoMo to submit payment results by IPN method (server-to-server) method */
-const partnerCode = process.env.HOST_WEBHOOK;
-const accessKey = process.env.HOST_WEBHOOK;
-const secretKey = process.env.HOST_WEBHOOK;
-const apiEndpoint = process.env.HOST_WEBHOOK;
+const HOST_WEBHOOK = process.env.HOST_WEBHOOK;
 
-/* constructor: partnerCode, accessKey, secretKey ,apiEndpoint=> provided by Momo
-apiEndpoint: 
-  sandbox:  https://test-payment.momo.vn
-  live:     https://payment.momo.vn
-*/
+const partnerCode = process.env.PARTNERCODE;
+const accessKey = process.env.ACCESSKEY;
+const secretKey = process.env.SECRETKEY;
+const apiEndpoint = process.env.APIENDPOINT;
+
 class MomoPaymentController {
     constructor(partnerCode, accessKey, secretKey, apiEndpoint) {
         this.momoPayment = new MomoPayment({
@@ -21,19 +18,20 @@ class MomoPaymentController {
         });
     }
 
-    /* The payment method payUrl is returned  */
     async createPayment({
         orderId,
         amount,
-        orderInfo = 'Your message',
-        returnUrl = 'https://your-website.com',
+        orderInfo,
+        returnUrl
     }) {
+        console.log(orderId, amount, orderInfo, returnUrl, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX1");
         try {
-            if (!orderId || !amount || !message || !orderInfo) {
+            console.log(orderId, amount, orderInfo, returnUrl, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX2");
+            if (!orderId || !amount || !returnUrl || !orderInfo) {
                 throw new Error('invalid input');
             }
             const result = await this.momoPayment.createPayment({
-                requestId: `ID-${orderId}-${Math.round(Date.now() / 1000)}`, // Help for re-create payment
+                requestId: `ID-${orderId}-${Math.round(Date.now() / 1000)}`,
                 orderId: `${orderId}-${Math.round(Date.now() / 1000)}`,
                 amount,
                 orderInfo,
@@ -47,7 +45,6 @@ class MomoPaymentController {
         }
     }
 
-    /* Proceed the refund payment */
     async refundPayment({ requestId, orderId, amount, transId }) {
         try {
             if (!orderId || !amount || !transId) {
@@ -66,7 +63,6 @@ class MomoPaymentController {
         }
     }
 
-    /* The function for verify webhook request and payment */
     verifySignature({
         signature,
         requestId,

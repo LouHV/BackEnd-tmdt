@@ -176,7 +176,7 @@ const Checkout = ({ dispatch, navigate }) => {
                     <MoMoPayment
                         payload={{
                             products: cart?.cart_products,
-                            total: Math.round(total / 23500),
+                            total: total,
                             orderBy: current?._id,
                             address: current?.address,
                             status: 2,
@@ -184,7 +184,7 @@ const Checkout = ({ dispatch, navigate }) => {
                             coupon_code: couponcode
                         }}
                         setIsSuccess={setIsSuccess}
-                        amount={Math.round(discountedTotal / 23500) || Math.round(total / 23500)} />
+                        amount={total} />
                 </div>}
 
             </div>
