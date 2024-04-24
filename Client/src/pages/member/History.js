@@ -16,7 +16,7 @@ const History = () => {
   const q = watch('q')
   const fectchOrders = async (params) => {
     const response = await apiGetUserOrders({ ...params, limit: process.env.REACT_APP_LIMIT })
-    console.log('response :>> ', response);
+    // console.log('response :>> ', response);
     if (response.success) {
       setOrders(response.Orders)
       setCounts(response.counts)

@@ -60,7 +60,7 @@ const ManageOrder = () => {
   const fectchOrders = async (params) => {
     const response = await apiGetOrders({ ...params, limit: process.env.REACT_APP_LIMIT, sort: "-createdAt" })
     if (response.success) {
-      console.log('response :>> ', response);
+      // console.log('response :>> ', response);
       setOrders(response.Orders)
       setCounts(response.counts)
     }

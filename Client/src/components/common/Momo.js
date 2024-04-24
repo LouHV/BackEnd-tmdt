@@ -1,76 +1,69 @@
+import React from 'react';
 
-import {
-    PayPalScriptProvider,
-    PayPalButtons,
-    usePayPalScriptReducer
-} from "@paypal/react-paypal-js";
-import { useEffect } from "react";
-import { apiCreateOrder } from "../../apis";
-import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { apiCreateOrder, createPayment } from "../../apis";
 
-const style = { "layout": "vertical" };
+const MoMoPayment = ({ amount, payload, setIsSuccess }) => {
 
-const ButtonWrapper = ({ currency, showSpinner, amount, payload, setIsSuccess }) => {
-    console.log('response :>> ', payload);
+    const {
+        products,
+        total,
+        orderBy,
+        address,
+        status,
+        discountedTotal,
+        coupon_code
+    } = payload;
 
-    const [{ isPending, options }, dispatch] = usePayPalScriptReducer();
-    const navigate = useNavigate()
-    useEffect(() => {
-        dispatch({
-            type: 'resetOptions',
-            value: {
-                ...options, currency: currency
-            }
-        })
+    const returnUrl = 'http://localhost:3000/';
+    const orderInfo = 'Cửa hàng Shop Lou';
+    const orderId = '6626040459d8daa53b394999';
 
 
-    }, [currency, showSpinner])
-    
-    const handleSaveOrder = async () => {
-        payload.total *= 23500; 
-        const response = await apiCreateOrder(payload)
-        if (response.success) {
-            setIsSuccess(true)
-            setTimeout(() => {
-                Swal.fire('Congrat!', 'Order was created.', 'success').then(() => {
-                    navigate('/')
-                    window.close()
-                })
-            }, 1500)
-        }
-    }
+    const handlePayment = async () => {
+        // try {
+        //     const response = await createPayment({ orderId: orderId, amount: amount, orderInfo: orderInfo, returnUrl: returnUrl })
+        //     if (!response.ok) {
+        //         throw new Error('Failed to create payment');
+        //     }
+        //     const result = response;
+
+        //     setIsSuccess(true);
+        //     const res = await apiCreateOrder(payload);
+
+        // } catch (error) {
+        //     console.error('Error:', error);
+        // }
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                partnerCode: 'MOMOBKUN20180529',
+                partnerName: "Test",
+                storeId:"MOMOBKUN20180529",
+                requestType: "payWithATM",
+                ipnUrl : "https://sangle.free.beeceptor.com",
+                redirectUrl : "https://sangle.free.beeceptor.com",
+                orderId: "1642387834078:0123456778",
+                amount:50000,
+                orderInfo: orderInfo,
+                lang:"vi",
+                requestId:"1713890784040id",
+                extraData:"ew0KImVtYWlsIjogImh1b25neGRAZ21haWwuY29tIg0KfQ==",
+                signature:"19b6bae640dd1ddb7f7dcf95d96d9f1df42930d4d15f49708ba230ce48d7baf5"
+            })
+            // body: { status: status }
+        };
+
+        const response = await fetch(`https://test-payment.momo.vn/v2/gateway/api/create`, requestOptions);
+        const result = await response.json();
+        console.log('object :>> ', result);
+    };
+
     return (
-        <>
-            {(showSpinner && isPending) && <div className="spinner" />}
-            <PayPalButtons
-                style={style}
-                disabled={false}
-                forceReRender={[style, currency, amount]}
-                fundingSource={undefined}
-                createOrder={(data, actions) => actions.order.create({
-                    purchase_units: [
-                        { amount: { currency_code: currency, value: amount} }
-                    ]
-                }).then(orderId => orderId)
-
-                }
-                onApprove={(data, actions) => actions.order.capture({}).then(async (response) => {
-                    if (response.status === 'COMPLETED') {
-                        handleSaveOrder()
-                    }
-                })}
-            />
-        </>
-    );
-}
-
-export default function MoMo({ amount, payload, setIsSuccess }) {
-    return (
-        <div style={{ maxWidth: "750px", minHeight: "200px", margin: "auto" }}>
-            <PayPalScriptProvider options={{ clientId: "test", components: "buttons", currency: "USD" }}>
-                <ButtonWrapper setIsSuccess={setIsSuccess} payload={payload} currency={'USD'} amount={amount} showSpinner={false} />
-            </PayPalScriptProvider>
+        <div>
+            <button onClick={handlePayment}>Thanh toán bằng Momo Pay</button>
         </div>
     );
-}
+};
+
+export default MoMoPayment;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { formatMoney, formatPrice } from '../../ultils/helper'
-import { Button, Cash, Congrat, InputForm, Paypal, MoMo } from '../../components'
+import { Button, Cash, Congrat, InputForm, Paypal, MoMoPayment } from '../../components'
 import { useForm } from 'react-hook-form'
 import withBase from '../../hocs/withBase'
 import { getCurrent } from '../../store/user/asyncActions'
@@ -172,12 +172,11 @@ const Checkout = ({ dispatch, navigate }) => {
                         setIsSuccess={setIsSuccess}
                         amount={Math.round(discountedTotal / 23500) || Math.round(total / 23500)} />
                 </div>}
-
                 {paymentMethod.paymentMethod === "momo" && <div className='w-full justify-center'>
-                    <MoMo
+                    <MoMoPayment
                         payload={{
                             products: cart?.cart_products,
-                            total: Math.round(total / 23500),
+                            total: total,
                             orderBy: current?._id,
                             address: current?.address,
                             status: 2,
@@ -185,8 +184,9 @@ const Checkout = ({ dispatch, navigate }) => {
                             coupon_code: couponcode
                         }}
                         setIsSuccess={setIsSuccess}
-                        amount={Math.round(discountedTotal / 23500) || Math.round(total / 23500)} />
+                        amount={total} />
                 </div>}
+
             </div>
         </div>
 

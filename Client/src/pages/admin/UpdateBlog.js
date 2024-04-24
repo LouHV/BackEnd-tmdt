@@ -75,7 +75,7 @@ const UpdateBlog = ({ editBlog, setEditBlog,fectchBlogs }) => {
           dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }))
           const response = await apiUpdateBlogs(formData,editBlog._id )
           dispatch(showModal({ isShowModal: false, modalChildren: null }))
-          console.log('response :>> ', response);
+        //   console.log('response :>> ', response);
 
           if (response.success) {
               toast.success(response.message)

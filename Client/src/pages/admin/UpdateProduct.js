@@ -115,7 +115,7 @@ const UpdateProduct = ({ editProduct, setEditProduct,fectchProducts }) => {
             dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }))
             const response = await apiUpdateProducts(formData, editProduct._id)
             dispatch(showModal({ isShowModal: false, modalChildren: null }))
-            console.log('response :>> ', response);
+            // console.log('response :>> ', response);
 
             if (response.success) {
                 toast.success(response.message)

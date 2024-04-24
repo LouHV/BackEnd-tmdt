@@ -21,7 +21,6 @@ const path = {
     ADMIN: 'admin',
     DASHBOARD: 'dasboard',
 
-    DASHBOARD: 'dasboard',
     
     MANAGE_USER: 'manage-user',
     MANAGE_PRODUCTS: 'manage-products',

@@ -21,7 +21,7 @@ const ChangePass = () => {
 
     const handleChangePass = async (data) => {
           const response = await apiChangePassUser(data)
-          console.log('response :>> ', response);
+        //   console.log('response :>> ', response);
           if (response.success) {
             toast.success(response.message)
             reset()
