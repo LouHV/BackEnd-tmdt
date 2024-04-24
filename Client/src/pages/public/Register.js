@@ -26,7 +26,7 @@ const Register = () => {
     const [invalidFields, setinvalidFields] = useState([])
 
     const handleSubmit = useCallback(async () => {
-        const { email, password, firstname, lastname, mobile } = payload
+        // const { email, password, firstname, lastname, mobile } = payload
         const response = await apiRegister(payload)
 
 

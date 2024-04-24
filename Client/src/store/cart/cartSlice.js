@@ -13,7 +13,7 @@ const cartSlice = createSlice({
             state.cart = action.payload;
         },
         addToCart: (state, action) => {
-            const productExists = state.cart.cart_products.find(product => product.productId == action.payload.productId);
+            const productExists = state.cart.cart_products.find(product => product.productId === action.payload.productId);
             if (productExists) {
                 productExists.price += action.payload.price;
                 productExists.quantity += action.payload.quantity;
@@ -24,7 +24,7 @@ const cartSlice = createSlice({
             }
         },
         updateQuantity: (state, action) => {
-            const productIndex = state.cart.cart_products.findIndex(p => p.product.toString() == action.payload.productId);
+            const productIndex = state.cart.cart_products.findIndex(p => p.product.toString() === action.payload.productId);
             if (productIndex !== -1) {
                 // state.cart.cart_products[productIndex].price = state.cart.cart_products[productIndex].price * action.payload.quantity / state.cart.cart_products[productIndex].quantity;
 
