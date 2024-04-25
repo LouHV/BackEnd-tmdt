@@ -27,6 +27,7 @@ const MoMoPayment = ({ amount, payload, setIsSuccess }) => {
     const requestId = date + "id";
     const orderId = date + ":0123456778";
     const requestType = 'payWithATM';
+    const requestTypeQrcode = 'captureWallet';
     // const notifyUrl = 'https://sangle.free.beeceptor.com';
     // const notifyUrl = 'https://sangle.free.beeceptor.com';
     const notifyUrl = 'http://localhost:3000';
@@ -74,7 +75,7 @@ const MoMoPayment = ({ amount, payload, setIsSuccess }) => {
             const response = await createPaymentQrCode({
                 requestId,
                 orderId,
-                requestType,
+                requestType: requestTypeQrcode,
                 notifyUrl,
                 returnUrl,
                 amount,
@@ -105,10 +106,14 @@ const MoMoPayment = ({ amount, payload, setIsSuccess }) => {
     };
 
     return (
-        <div>
-            <button onClick={handlePayment}>Thanh toán bằng Momo Credit</button>
-            <button onClick={handlePaymentQrCode}>Thanh toán bằng Momo QR Code</button>
-        </div>
+        <>
+            <div>
+                <button onClick={handlePayment}>Thanh toán bằng Momo Credit</button>
+            </div>
+            <div>
+                <button onClick={handlePaymentQrCode}>Thanh toán bằng Momo QR Code</button>
+            </div>
+        </>
     );
 };
 
