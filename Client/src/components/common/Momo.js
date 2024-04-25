@@ -88,7 +88,7 @@ const MoMoPayment = ({ amount, payload, setIsSuccess }) => {
 
             if (response.success) {
                 setIsSuccess(true);
-                console.log("XXXX", response.jsonResponse.payUrl);
+                // console.log("XXXX", response.jsonResponse.payUrl);
                 window.open(`${response.jsonResponse.payUrl}`, "_blank");
             }
 
