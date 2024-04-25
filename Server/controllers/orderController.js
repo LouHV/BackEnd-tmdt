@@ -48,22 +48,13 @@ const updateStatus = asyncHandler(async (req, res) => {
     const { status } = req.body
     if (!status) throw new Error('Missing Status')
     const response = await Order.findByIdAndUpdate(orderId, { status }, { new: true })
-
-    console.log("responseKKKKK:::", response);
-    console.log("responseKKKKK22222:::", response.orderBy);
-
     const user = await User.findOne({ _id: convertToObjectIdMongoDb(response.orderBy).toString() });
     if (!user) throw new Error('missing user');
-
-    console.log("user444KKKKK:::", user);
-
 
     const html = `Đơn hàng của bạn đã được cập nhật trạng thái. Xem chi tiết thông tin đơn hàng tại đây: 
     <a href=${process.env.CLIENT_URL}/member/buy-history>Click here</a>`;
 
     const email = user.email;
-    console.log("emailemailKKKKK:::", email);
-
     const data = {
         email,
         html
