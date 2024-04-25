@@ -5,6 +5,7 @@ const MomoPaymentController = require("../controllers/paymentController");
 const { verifyAccessToken } = require('../middlewares/verifyToken');
 
 router.post('/create-payment', [verifyAccessToken], MomoPaymentController.createPayment);
+router.post('/create-payment-qrcode', [verifyAccessToken], MomoPaymentController.createPaymentQrCode);
 
 // router.post('/create-payment', [verifyAccessToken], (req, res) => {
 //     const { orderId, amount, orderInfo, returnUrl } = req.body; // Sửa các tham số ở đây

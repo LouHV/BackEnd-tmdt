@@ -53,12 +53,42 @@ const MoMoPayment = ({ amount, payload, setIsSuccess }) => {
 
             if (response.success) {
                 setIsSuccess(true);
+                window.open(`${response.jsonResponse.payUrl}`, "_blank");
+            }
 
-                console.log("XXXX", response.payUrl);
+            // const res = await apiCreateOrder(payload);
+            // setTimeout(() => {
+            //     Swal.fire('Congrat!', 'Order was created.', 'success').then(() => {
+            //         navigate('/')
+            //         window.close()
+            //     })
+            // }, 1500)
 
-                window.open(`${response.payUrl}`, "_blank");
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
 
-                // navigate(`${response.payUrl}`);
+    const handlePaymentQrCode = async () => {
+        try {
+            const response = await createPayment({
+                requestId,
+                orderId,
+                requestType,
+                notifyUrl,
+                returnUrl,
+                amount,
+                orderInfo,
+                extraData
+            })
+            if (!response) {
+                throw new Error('Failed to create payment');
+            }
+
+            if (response.success) {
+                setIsSuccess(true);
+                console.log("XXXX", response.jsonResponse.payUrl);
+                window.open(`${response.jsonResponse.payUrl}`, "_blank");
             }
 
             // const res = await apiCreateOrder(payload);
@@ -76,7 +106,8 @@ const MoMoPayment = ({ amount, payload, setIsSuccess }) => {
 
     return (
         <div>
-            <button onClick={handlePayment}>Thanh toán bằng Momo Pay</button>
+            <button onClick={handlePayment}>Thanh toán bằng Momo Credit</button>
+            <button onClick={handlePaymentQrCode}>Thanh toán bằng Momo QR Code</button>
         </div>
     );
 };
