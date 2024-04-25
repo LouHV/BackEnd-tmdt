@@ -5,17 +5,13 @@ const Product = require("../models/productModel")
 const Carts = require('../models/cart');
 
 const convertToObjectIdMongoDb = require('../ultils/index')
-
-
 const sendMail = require("../ultils/sendMail")
-
-
 const asyncHandler = require('express-async-handler')
 
 
 const createNewOrder = asyncHandler(async (req, res) => {
     const { _id } = req.user
-    const { products, total, address, status, discountedTotal } = req.body
+    const { products, total, address, status, discountedTotal, coupon_code } = req.body
     if (address) {
         await User.findByIdAndUpdate(_id, { address, cart: [] })
     }
@@ -37,6 +33,17 @@ const createNewOrder = asyncHandler(async (req, res) => {
         });
     }
     await Carts.deleteOne({ cart_userId: _id });
+
+    if (discountedTotal > 0) {
+        const coupon = await Coupon.findOne({ coupon_code: coupon_code });
+        if (coupon) {
+            if (coupon.quantity > 0) {
+                const updateCoupon = await Coupon.updateOne({ _id: coupon._id }, { $inc: { quantity: -1 } });
+                if (!updateCoupon) throw new Error('Missing Update Coupon');
+            }
+        }
+    }
+
     return res.json({
         success: rs ? true : false,
         rs: rs ? rs : 'Something went wrong'
@@ -46,7 +53,7 @@ const createNewOrder = asyncHandler(async (req, res) => {
 const updateStatus = asyncHandler(async (req, res) => {
     const { orderId } = req.params
     const { status } = req.body
-    if (!status) throw new Error('Missing Status')
+    if (!status) throw new Error('Missing Status');
     const response = await Order.findByIdAndUpdate(orderId, { status }, { new: true })
     const user = await User.findOne({ _id: convertToObjectIdMongoDb(response.orderBy).toString() });
     if (!user) throw new Error('missing user');
@@ -158,7 +165,6 @@ const getOders = asyncHandler(async (req, res) => {
 const getOrdersCountByDate = asyncHandler(async (req, res) => {
     const { dateType, dateValue } = req.query; // dateType can be 'day', 'month', or 'year'
     const dateField = dateType === 'day' ? '$date' : dateType === 'month' ? { $month: '$date' } : { $year: '$date' };
-    // console.log('dateField :>> ', dateField);
     const pipeline = [
         {
             $match: {

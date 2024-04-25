@@ -157,6 +157,46 @@ const applyCouponToOrder = asyncHandler(async (req, res) => {
         return res.status(400).json({ success: false, message: 'Invalid or expired coupon code' });
     }
 
+    if (coupon.start_date > new Date()) {
+        return res.status(400).json({ success: false, message: 'Coupon not yet valid' });
+    }
+
+    if (coupon.quantity <= 0) {
+        return res.status(400).json({ success: false, message: 'Coupon has been used up' });
+    }
+
+    const cart = await Carts.findOne({ cart_userId: _id, cart_state: 'active' });
+    if (!cart) {
+        return res.status(404).json({ success: false, message: 'Cart not found ...' });
+    }
+
+    let discountedTotal = cart.cart_products.reduce((acc, product) => acc + product.price, 0);
+
+    if (coupon.type_coupon === 'Percent') {
+        discountedTotal -= discountedTotal * (coupon.discount / 100);
+    } else if (coupon.type_coupon === 'Amount') {
+        discountedTotal -= coupon.discount;
+    } else {
+        discountedTotal = discountedTotal;
+    }
+
+    return res.json({
+        success: true,
+        message: 'Coupon applied successfully',
+        discountedTotal
+    });
+});
+
+
+const applyCouponToOrder1111111 = asyncHandler(async (req, res) => {
+    const { _id } = req.user;
+    const { coupon_code } = req.body;
+
+    const coupon = await Coupon.findOne({ coupon_code, expiry: { $gte: new Date() } });
+    if (!coupon) {
+        return res.status(400).json({ success: false, message: 'Invalid or expired coupon code' });
+    }
+
     const cart = await Carts.findOne({ cart_userId: _id, cart_state: 'active' });
     if (!cart) {
         return res.status(404).json({ success: false, message: 'Cart not found ...' });
