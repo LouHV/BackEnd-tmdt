@@ -47,27 +47,18 @@ const MoMoPayment = ({ amount, payload, setIsSuccess }) => {
                 orderInfo,
                 extraData
             })
+            console.log('response :>> ', response);
             if (!response) {
                 throw new Error('Failed to create payment');
             }
 
             if (response.success) {
                 setIsSuccess(true);
+                window.open(`${response.jsonResponse.payUrl}`, "_blank");
 
-                console.log("XXXX", response.payUrl);
-
-                window.open(`${response.payUrl}`, "_blank");
-
-                // navigate(`${response.payUrl}`);
             }
 
-            // const res = await apiCreateOrder(payload);
-            // setTimeout(() => {
-            //     Swal.fire('Congrat!', 'Order was created.', 'success').then(() => {
-            //         navigate('/')
-            //         window.close()
-            //     })
-            // }, 1500)
+
 
         } catch (error) {
             console.error('Error:', error);
@@ -76,7 +67,11 @@ const MoMoPayment = ({ amount, payload, setIsSuccess }) => {
 
     return (
         <div>
-            <button onClick={handlePayment}>Thanh toán bằng Momo Pay</button>
+            <button onClick={handlePayment}
+                className='px-4 py-2 rounded-md text-white my-2 bg-main text-semibold'>
+
+                CLICK HERE TO PAY WITH MOMO </button>
+
         </div>
     );
 };

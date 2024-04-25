@@ -140,11 +140,12 @@ const Checkout = ({ dispatch, navigate }) => {
                     <select className='rounded border border-gray-300' name="paymentMethod" onChange={handleInputChange}>
                         <option value="">Cash</option>
                         <option value="paypal">Paypal</option>
-                        <option value="momo">Momo</option>
+                        <option value="momo">
+                            Momo</option>
                     </select>
                 </div>
 
-                {paymentMethod.paymentMethod === "" && <div className='w-full justify-center'>
+                {paymentMethod.paymentMethod !== "paypal" && paymentMethod.paymentMethod !== "momo" && <div className='w-full justify-center'>
                     <Cash
                         payload={{
                             products: cart?.cart_products,
