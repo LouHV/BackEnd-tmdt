@@ -6,19 +6,25 @@ const slugtify = require('slugify')
 const categoryData = require('../../Data/cate_brand')
 
 const fn = async (product) => {
+     let price = product?.price.match(/\d/g).join('');
+    let processedPrice = 0; // Giá trị mặc định hoặc bỏ qua
+    if (Number(price) >= 1000) {
+        processedPrice = Math.round(Number(price) / 1000);
+    }
+
     await Product.create({
         title: product?.name + Math.round(Math.random() * 1000) + '',
         slug: slugtify(product?.name),
         description: product?.description,
         brand: product?.brand,
-        price: Math.round(Number(product?.price.match(/\d/g).join('')) / 100),
+        price: processedPrice, // Sử dụng giá trị đã xử lý
         category: product?.category[1],
         quantity: Math.round(Math.random() * 1000),
-        sold: Math.round(Math.random() * 1000),
+        sold: 0,
         images: product?.images,
-        color: product?.variants?.find(el => el.label === 'Color')?.variants?.[0] || null,
+        color: product?.varriants?.find(el => el.label === 'Color')?.varriants?.[0] || null,
         thumb: product?.thumb,
-        totalRating: Math.floor(Math.random() * 6),
+        totalRating: 0,
     })
 }
 const insertProduct = asyncHandler(async (req, res) => {

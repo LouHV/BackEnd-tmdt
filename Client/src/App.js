@@ -50,6 +50,7 @@ import CreateCoupon from './pages/admin/CreateCoupon';
 import DetailBlogs from './pages/public/DetailBlogs';
 
 import ErrorBoundary from '../src/ultils/errorBoundary';
+import DetailOrder from './pages/member/DetailOrder';
 
 
 function App() {
@@ -106,6 +107,11 @@ function App() {
           <Route path={path.MANAGE_BRAND} element={<ManageBrand />} />
           <Route path={path.CREATE_BRAND} element={<CreateBrand />} />
         </Route>
+        <Route>
+          <Route path={path.DETAILORDER} element={<DetailOrder />} />
+
+        </Route>
+
         {/* member */}
         {/* <Route path={path.MEMBER} element={<MemberLayout />}>
           <Route path={path.PERSONAL} element={<Personal />} />
@@ -115,6 +121,7 @@ function App() {
         <Route path={path.REGISTER} element={<Register />} />
         <Route path={path.FINAL_REGISTER} element={<FinalRegister />} />
         <Route path={path.CHECKOUT} element={<Checkout />} />
+
       </Routes>
 
       <ToastContainer

@@ -26,10 +26,10 @@
             "Internal: 32GB/64GB/128GB",
             "Camera: 16 MP, f/2.0 - 4 MP, f/2.0"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Internal",
-                "variants": [
+                "varriants": [
                     "32GB",
                     "64GB",
                     "128GB"
@@ -37,7 +37,7 @@
             },
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "BLACK",
                     "WHITE",
                     "GOLD",
@@ -46,7 +46,7 @@
             },
             {
                 "label": "Ram",
-                "variants": [
+                "varriants": [
                     "2GB",
                     "3GB"
                 ]
@@ -85,10 +85,10 @@
             "Internal: 32 GB, 4 GB RAM",
             "Camera: 13MB - 20 MP"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "GOLD",
                     "GRAY"
                 ]
@@ -128,17 +128,17 @@
             "Internal: 32/64 GB",
             "Camera: 23 MP, f/2.0 - 13 MP, f/2.0"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Internal",
-                "variants": [
+                "varriants": [
                     "32GB",
                     "64GB"
                 ]
             },
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "MINERAL BLACK",
                     "PLATINUM",
                     "FOREST BLUE",
@@ -180,10 +180,10 @@
             "Internal: 32 GB, 4 GB RAM",
             "Camera: 112 MP - 5 MP"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Size",
-                "variants": [
+                "varriants": [
                     "LARGE"
                 ]
             }
@@ -222,17 +222,17 @@
             "Internal: 16/32 GB, 3 GB RAM",
             "Camera: 13 MP, f/1.9 - 8 MP, f/1.9"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Internal",
-                "variants": [
+                "varriants": [
                     "12GB",
                     "16GB"
                 ]
             },
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "BLACK",
                     "GOLD"
                 ]
@@ -273,7 +273,7 @@
             "Internal: 32 GB, 4 GB RAM",
             "Camera: Dual 16 MP (29mm, f/1.8) + 8 MP (12mm, f/2.4)"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nTechnology: GSM / CDMA / HSPA / LTE\nDimensions: 149.4 x 73.9 x 7.7 mm\nWeight: 159 g\nDisplay: IPS LCD 5.3 inches\nResolution: 1440 x 2560\nOS: Android OS, v6.0.1 (Marshmallow)\nChipset: Snapdragon 820\nCPU: Quad-core\nInternal: 32 GB, 4 GB RAM\nCamera: Dual 16 MP (29mm, f/1.8) + 8 MP (12mm, f/2.4)\n\n\nSomeone at LG must have thought: \"Leather is so last-year, let’s do something nobody has done – or long quit trying.\" And here we have the LG G5. It has the looks of a brand new flagship, the heart of a dragon and an adventurous dual camera setup suited for every occasion. But there’s more than what meets the eye, the Magic Slot. The LG G5 is a modular smartphone, which lets you plug a handful of external add-ons: a semi-pro camera grip with shutter buttons and a bigger battery, or an external sound amplifier by B&O.\nHow long since you last saw the inside of your phone? It seems like while everyone was busy experimenting with designs and mixing up various alloys, there was something unusual cooking in the LG labs.\nBrand new or just well forgotten old, innovating for its own sake or trying to defy the impossible, the modular design won't let you upgrade the processor or the camera, but it certainly offers plenty of options. The add-ons will mostly be sold separately but initial prices don't seem too bad. You might even get a bonus camera grip - LG will throw one in the bundle in select markets. Who knows, we might see the return of the xenon flash or some smart docking solutions along the lines of Microsoft's Continuum.\nWhat you do get right out of the box is the base equipment and in the case of the G5, it's anything but modest. Perhaps the star of the show is the camera combo. The 16MP camera borrowed from the LG V10 does top-notch stills, and the secondary 8MP sensor offers unmatched super wide shots while adding a hybrid zoom of sorts to the package.\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -309,10 +309,10 @@
             "Internal: 32/128 GB, 2 GB RAM",
             "Camera: 12 MP - 7 MP"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Capacity",
-                "variants": [
+                "varriants": [
                     "32GB",
                     "64GB",
                     "128GB"
@@ -320,7 +320,7 @@
             },
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "BLACK",
                     "GOLD",
                     "WHITE"
@@ -360,17 +360,17 @@
             "Internal: 32/64 GB, 4 GB RAM",
             "Camera: 12 MP, f/1.8 - 5 MP, f/1.8"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Internal",
-                "variants": [
+                "varriants": [
                     "32GB",
                     "64GB"
                 ]
             },
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "CARBON GRAY",
                     "TOPAZ GOLD",
                     "GLACIER SILVER",
@@ -415,17 +415,17 @@
             "Internal: 32/128 GB, 4 GB RAM",
             "Camera: 12.3 MP, f/2.0 - 8 MP, f/2.4"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Internal",
-                "variants": [
+                "varriants": [
                     "32GB",
                     "128GB"
                 ]
             },
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "QUITE BLACK",
                     "VERY SILVER",
                     "REALLY BLUE"
@@ -467,17 +467,17 @@
             "Internal: 16GB/2GB - 32GB/3GB",
             "Camera: 16 MP, f/2.0 - 5 MP, f/2.0"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Internal",
-                "variants": [
+                "varriants": [
                     "12GB",
                     "32GB"
                 ]
             },
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "SILVER",
                     "GRAY",
                     "GOLD"
@@ -485,7 +485,7 @@
             },
             {
                 "label": "Ram",
-                "variants": [
+                "varriants": [
                     "2GB",
                     "3GB"
                 ]
@@ -526,10 +526,10 @@
             "Internal: 32 GB, 3 GB RAM",
             "Camera: 8.1 MP - 5.1 MP"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "BLACK",
                     "WHITE"
                 ]
@@ -568,17 +568,17 @@
             "Internal: 16/32 GB, 3 GB RAM",
             "Camera: 8 MP - 2.1 MP"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Size",
-                "variants": [
+                "varriants": [
                     "16GB",
                     "32GB"
                 ]
             },
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "DAZZLING WHITE",
                     "TITANIUM BRONZE"
                 ]
@@ -616,7 +616,7 @@
             "Internal: 32 GB, 2 GB RAM",
             "Camera: 5 MP - 5 MP"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nTechnology: GSM / HSPA / LTE\nDimensions: 256.2 x 167.9 x 6.7 mm\nWeight: 510 g\nDisplay: IPS LCD 10.1 inches\nResolution: 1200 x 1920\nOS: Android OS, v6.0.1 (Marshmallow)\nChipset: Snapdragon 617\nCPU: Octa-core\nInternal: 32 GB, 2 GB RAM\nCamera: 5 MP - 5 MP\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -651,7 +651,7 @@
             "Internal: 32 GB, 3 GB RAM",
             "Camera: 13 MP - 5 MP"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nTechnology: GSM / HSPA / LTE\nDimensions: 247 x 179 mm\nWeight: 637 g\nDisplay: IPS LCD 10.1 inches\nResolution: 1600 x 2560\nOS: Android OS, v6.0.1 (Marshmallow)\nChipset: Snapdragon 625\nCPU: Octa-core\nInternal: 32 GB, 3 GB RAM\nCamera: 13 MP - 5 MP\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -686,7 +686,7 @@
             "Internal: 8 GB, 1 GB RAM",
             "Camera: 2 MP"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nTechnology: GSM / HSPA\nDimensions: 191.8 x 107 x 8.5 mm\nWeight: 2783 g\nDisplay: IPS LCD 7.0 inches\nResolution: 600 x 1024\nOS: Android OS, v4.4.2 (KitKat)\nChipset: Spreadtrum SC7731G\nCPU: Quad-core 1.2 GHz\nInternal: 8 GB, 1 GB RAM\nCamera: 2 MP\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -720,7 +720,7 @@
             "Internal: 32 GB, 4 GB RAM",
             "Camera: 8 MP - 2 MP"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nTechnology: GSM / HSPA / LTE\nDimensions: 205.4 x 136.4 x 7.6 mm\nWeight: 320 g\nDisplay: IPS LCD 7.9 inches\nResolution: 1536 x 2048\nOS: Android OS, v6.0 (Marshmallow)\nChipset: Snapdragon 650\nCPU: Hexa-core\nInternal: 32 GB, 4 GB RAM\nCamera: 8 MP - 2 MP\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -756,10 +756,10 @@
             "Internal: 32/128/256 GB, 4 GB RAM",
             "Camera: 8 MP - 1.2 MP"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Internal",
-                "variants": [
+                "varriants": [
                     "32GB",
                     "128GB",
                     "256GB"
@@ -767,7 +767,7 @@
             },
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "SPACE GRAY",
                     "SILVER",
                     "GOLD"
@@ -808,10 +808,10 @@
             "Internal: 16/32/64/128 GB, 2 GB RAM",
             "Camera: 8 MP, f/2.4 - 1.2 MP, f/2.2"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Size",
-                "variants": [
+                "varriants": [
                     "16GB",
                     "32GB",
                     "64GB",
@@ -820,7 +820,7 @@
             },
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "SPACE GRAY",
                     "SILVER",
                     "GOLD"
@@ -860,7 +860,7 @@
             "Dimensions: 377 x 264 x 22.9 cmM",
             "Weight: 2.3 kg"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nProcessor: Intel, Core i7 Skylake\nMemory: DDR4 - 8 GB\nDisplay: 15.6\" 1366 x 768\nGraphic: AMD Radeon R5 M430\nStorage: HDD, 1 TB\nCamera: 0.3 MP\nNetworking: 802.11 b/g/n\nBattery: Li-Ion 4 cell\nDimensions: 377 x 264 x 22.9 cmM\nWeight: 2.3 kg\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -894,7 +894,7 @@
             "Dimensions: 382 x 263 x 24.4 cmM",
             "Weight: 2 kg"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nProcessor: Intel, Core i5 Skylake\nMemory: DDR4 - 4 GB\nDisplay: 15.6\" 1920 x 1080\nGraphic: Intel® HD Graphics 620\nStorage: HDD, 500 GB\nCamera: 1 MP\nNetworking: 802.11 b/g/n\nBattery: Li-Ion 4 cell\nDimensions: 382 x 263 x 24.4 cmM\nWeight: 2 kg\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -928,7 +928,7 @@
             "Dimensions: 383 x 243 x 22.5 cmM",
             "Weight: 2 kg"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nProcessor: Intel, Core i7 Skylake\nMemory: DDR4 4 GB\nDisplay: 15.6\" - 1366x768\nGraphic: NVIDIA® GeForce® 940M, 4 GB\nStorage: HDD, 1 TB\nCamera: 1 MP\nNetworking: 802.11 b/g/n\nBattery: Li-Ion 2 cell\nDimensions: 383 x 243 x 22.5 cmM\nWeight: 2 kg\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -962,7 +962,7 @@
             "Dimensions: 323.3 x 227.1 x 18.95 cmM",
             "Weight: 1.7 kg"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nProcessor: Core i5 Kabylake 2.50GHz\nMemory: DDR4 4GB 2400MHz\nDisplay: 14.0\" 1920x1080\nGraphic: NVIDIA GeForce 940MX, 2 GB\nStorage: HDD: 500GB + SSD: 128GB\nCamera: 1 M\nNetworking: 802.11 b/g/n\nBattery: Li-Ion 3 cell\nDimensions: 323.3 x 227.1 x 18.95 cmM\nWeight: 1.7 kg\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -996,10 +996,10 @@
             "Dimensions: 339 x 235 x 21.9 cmM",
             "Weight: 1.65 kg"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "RED",
                     "BLUE",
                     "WHITE"
@@ -1039,7 +1039,7 @@
             "Dimensions: 212,4 x 304.1 x 14,9 cmM",
             "Weight: 1.37 kg"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nProcessor: 2.0GHz Core i5\nMemory: DDR4 8GB 1866MHz\nDisplay: 13.3\" Retina (2560 x 1600 pixels)\nGraphic: Intel Iris Graphics 540\nStorage: SSD: 256GB\nCamera: HD Camera\nNetworking: 802.11 a/b/g/n/ac\nBattery: up to 10h\nDimensions: 212,4 x 304.1 x 14,9 cmM\nWeight: 1.37 kg\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -1073,7 +1073,7 @@
             "Dimensions: 325 x 227 x 17 cmM",
             "Weight: 1.35 kg"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nProcessor: Core i5 Broadwelle\nMemory: DDR3L - 8 GB\nDisplay: 13.3\" 1440 x 900\nGraphic: Intel HD Graphics 6000\nStorage: SSD, 128 GB\nCamera: 1.3 MP\nNetworking: 802.11 b/g/n\nBattery: Lithium- polymer\nDimensions: 325 x 227 x 17 cmM\nWeight: 1.35 kg\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -1107,7 +1107,7 @@
             "Dimensions: 318 x 259 x 30.4 cmM",
             "Weight: 2.23 kg"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nProcessor: Intel, Core i5 Skylake\nMemory: DDR4 - 4 GB\nDisplay: 15.6\" 1920 x 1080\nGraphic: NVIDIA® GeForce® 940M\nStorage: HDD: 500GB + SSD: 8GB\nCamera: 1 MP\nNetworking: 802.11 b/g/n\nBattery: Li-Ion 4 cell\nDimensions: 318 x 259 x 30.4 cmM\nWeight: 2.23 kg\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -1136,10 +1136,10 @@
             "Storage temperature: 0° - 158°",
             "5-year limited warranty"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Capacity",
-                "variants": [
+                "varriants": [
                     "16GB",
                     "32GB",
                     "64GB",
@@ -1177,7 +1177,7 @@
             "Always in control",
             "Peace of mind"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nLong talk time – Up to 10 hours\nTells you how it’s doing\nFor calls and music\nPerfect iPhone partner\nCharging is quick\nConnects to two devices\nUSB charging cable\nClear as HD\nEasy call control\nAlways in control\nPeace of mind\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -1210,7 +1210,7 @@
             "Platform: Samsung Gear VR powered by Oculus",
             "Supported: Note5, Note7, S6, S6 Edge, S6 Edge+, S7, S7 Edge"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nConnections: USB 2.0, USB 3.0\nControls: Onboard touchpad, Bluetooth controllers\nHardware Platform: Android\nHeadset Type: Mobile\nResolution: 2,560 by 1,440\nSensors: Motion, presence\nPlatform: Samsung Gear VR powered by Oculus\nSupported: Note5, Note7, S6, S6 Edge, S6 Edge+, S7, S7 Edge\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -1246,10 +1246,10 @@
             "Internal: 4 GB, 512 MB RAM",
             "Camera: No"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "BLACK LEATHER",
                     "BLACK METAL",
                     "ROSE GOLD",
@@ -1258,7 +1258,7 @@
             },
             {
                 "label": "Traps",
-                "variants": [
+                "varriants": [
                     "42MM",
                     "46MM"
                 ]
@@ -1291,7 +1291,7 @@
             "Nano USB receiver",
             "3-year Limited hardware warranty"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nDimensions: 139mm x 288mm x 21mm\nWeight: 312 g\n36-month battery life\nAdjustable keyboard height\nSpill-resistant design\n2.4GHz wireless (10 meters)\nNano USB receiver\n3-year Limited hardware warranty\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -1325,10 +1325,10 @@
             "1-Year Limited Hardware Warranty",
             "Requirements: Windows® 7 to latest"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "BLACK",
                     "NAVY BLUE",
                     "STONE"
@@ -1367,10 +1367,10 @@
             "Weight: 800g",
             "Power supply: 5V / 2.3A"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "BLACK",
                     "BLUE",
                     "GREY",
@@ -1411,24 +1411,24 @@
             "Internal: No",
             "Camera: No"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Type",
-                "variants": [
+                "varriants": [
                     "EDITION",
                     "SPORT"
                 ]
             },
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "WHITE",
                     "SPORT BAND"
                 ]
             },
             {
                 "label": "Strap",
-                "variants": [
+                "varriants": [
                     "42MM",
                     "38MM"
                 ]
@@ -1462,10 +1462,10 @@
             "Storage temperature: 0° - 158°",
             "5-year limited warranty"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Capacity",
-                "variants": [
+                "varriants": [
                     "16GB",
                     "32GB",
                     "64GB",
@@ -1503,7 +1503,7 @@
             "Always in control",
             "Peace of mind"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nLong talk time – Up to 10 hours\nTells you how it’s doing\nFor calls and music\nPerfect iPhone partner\nCharging is quick\nConnects to two devices\nUSB charging cable\nClear as HD\nEasy call control\nAlways in control\nPeace of mind\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -1536,7 +1536,7 @@
             "Platform: Samsung Gear VR powered by Oculus",
             "Supported: Note5, Note7, S6, S6 Edge, S6 Edge+, S7, S7 Edge"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nConnections: USB 2.0, USB 3.0\nControls: Onboard touchpad, Bluetooth controllers\nHardware Platform: Android\nHeadset Type: Mobile\nResolution: 2,560 by 1,440\nSensors: Motion, presence\nPlatform: Samsung Gear VR powered by Oculus\nSupported: Note5, Note7, S6, S6 Edge, S6 Edge+, S7, S7 Edge\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -1572,10 +1572,10 @@
             "Internal: 4 GB, 512 MB RAM",
             "Camera: No"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "BLACK LEATHER",
                     "BLACK METAL",
                     "ROSE GOLD",
@@ -1584,7 +1584,7 @@
             },
             {
                 "label": "Traps",
-                "variants": [
+                "varriants": [
                     "42MM",
                     "46MM"
                 ]
@@ -1617,7 +1617,7 @@
             "Nano USB receiver",
             "3-year Limited hardware warranty"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nDimensions: 139mm x 288mm x 21mm\nWeight: 312 g\n36-month battery life\nAdjustable keyboard height\nSpill-resistant design\n2.4GHz wireless (10 meters)\nNano USB receiver\n3-year Limited hardware warranty\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -1651,10 +1651,10 @@
             "1-Year Limited Hardware Warranty",
             "Requirements: Windows® 7 to latest"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "BLACK",
                     "NAVY BLUE",
                     "STONE"
@@ -1693,10 +1693,10 @@
             "Weight: 800g",
             "Power supply: 5V / 2.3A"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "BLACK",
                     "BLUE",
                     "GREY",
@@ -1737,24 +1737,24 @@
             "Internal: No",
             "Camera: No"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Type",
-                "variants": [
+                "varriants": [
                     "EDITION",
                     "SPORT"
                 ]
             },
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "WHITE",
                     "SPORT BAND"
                 ]
             },
             {
                 "label": "Strap",
-                "variants": [
+                "varriants": [
                     "42MM",
                     "38MM"
                 ]
@@ -1788,10 +1788,10 @@
             "Storage temperature: 0° - 158°",
             "5-year limited warranty"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Capacity",
-                "variants": [
+                "varriants": [
                     "16GB",
                     "32GB",
                     "64GB",
@@ -1829,7 +1829,7 @@
             "Always in control",
             "Peace of mind"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nLong talk time – Up to 10 hours\nTells you how it’s doing\nFor calls and music\nPerfect iPhone partner\nCharging is quick\nConnects to two devices\nUSB charging cable\nClear as HD\nEasy call control\nAlways in control\nPeace of mind\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -1862,7 +1862,7 @@
             "Platform: Samsung Gear VR powered by Oculus",
             "Supported: Note5, Note7, S6, S6 Edge, S6 Edge+, S7, S7 Edge"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nConnections: USB 2.0, USB 3.0\nControls: Onboard touchpad, Bluetooth controllers\nHardware Platform: Android\nHeadset Type: Mobile\nResolution: 2,560 by 1,440\nSensors: Motion, presence\nPlatform: Samsung Gear VR powered by Oculus\nSupported: Note5, Note7, S6, S6 Edge, S6 Edge+, S7, S7 Edge\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -1898,10 +1898,10 @@
             "Internal: 4 GB, 512 MB RAM",
             "Camera: No"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "BLACK LEATHER",
                     "BLACK METAL",
                     "ROSE GOLD",
@@ -1910,7 +1910,7 @@
             },
             {
                 "label": "Traps",
-                "variants": [
+                "varriants": [
                     "42MM",
                     "46MM"
                 ]
@@ -1943,7 +1943,7 @@
             "Nano USB receiver",
             "3-year Limited hardware warranty"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nDimensions: 139mm x 288mm x 21mm\nWeight: 312 g\n36-month battery life\nAdjustable keyboard height\nSpill-resistant design\n2.4GHz wireless (10 meters)\nNano USB receiver\n3-year Limited hardware warranty\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -1977,10 +1977,10 @@
             "1-Year Limited Hardware Warranty",
             "Requirements: Windows® 7 to latest"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "BLACK",
                     "NAVY BLUE",
                     "STONE"
@@ -2019,10 +2019,10 @@
             "Weight: 800g",
             "Power supply: 5V / 2.3A"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "BLACK",
                     "BLUE",
                     "GREY",
@@ -2063,24 +2063,24 @@
             "Internal: No",
             "Camera: No"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Type",
-                "variants": [
+                "varriants": [
                     "EDITION",
                     "SPORT"
                 ]
             },
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "WHITE",
                     "SPORT BAND"
                 ]
             },
             {
                 "label": "Strap",
-                "variants": [
+                "varriants": [
                     "42MM",
                     "38MM"
                 ]
@@ -2118,7 +2118,7 @@
             "Platform: Samsung Gear VR powered by Oculus",
             "Supported: Note5, Note7, S6, S6 Edge, S6 Edge+, S7, S7 Edge"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nConnections: USB 2.0, USB 3.0\nControls: Onboard touchpad, Bluetooth controllers\nHardware Platform: Android\nHeadset Type: Mobile\nResolution: 2,560 by 1,440\nSensors: Motion, presence\nPlatform: Samsung Gear VR powered by Oculus\nSupported: Note5, Note7, S6, S6 Edge, S6 Edge+, S7, S7 Edge\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -2154,10 +2154,10 @@
             "Internal: 4 GB, 512 MB RAM",
             "Camera: No"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "BLACK LEATHER",
                     "BLACK METAL",
                     "ROSE GOLD",
@@ -2166,7 +2166,7 @@
             },
             {
                 "label": "Traps",
-                "variants": [
+                "varriants": [
                     "42MM",
                     "46MM"
                 ]
@@ -2199,7 +2199,7 @@
             "Nano USB receiver",
             "3-year Limited hardware warranty"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nDimensions: 139mm x 288mm x 21mm\nWeight: 312 g\n36-month battery life\nAdjustable keyboard height\nSpill-resistant design\n2.4GHz wireless (10 meters)\nNano USB receiver\n3-year Limited hardware warranty\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -2233,10 +2233,10 @@
             "1-Year Limited Hardware Warranty",
             "Requirements: Windows® 7 to latest"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "BLACK",
                     "NAVY BLUE",
                     "STONE"
@@ -2275,10 +2275,10 @@
             "Weight: 800g",
             "Power supply: 5V / 2.3A"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "BLACK",
                     "BLUE",
                     "GREY",
@@ -2319,24 +2319,24 @@
             "Internal: No",
             "Camera: No"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Type",
-                "variants": [
+                "varriants": [
                     "EDITION",
                     "SPORT"
                 ]
             },
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "WHITE",
                     "SPORT BAND"
                 ]
             },
             {
                 "label": "Strap",
-                "variants": [
+                "varriants": [
                     "42MM",
                     "38MM"
                 ]
@@ -2370,10 +2370,10 @@
             "Storage temperature: 0° - 158°",
             "5-year limited warranty"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Capacity",
-                "variants": [
+                "varriants": [
                     "16GB",
                     "32GB",
                     "64GB",
@@ -2411,7 +2411,7 @@
             "Always in control",
             "Peace of mind"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nLong talk time – Up to 10 hours\nTells you how it’s doing\nFor calls and music\nPerfect iPhone partner\nCharging is quick\nConnects to two devices\nUSB charging cable\nClear as HD\nEasy call control\nAlways in control\nPeace of mind\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -2440,10 +2440,10 @@
             "Storage temperature: 0° - 158°",
             "5-year limited warranty"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Capacity",
-                "variants": [
+                "varriants": [
                     "16GB",
                     "32GB",
                     "64GB",
@@ -2481,7 +2481,7 @@
             "Always in control",
             "Peace of mind"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nLong talk time – Up to 10 hours\nTells you how it’s doing\nFor calls and music\nPerfect iPhone partner\nCharging is quick\nConnects to two devices\nUSB charging cable\nClear as HD\nEasy call control\nAlways in control\nPeace of mind\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -2514,7 +2514,7 @@
             "Platform: Samsung Gear VR powered by Oculus",
             "Supported: Note5, Note7, S6, S6 Edge, S6 Edge+, S7, S7 Edge"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nConnections: USB 2.0, USB 3.0\nControls: Onboard touchpad, Bluetooth controllers\nHardware Platform: Android\nHeadset Type: Mobile\nResolution: 2,560 by 1,440\nSensors: Motion, presence\nPlatform: Samsung Gear VR powered by Oculus\nSupported: Note5, Note7, S6, S6 Edge, S6 Edge+, S7, S7 Edge\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -2550,10 +2550,10 @@
             "Internal: 4 GB, 512 MB RAM",
             "Camera: No"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "BLACK LEATHER",
                     "BLACK METAL",
                     "ROSE GOLD",
@@ -2562,7 +2562,7 @@
             },
             {
                 "label": "Traps",
-                "variants": [
+                "varriants": [
                     "42MM",
                     "46MM"
                 ]
@@ -2595,7 +2595,7 @@
             "Nano USB receiver",
             "3-year Limited hardware warranty"
         ],
-        "variants": [],
+        "varriants": [],
         "infomations": {
             "DESCRIPTION": "\n                  \nDimensions: 139mm x 288mm x 21mm\nWeight: 312 g\n36-month battery life\nAdjustable keyboard height\nSpill-resistant design\n2.4GHz wireless (10 meters)\nNano USB receiver\n3-year Limited hardware warranty\n\n                ",
             "WARRANTY": "\n                  Warranty Information\nLIMITED WARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:\nFrames Used In Upholstered and Leather ProductsLimited Lifetime Warranty A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.\n                ",
@@ -2629,10 +2629,10 @@
             "1-Year Limited Hardware Warranty",
             "Requirements: Windows® 7 to latest"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "BLACK",
                     "NAVY BLUE",
                     "STONE"
@@ -2671,10 +2671,10 @@
             "Weight: 800g",
             "Power supply: 5V / 2.3A"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "BLACK",
                     "BLUE",
                     "GREY",
@@ -2715,24 +2715,24 @@
             "Internal: No",
             "Camera: No"
         ],
-        "variants": [
+        "varriants": [
             {
                 "label": "Type",
-                "variants": [
+                "varriants": [
                     "EDITION",
                     "SPORT"
                 ]
             },
             {
                 "label": "Color",
-                "variants": [
+                "varriants": [
                     "WHITE",
                     "SPORT BAND"
                 ]
             },
             {
                 "label": "Strap",
-                "variants": [
+                "varriants": [
                     "42MM",
                     "38MM"
                 ]

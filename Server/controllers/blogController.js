@@ -77,69 +77,7 @@ const getAllBlog = asyncHandler(async (req, res) => {
 
 })
 
-/*
-khi người dùng like bài viết 1 bài blog thì:
-1. check xem trc đó người đó có nhấn dislike không  => bấm like sẽ bỏ dislike, và ngược lại
-*/
-// const likeBlog = asyncHandler(async (req, res) => {
-//     const { _id } = req.user
-//     const { blogId } = req.params
-//     if (!blogId) throw new Error("Missing inputs")
-//     const blog = await Blog.findById(blogId)
-//     const allreadyDisliked = blog?.dislikes?.find(el => el.toString() === _id)
-//     if (allreadyDisliked) {
-//         const response = await Blog.findByIdAndUpdate(blogId, { $pull: { dislikes: _id } }, { new: true })
-//         return res.json({
-//             success: response ? true : false,
-//             result: response
-//         })
-//     }
-//     const isLiked = blog?.likes?.find(el => el.toString() === _id)
-//     if (isLiked) {
-//         const response = await Blog.findByIdAndUpdate(blogId, { $pull: { likes: _id } }, { new: true })
-//         return res.json({
-//             success: response ? true : false,
-//             result: response
-//         })
-//     } else {
-//         const response = await Blog.findByIdAndUpdate(blogId, { $push: { likes: _id } }, { new: true })
-//         return res.json({
-//             success: response ? true : false,
-//             result: response
-//         })
-//     }
-// })
 
-// const dislikeBlog = asyncHandler(async (req, res) => {
-//     const { _id } = req.user
-//     const { blogId } = req.params
-//     if (!blogId) throw new Error("Missing inputs")
-//     const blog = await Blog.findById(blogId)
-//     const allreadyLiked = blog?.likes?.find(el => el.toString() === _id)
-//     if (allreadyLiked) {
-//         const response = await Blog.findByIdAndUpdate(blogId, { $pull: { likes: _id } }, { new: true })
-//         return res.json({
-//             success: response ? true : false,
-//             result: response
-//         })
-//     }
-//     const isDisliked = blog?.dislikes?.find(el => el.toString() === _id)
-//     if (isDisliked) {
-//         const response = await Blog.findByIdAndUpdate(blogId, { $pull: { dislikes: _id } }, { new: true })
-//         return res.json({
-//             success: response ? true : false,
-//             result: response
-//         })
-//     } else {
-//         const response = await Blog.findByIdAndUpdate(blogId, { $push: { dislikes: _id } }, { new: true })
-//         return res.json({
-//             success: response ? true : false,
-//             result: response
-//         })
-//     }
-// })
-
-//cach2
 const toggleLikeDislike = asyncHandler(async (req, res, field) => {
     const { _id } = req.user;
     const { blogId } = req.params;

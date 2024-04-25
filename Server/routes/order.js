@@ -9,6 +9,7 @@ router.post('/', [verifyAccessToken], OrderController.createNewOrder)
 // router.put('/status/:orderId', [verifyAccessToken, isAdmin], OrderController.updateStatus);
 router.put('/status/:orderId', [], OrderController.updateStatus);
 router.get('/admin', [verifyAccessToken, isAdmin], OrderController.getOders)
+router.get('/detailOrder/:orderId', [], OrderController.getOrderDetail)
 router.get('/', [verifyAccessToken], OrderController.getUserOder)
 
 

@@ -12,6 +12,7 @@ const path = {
     DETAIL_BLOG__BID__TITLE: 'blogs/:bid/:title',
     FINAL_REGISTER: 'finalregister/:status',
     RESET_PASSWORD: 'reset-password/:token',
+    DETAILORDER:'detailorder/:orderId',
     DETAIL_CART: 'my-cart',
     CHECKOUT: "checkout",
     PRODUCTS: 'products',

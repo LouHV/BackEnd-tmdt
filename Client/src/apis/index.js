@@ -5,5 +5,5 @@ export * from './coupon'
 export * from './blogs'
 export * from './brand'
 export * from './category'
-
+export * from './order'
 export * from './statistic'

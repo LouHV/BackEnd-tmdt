@@ -15,7 +15,7 @@ const createNewOrder = asyncHandler(async (req, res) => {
     if (address) {
         await User.findByIdAndUpdate(_id, { address, cart: [] })
     }
-    const data = { products, total, orderBy: _id }
+    const data = { products, total, orderBy: _id, coupon_code }
     if (status) data.status = status
     if (discountedTotal) data.discountedTotal = discountedTotal
     const rs = await Order.create(data)
@@ -59,14 +59,14 @@ const updateStatus = asyncHandler(async (req, res) => {
     if (!user) throw new Error('missing user');
 
     const html = `Đơn hàng của bạn đã được cập nhật trạng thái. Xem chi tiết thông tin đơn hàng tại đây: 
-    <a href=${process.env.CLIENT_URL}/member/buy-history>Click here</a>`;
+    <a href=${process.env.CLIENT_URL}/detailorder/${orderId}>Click here</a>`;
 
     const email = user.email;
     const data = {
         email,
         html
     }
-    const rsSendMail = await sendMail(data)
+    const rsSendMail = await sendMail.sendMail2(data)
     if (!rsSendMail) throw new Error('Missing send mail update status order');
 
     return res.json({
@@ -221,7 +221,28 @@ const applyCouponToOrder = asyncHandler(async (req, res) => {
 
     return res.status(200).json({ success: true, message: 'Coupon applied successfully', order });
 });
+const getOrderDetail = asyncHandler(async (req, res) => {
+    const { orderId } = req.params;
+    if (!orderId) throw new Error('Missing Order ID');
 
+    try {
+        // Tìm đơn hàng dựa trên ID
+        const order = await Order.findById(orderId).populate({
+            path: 'orderBy',
+            select: 'mobile address'
+        })
+
+        if (!order) throw new Error('Order not found');
+
+        // Trả về thông tin chi tiết của đơn hàng
+        return res.status(200).json({
+            success: true,
+            order: order
+        });
+    } catch (err) {
+        throw new Error(err.message);
+    }
+});
 
 module.exports = {
     createNewOrder,
@@ -229,5 +250,6 @@ module.exports = {
     getUserOder,
     getOders,
     getOrdersCountByDate,
-    applyCouponToOrder
+    applyCouponToOrder,
+    getOrderDetail
 }
