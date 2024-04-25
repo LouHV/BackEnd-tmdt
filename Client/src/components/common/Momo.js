@@ -1,7 +1,7 @@
 import React from 'react';
 
 import axios from 'axios'
-import { apiCreateOrder, createPayment } from "../../apis";
+import { apiCreateOrder, createPayment, createPaymentQrCode } from "../../apis";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
@@ -27,6 +27,7 @@ const MoMoPayment = ({ amount, payload, setIsSuccess }) => {
     const requestId = date + "id";
     const orderId = date + ":0123456778";
     const requestType = 'payWithATM';
+    const requestTypeQrcode = 'captureWallet';
     // const notifyUrl = 'https://sangle.free.beeceptor.com';
     // const notifyUrl = 'https://sangle.free.beeceptor.com';
     const notifyUrl = 'http://localhost:3000';
@@ -55,7 +56,41 @@ const MoMoPayment = ({ amount, payload, setIsSuccess }) => {
             if (response.success) {
                 setIsSuccess(true);
                 window.open(`${response.jsonResponse.payUrl}`, "_blank");
+            }
 
+            // const res = await apiCreateOrder(payload);
+            // setTimeout(() => {
+            //     Swal.fire('Congrat!', 'Order was created.', 'success').then(() => {
+            //         navigate('/')
+            //         window.close()
+            //     })
+            // }, 1500)
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    const handlePaymentQrCode = async () => {
+        try {
+            const response = await createPaymentQrCode({
+                requestId,
+                orderId,
+                requestType: requestTypeQrcode,
+                notifyUrl,
+                returnUrl,
+                amount,
+                orderInfo,
+                extraData
+            })
+            if (!response) {
+                throw new Error('Failed to create payment');
+            }
+
+            if (response.success) {
+                setIsSuccess(true);
+                // console.log("XXXX", response.jsonResponse.payUrl);
+                window.open(`${response.jsonResponse.payUrl}`, "_blank");
             }
 
 
@@ -66,13 +101,14 @@ const MoMoPayment = ({ amount, payload, setIsSuccess }) => {
     };
 
     return (
-        <div>
-            <button onClick={handlePayment}
-                className='px-4 py-2 rounded-md text-white my-2 bg-main text-semibold'>
-
-                CLICK HERE TO PAY WITH MOMO </button>
-
-        </div>
+        <>
+            <div>
+                <button onClick={handlePayment}>Thanh toán bằng Momo Credit</button>
+            </div>
+            <div>
+                <button onClick={handlePaymentQrCode}>Thanh toán bằng Momo QR Code</button>
+            </div>
+        </>
     );
 };
 

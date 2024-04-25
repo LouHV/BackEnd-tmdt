@@ -2,14 +2,16 @@ const Order = require('../models/oderModel')
 const User = require("../models/userModel")
 const Coupon = require("../models/couponModel")
 const Product = require("../models/productModel")
-const Carts = require('../models/cart')
+const Carts = require('../models/cart');
 
+const convertToObjectIdMongoDb = require('../ultils/index')
+const sendMail = require("../ultils/sendMail")
 const asyncHandler = require('express-async-handler')
 
 
 const createNewOrder = asyncHandler(async (req, res) => {
     const { _id } = req.user
-    const { products, total, address, status, discountedTotal } = req.body
+    const { products, total, address, status, discountedTotal, coupon_code } = req.body
     if (address) {
         await User.findByIdAndUpdate(_id, { address, cart: [] })
     }
@@ -31,6 +33,17 @@ const createNewOrder = asyncHandler(async (req, res) => {
         });
     }
     await Carts.deleteOne({ cart_userId: _id });
+
+    if (discountedTotal > 0) {
+        const coupon = await Coupon.findOne({ coupon_code: coupon_code });
+        if (coupon) {
+            if (coupon.quantity > 0) {
+                const updateCoupon = await Coupon.updateOne({ _id: coupon._id }, { $inc: { quantity: -1 } });
+                if (!updateCoupon) throw new Error('Missing Update Coupon');
+            }
+        }
+    }
+
     return res.json({
         success: rs ? true : false,
         rs: rs ? rs : 'Something went wrong'
@@ -40,8 +53,22 @@ const createNewOrder = asyncHandler(async (req, res) => {
 const updateStatus = asyncHandler(async (req, res) => {
     const { orderId } = req.params
     const { status } = req.body
-    if (!status) throw new Error('Missing Status')
+    if (!status) throw new Error('Missing Status');
     const response = await Order.findByIdAndUpdate(orderId, { status }, { new: true })
+    const user = await User.findOne({ _id: convertToObjectIdMongoDb(response.orderBy).toString() });
+    if (!user) throw new Error('missing user');
+
+    const html = `Đơn hàng của bạn đã được cập nhật trạng thái. Xem chi tiết thông tin đơn hàng tại đây: 
+    <a href=${process.env.CLIENT_URL}/member/buy-history>Click here</a>`;
+
+    const email = user.email;
+    const data = {
+        email,
+        html
+    }
+    const rsSendMail = await sendMail(data)
+    if (!rsSendMail) throw new Error('Missing send mail update status order');
+
     return res.json({
         success: response ? true : false,
         createdOrder: response ? response : 'Something went wrong',
@@ -59,7 +86,7 @@ const getUserOder = asyncHandler(async (req, res) => {
     queryString = queryString.replace(/\b(gte|gt|lt|lte)\b/g, matchedEl => `$${matchedEl}`);
     const formattedQueries = JSON.parse(queryString);
 
-   
+
     const qr = { ...formattedQueries, orderBy: _id }
 
     if (req.query.sort) {
@@ -138,7 +165,6 @@ const getOders = asyncHandler(async (req, res) => {
 const getOrdersCountByDate = asyncHandler(async (req, res) => {
     const { dateType, dateValue } = req.query; // dateType can be 'day', 'month', or 'year'
     const dateField = dateType === 'day' ? '$date' : dateType === 'month' ? { $month: '$date' } : { $year: '$date' };
-    console.log('dateField :>> ', dateField);
     const pipeline = [
         {
             $match: {
@@ -202,5 +228,6 @@ module.exports = {
     updateStatus,
     getUserOder,
     getOders,
-    getOrdersCountByDate
+    getOrdersCountByDate,
+    applyCouponToOrder
 }
