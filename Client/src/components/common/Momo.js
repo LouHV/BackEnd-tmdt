@@ -1,7 +1,7 @@
 import React from 'react';
 
 import axios from 'axios'
-import { apiCreateOrder, createPayment } from "../../apis";
+import { apiCreateOrder, createPayment, createPaymentQrCode } from "../../apis";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
@@ -71,7 +71,7 @@ const MoMoPayment = ({ amount, payload, setIsSuccess }) => {
 
     const handlePaymentQrCode = async () => {
         try {
-            const response = await createPayment({
+            const response = await createPaymentQrCode({
                 requestId,
                 orderId,
                 requestType,
