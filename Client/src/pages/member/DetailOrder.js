@@ -4,13 +4,13 @@ import { formatMoney, formatPrice } from '../../ultils/helper';
 import { STATUS } from '../../ultils/contants';
 import moment from 'moment';
 import { apiGetOrderDetail } from '../../apis';
+import { format } from 'date-fns';
 
 const DetailOrder = () => {
     const { orderId } = useParams()
     const [params] = useSearchParams()
     const [orders, setOrders] = useState(null)
 
-    console.log('orderId :>> ', orderId);
     const fectchOrderDetail = async () => {
         const requestOptions = {
             method: 'GET',
@@ -28,26 +28,29 @@ const DetailOrder = () => {
     useEffect(() => {
         fectchOrderDetail()
     }, [])
-    console.log('orders :>> ', orders);
+    if (!orders) {
+        return <div>Loading...</div>; // Hoặc một UI fallback khác
+    }
     return (
-        <div className='w-full p-2 text-xl'>
+        <div className='w-full p-2 '>
+            
             <div className='flex gap-auto mb-4'>
                 <div className='flex mr-20 gap-2'>
                     <div className='flex flex-col'>
-                        <span>Mã đơn:</span>
-                        <span>Ngày nhận:</span>
-                        <span>Trạng thái đơn:</span>
+                        <span>Code orders:</span>
+                        <span>Order creation date:</span>
+                        <span>Status:</span>
                     </div>
                     <div className='flex flex-col'>
                         <span>{orders?._id}</span>
-                        <span>{orders?.createdAt}</span>
+                        <span>{format(new Date(orders?.createdAt), 'dd/MM/yyyy')}</span>
                         <span>{STATUS.find(status => status.id == orders?.status)?.name || 'Unknown'}</span>
                     </div>
                 </div>
                 <div className='flex gap-2'>
                     <div className='flex flex-col'>
-                        <span>Số điện thoại:</span>
-                        <span>Địa chỉ:</span>
+                        <span>Mobile:</span>
+                        <span>Address:</span>
                     </div>
                     <div className='flex flex-col'>
                         <span>{orders?.orderBy?.mobile}</span>
@@ -57,15 +60,16 @@ const DetailOrder = () => {
             </div>
             <div>
                 <table className="table-auto mb-6 w-main">
-                    <thead className="font-bold  text-[13px] border border-black text-center bg-sky-700 text-white">
+                    <thead className="font-bold text-xl border border-black text-center bg-sky-700 text-white">
                         <tr>
                             <th className="px-4 py-2 border border-black">Stt</th>
-                            <th className="px-4 py-2 border border-black">Ảnh</th>
-                            <th className="px-4 py-2 border border-black">Tên</th>
-                            <th className="px-4 py-2 border border-black">Màu</th>
-                            <th className="px-4 py-2 border border-black">Số lượng</th>
-                            <th className="px-4 py-2 border border-black">Đơn giá</th>
-                            <th className="px-4 py-2 border border-black">Giá</th>
+                            <th className="px-4 py-2 border border-black">Image</th>
+                            <th className="px-4 py-2 border border-black">Name</th>
+                            <th className="px-4 py-2 border border-black">Color</th>
+                            <th className="px-4 py-2 border border-black">Quantity</th>
+                            <th className="px-4 py-2 border border-black">
+                                Unit price</th>
+                            <th className="px-4 py-2 border border-black">Total price</th>
 
 
 
@@ -83,8 +87,8 @@ const DetailOrder = () => {
                                 <td className="py-4 border border-black text-center">{el?.title}</td>
                                 <td className="py-4 border border-black text-center">{el?.color}</td>
                                 <td className="py-4 border border-black text-center">{el?.quantity}</td>
-                                <td className="py-4 border border-black text-center">{`${formatMoney(el?.price)} VNĐ`}</td>
-                                <td className="py-4 border border-black text-center">{`${formatMoney(el?.price * el?.quantity)} VNĐ`}</td>
+                                <td className="py-4 border border-black text-center">{`${formatMoney(el?.product?.price)} VNĐ`}</td>
+                                <td className="py-4 border border-black text-center">{`${formatMoney(el?.product?.price * el?.quantity)} VNĐ`}</td>
                             </tr>
 
                         ))}
@@ -94,31 +98,32 @@ const DetailOrder = () => {
                                 <td className="py-2 "></td>
                                 <td className="py-2 "></td>
                                 <td className="py-2 "></td>
-                                <td className="py-2  text-center">Tạm tính</td>
+                                <td className="py-2  text-center">Total amount</td>
                                 <td className="py-2 "></td>
                                 <td className="py-2 border-r border-r-black text-center">{`${formatMoney(orders?.total)} VNĐ`}</td>
 
 
                             </tr>}
-                        {orders.coupon_code &&
+                        {orders?.coupon_code &&
                             <tr>
                                 <td className="py-2 border-l border-l-black"></td>
                                 <td className="py-2 "></td>
                                 <td className="py-2 "></td>
                                 <td className="py-2 "></td>
-                                <td className="py-2  text-center">Mã giảm giá</td>
+                                <td className="py-2  text-center">
+                                    Total discount</td>
                                 <td className="py-2 "></td>
-                                <td className="py-2 border-r border-r-black text-center">{orders?.coupon_code}</td>
+                                <td className="py-2 border-r border-r-black text-center">{`${formatMoney(orders?.total - orders?.discountedTotal)} VNĐ`}</td>
 
 
                             </tr>}
-                        {orders &&
+                        {orders?.discountedTotal &&
                             <tr>
                                 <td className="py-2 border-b border-l border-b-black border-l-black"></td>
                                 <td className="py-2 border-b border-b-black"></td>
                                 <td className="py-2 border-b border-b-black"></td>
                                 <td className="py-2 border-b border-b-black"></td>
-                                <td className="py-2 border-b border-b-black text-center">Tổng</td>
+                                <td className="py-2 border-b border-b-black text-center">Total payment</td>
                                 <td className="py-2 border-b border-b-black"></td>
                                 <td className="py-2 border-r border-b border-b-black border-r-black text-center">{`${formatMoney(orders?.discountedTotal)} VNĐ`}</td>
 

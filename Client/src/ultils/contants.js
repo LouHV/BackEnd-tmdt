@@ -140,19 +140,11 @@ export const adminSideBar = [
     // },
     {
         id: 1,
-        type: 'PARENT',
+        type: 'SINGLE',
         text: 'Dashboard',
         icon: <FaChartBar />,
-        submenu: [
-            {
-                text: 'Revenue Statistic',
-                path: `/${path.ADMIN}/${path.DASHBOARD}`
-            },
-            {
-                text: 'Manage Statistic',
-                path: `/${path.ADMIN}/${path.MANAGE_PRODUCTS}`
-            },
-        ]
+        path: `/${path.ADMIN}/${path.DASHBOARD}`
+
     },
     {
         id: 2,

@@ -57,7 +57,7 @@ const Checkout = ({ dispatch, navigate }) => {
         setPaymentMethod({ [name]: value });
 
     };
-
+console.log('total :>> ', total);
     return (
         <div className='w-full'>
             <div className='flex justify-start items-center text-xl m-8 hover:text-main cursor-pointer w-[85px] h-auto'
@@ -149,7 +149,7 @@ const Checkout = ({ dispatch, navigate }) => {
                     <Cash
                         payload={{
                             products: cart?.cart_products,
-                            total: Math.round(cart?.cart_products?.reduce((sum, el) => +el.price + sum, 0)),
+                            total: total,
                             orderBy: current?._id,
                             address: current?.address,
                             status: 1,

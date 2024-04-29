@@ -116,7 +116,7 @@ const Coupon = () => {
               <th className="px-4 py-2 border border-black">Stt</th>
               <th className="px-4 py-2 border border-black">Name Coupon</th>
               <th className="px-4 py-2 border border-black">Coupon Code</th>
-              <th className="px-4 py-2 border border-black">Discount(%)</th>
+              <th className="px-4 py-2 border border-black">Discount</th>
               <th className="px-4 py-2 border border-black">Quantity</th>
               <th className="px-4 py-2 border border-black">Start Day</th>
               <th className="px-4 py-2 border border-black">Expiry</th>
@@ -130,7 +130,9 @@ const Coupon = () => {
                 <td className="py-4 border border-black">{idx + 1}</td>
                 <td className="py-4 border border-black">{el?.name_coupon}</td>
                 <td className="py-4 border border-black">{el?.coupon_code}</td>
-                <td className="py-4 border border-black">{el?.discount}</td>
+                <td className="py-4 border border-black">
+                  {el?.type_coupon === "Percent" ? `${el?.discount}%` : `${el?.discount} VNĐ`}
+                </td>
                 <td className="py-4 border border-black">{el?.quantity}</td>
                 <td className="py-4 border border-black">{el?.start_date ? format(new Date(el?.start_date), 'dd/MM/yyyy') : 'Invalid date'}</td>
                 <td className="py-4 border border-black"> {el?.expiry ? format(new Date(el?.expiry), 'dd/MM/yyyy') : 'Invalid date'}</td>

@@ -3,11 +3,13 @@ import Slider from "react-slick";
 import { Product } from '..'
 
 const settings = {
-    dots: false,
+    dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 3,
-    slidesToScroll: 1
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000, // Thời gian chuyển đổi giữa các slide (tính bằng mili giây)
 };
 const CustomSlider = ({ products, activedTab, normal }) => {
 

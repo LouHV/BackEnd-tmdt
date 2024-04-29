@@ -115,7 +115,7 @@ const Header = ({ navigate }) => {
                     }}>
                     <FaCartShopping color="red" size={24} />
                     {/* <span>{`${current?.cart?.length || 0} item(s)`}</span> */}
-                    <span>{`${cart?.cart_count_product || 0} item(s)`}</span>
+                    <span>{`${cart?.cart_products?.length || 0} item(s)`}</span>
                 </div>
 
             </div>

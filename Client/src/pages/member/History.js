@@ -28,7 +28,7 @@ const History = () => {
 
 
   return (
-    <div className='w-full relative px-4 bg-gray-100 h-full p-5 mt-5 rounded-lg'>
+    <div className='w-full relative px-4 bg-gray-100 min-h-[500px] p-5 mt-5 rounded-lg'>
       <header className='text-3xl py-4 border-b border-b-gray-300 '>
         History
       </header>

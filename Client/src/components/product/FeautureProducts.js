@@ -8,8 +8,7 @@ const FeautureProducts = ({ navigate }) => {
     console.log('products :>> ', products);
 
     const fetchProducts = async () => {
-        const response = await apiGetProducts({ limit: 9, page: Math.round(Math.random() * 10)})
-
+        const response = await apiGetProducts({ limit: 9, page: Math.round(Math.random() * 10) })
         if (response.success) setProducts(response.products)
     }
     useEffect(() => {
@@ -19,7 +18,7 @@ const FeautureProducts = ({ navigate }) => {
         <div className="w-full">
             <h3 className="text-[20px] uppercase font-semibold py-[15px] border-2 border-t-main  pl-5">Feauture</h3>
             <div className="flex flex-wrap mt-[15px] mx-[10px]"
-                >
+            >
                 {products?.map(el => (
                     <ProductCard
                         key={el._id}

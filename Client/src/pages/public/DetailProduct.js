@@ -23,11 +23,13 @@ import { addToCart } from '../../store/cart/asyncActions';
 
 
 const settings = {
-    dots: false,
+    dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 3,
-    slidesToScroll: 1
+    slidesToScroll: 1,
+    autoplay: true, 
+    autoplaySpeed: 2000, // Thời gian chuyển đổi giữa các slide (tính bằng mili giây)
 };
 
 const DetailProducts = ({ navigate, dispatch, location }) => {
@@ -313,8 +315,9 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
                     pid={product?._id}
                     rerender={rerender} />
             </div>
-            <div className="w-main m-auto mt-8">
+            <div className="w-main m-auto mt-8 mb-8">
                 <h3 className="text-[20px] uppercase font-semibold py-[15px] border-2 border-t-main">OTHER CUSTINERS ALSO BUY:</h3>
+                
                 <CustomSlider normal={true} products={relatedProduct} />
             </div>
 
