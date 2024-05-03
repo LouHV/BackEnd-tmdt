@@ -3,13 +3,10 @@ import { apiGetOrders, apiGetUserOrders } from '../../apis';
 import { useForm } from 'react-hook-form';
 import InputForm from '../../components/input/inputForm';
 import { Pagination } from '../../components';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import moment from 'moment';
 import { formatMoney, formatPrice } from '../../ultils/helper';
 import { STATUS } from '../../ultils/contants';
-
-import path from '../../ultils/path'
-
 
 const History = () => {
   const { register, formState: { errors }, watch } = useForm()
@@ -47,7 +44,7 @@ const History = () => {
               <th className="px-4 py-2 border border-black">Total</th>
               <th className="px-4 py-2 border border-black">Status</th>
               <th className="px-4 py-2 border border-black">CreatedAt</th>
-              <th className="px-4 py-2 border border-black"></th>
+              <th className="px-4 py-2 border border-black">Actions</th>
 
 
             </tr>
@@ -68,12 +65,6 @@ const History = () => {
                 </td>
 
                 <td className="p-2 border border-black text-center">{moment(el?.createdAt).format('DD/MM/YYYY')}</td>
-
-                <td className="p-2 border border-black text-center cursor-pointer" style={{ margin: 20 }}
-                  onClick={() => navigate(`/detailorder/${el._id}`)}
-                >
-                  <i className="fas fa-eye"></i>
-                </td>
 
 
 
