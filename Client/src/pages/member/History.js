@@ -9,30 +9,32 @@ import { formatMoney, formatPrice } from '../../ultils/helper';
 import { STATUS } from '../../ultils/contants';
 
 const History = () => {
+  const { register, formState: { errors }, watch } = useForm()
   const [orders, setOrders] = useState(null)
   const [counts, setCounts] = useState(0)
   const [params] = useSearchParams()
-  const { register, formState: { errors }, watch } = useForm()
+  const searchParams = Object.fromEntries([...params]);
+
   const q = watch('q')
   const fectchOrders = async (params) => {
-    const response = await apiGetUserOrders({ ...params, limit: process.env.REACT_APP_LIMIT })
+    const response = await apiGetUserOrders({ ...searchParams, limit: process.env.REACT_APP_LIMIT })
     // console.log('response :>> ', response);
     if (response.success) {
       setOrders(response.Orders)
       setCounts(response.counts)
+
     }
   }
   useEffect(() => {
     fectchOrders()
-  }, [])
-
+  }, [params])
 
   return (
     <div className='w-full relative px-4 bg-gray-100 min-h-[500px] p-5 mt-5 rounded-lg'>
       <header className='text-3xl py-4 border-b border-b-gray-300 '>
         History
       </header>
-      
+
       <div className="w-ful text-rightx">
         <table className="table-auto mb-6 w-full">
           <thead className="font-bold  text-[13px] border border-black text-center bg-main text-white">

@@ -19,11 +19,20 @@ const Dashboard = () => {
   });
 
   const [selectedDays, setSelectedDays] = useState(14);
+  const [isCustom, setIsCustom] = useState(false);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/statistic/get-revenue-by-day/${selectedDays}`);
+        let url = `http://localhost:8080/api/statistic/get-revenue-by-day/${selectedDays}`;
+        if (isCustom) {
+          url += `?startDate=${startDate}&endDate=${endDate}`;
+          // const data = result.data;
+          // console.log('data :>> ', data);
+        }
+        const response = await fetch(url);
         const result = await response.json();
         const data = result.data;
 
@@ -54,7 +63,31 @@ const Dashboard = () => {
               const item = data.find(item => item.time === label);
               allData.push(item ? Number(item.revenue) * 1000 : 0);
             }
+            console.log('allData1 :>> ', allData);
 
+            // allLabels = data.map(item => item.time);
+            // allData = data.map(item => item.revenue);
+          }
+          else if (isCustom) {
+
+            // Chuyển đổi startDate và endDate thành đối tượng Date
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+
+            // Tính số ngày giữa start và end
+            const diffTime = Math.abs(end - start);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            // Tạo vòng lặp để tạo ra các nhãn và dữ liệu
+            for (let i = 0; i <= diffDays; i++) {
+              const date = new Date(start);
+              date.setDate(date.getDate() + i);
+              const label = `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
+              allLabels.push(label);
+              const item = data.find(item => item.time === label);
+              allData.push(item ? Number(item.revenue) * 1000 : 0);
+            }
+            console.log('allData :>> ', allData);
             // allLabels = data.map(item => item.time);
             // allData = data.map(item => item.revenue);
           }
@@ -80,16 +113,17 @@ const Dashboard = () => {
     };
 
     fetchData();
-  }, [selectedDays]);
-
+  }, [selectedDays, isCustom, startDate, endDate]);
 
   const handleSelectChange = (event) => {
-    setSelectedDays(event.target.value);
+    const value = event.target.value;
+    setSelectedDays(value);
+    setIsCustom(value === 'custom');
   };
 
   return (
     <div className="m-[20px]">
-      <h1 className="h-[75px] w-full flex justify-between items-center text-3xl font-bold px-4 border-b  top-0  ">
+      <h1 className="h-[75px] w-full flex justify-between items-center text-3xl font-bold px-4 border-b top-0 ">
         <span>Revenue Statistic</span>
       </h1>
       <select value={selectedDays} onChange={handleSelectChange}>
@@ -97,7 +131,16 @@ const Dashboard = () => {
         <option value="14">14 ngày gần đây</option>
         <option value="6">6 tháng gần nhất</option>
         <option value="12">12 tháng gần đây</option>
+        <option value="custom">Tùy chỉnh</option>
       </select>
+      {isCustom && (
+        <div className='gap-2 flex mt-4 items-center'>
+          <label>Start date:</label>
+          <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className='border p-1 cursor-pointer' />
+          <label>End date:</label>
+          <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className='border p-1 cursor-pointer' />
+        </div>
+      )}
       <Bar
         data={chartData}
         options={{
@@ -105,7 +148,6 @@ const Dashboard = () => {
             y: {
               beginAtZero: true,
               min: 0,
-              // max: Math.max(...chartData.datasets[0].data) * 1.1,
               max: Math.round(Math.max(...chartData.datasets[0].data) * 100) / 100 * 1.2,
             },
             x: {
@@ -125,7 +167,6 @@ const Dashboard = () => {
             },
           },
         }}
-
       />
     </div>
   );

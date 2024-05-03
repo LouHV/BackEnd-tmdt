@@ -30,7 +30,7 @@ const Register = () => {
         const response = await apiRegister(payload)
 
 
-        Swal.fire(response.success ? 'Congratulation' : 'Oops!', response.message, response.success ? 'Success' : 'Error')
+        Swal.fire(response.success ? 'Congratulation' : 'Oops!', response.data.message, response.success ? 'Success' : 'Error')
             .then((result) => { // Nhận kết quả từ swal
                 if (result.isConfirmed && response.success) { // Nếu xác nhận và thành công
                     resetPayload(); // Reset trường nhập liệu
