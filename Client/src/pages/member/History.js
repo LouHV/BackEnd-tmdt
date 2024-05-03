@@ -12,30 +12,28 @@ import path from '../../ultils/path'
 
 
 const History = () => {
+  const { register, formState: { errors }, watch } = useForm()
   const [orders, setOrders] = useState(null)
   const [counts, setCounts] = useState(0)
   const [params] = useSearchParams()
-  const { register, formState: { errors }, watch } = useForm()
-  const q = watch('q');
+  const searchParams = Object.fromEntries([...params]);
 
-  const navigate = useNavigate()
-
-
+  const q = watch('q')
   const fectchOrders = async (params) => {
-    const response = await apiGetUserOrders({ ...params, limit: process.env.REACT_APP_LIMIT })
-    console.log('response :>> ', response);
+    const response = await apiGetUserOrders({ ...searchParams, limit: process.env.REACT_APP_LIMIT })
+    // console.log('response :>> ', response);
     if (response.success) {
       setOrders(response.Orders)
       setCounts(response.counts)
+
     }
   }
   useEffect(() => {
     fectchOrders()
-  }, [])
-
+  }, [params])
 
   return (
-    <div className='w-full relative px-4 bg-gray-100 h-full p-5 mt-5 rounded-lg'>
+    <div className='w-full relative px-4 bg-gray-100 min-h-[500px] p-5 mt-5 rounded-lg'>
       <header className='text-3xl py-4 border-b border-b-gray-300 '>
         History
       </header>

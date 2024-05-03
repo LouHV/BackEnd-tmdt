@@ -25,9 +25,9 @@ const Login = () => {
 
     const [email, setemail] = useState('')
     const handleForgotPassword = async () => {
-        dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }))
+        // dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }))
         const response = await apiForgotPassword({ email })
-        dispatch(showModal({ isShowModal: false, modalChildren: null }))
+        // dispatch(showModal({ isShowModal: false, modalChildren: null }))
         if (response.success) {
             setisForgotPassword(false)
             setemail('')

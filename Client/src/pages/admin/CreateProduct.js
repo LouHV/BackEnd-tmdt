@@ -83,9 +83,9 @@ const CreateProduct = () => {
       if (finalPayload.images) {
         for (let image of finalPayload.images) formData.append('images', image)
       }
-      dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }))
+      // dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }))
       const response = await apiCreateProduct(formData)
-      dispatch(showModal({ isShowModal: false, modalChildren: null }))
+      // dispatch(showModal({ isShowModal: false, modalChildren: null }))
 
       if (response.success) {
         toast.success(response.message)

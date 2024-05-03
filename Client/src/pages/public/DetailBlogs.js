@@ -11,6 +11,7 @@ import { getBlogs } from '../../store/blogs/asyncActions';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { formatNumber } from '../../ultils/helper';
+import DOMPurify from 'dompurify';
 
 const DetailBlogs = ({ navigate, dispatch }) => {
     const { bid, title } = useParams()
@@ -78,7 +79,13 @@ const DetailBlogs = ({ navigate, dispatch }) => {
                     <span className='ml-2'>{`Views: ${blog?.numberViews}`}</span>
                 </div>
                 <img src={blog?.image_blog} className='w-full min-h-[780px] mb-5' />
-                <span className='mb-5'>{blog?.description_blog}</span>
+                <span className='mb-5'>
+                    
+                   
+                    {blog?.description_blog?.length > 1 && <div
+            className="text-sm cursor-pointer"
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog?.description_blog) }}></div>}
+                    </span>
 
 
                 <div className='flex w-main m-auto gap-4 my-4 items-center '>

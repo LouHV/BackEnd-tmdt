@@ -23,11 +23,13 @@ import { addToCart } from '../../store/cart/asyncActions';
 
 
 const settings = {
-    dots: false,
+    dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 3,
-    slidesToScroll: 1
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000, // Thời gian chuyển đổi giữa các slide (tính bằng mili giây)
 };
 
 const DetailProducts = ({ navigate, dispatch, location }) => {
@@ -46,6 +48,8 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
     const [update, setUpdate] = useState(false)
 
     const [relatedProduct, setrelatedProduct] = useState(null)
+
+    const [isAddToCartDisabled, setIsAddToCartDisabled] = useState(false);
 
     const [currentProduct, setCurrentProduct] = useState({
         title: '',
@@ -130,14 +134,14 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
 
     // console.log('quantity :>> ', quantity);
     const handleChangeQuantity = useCallback((flag) => {
-        if (flag === 'minus' && quantity === 1) return
+        if (flag === 'minus' && quantity === 0) return
         if (flag === 'minus') setquantity(prev => +prev - 1)
         if (flag === 'plus') {
             setquantity(prev => {
 
                 if (+prev >= countPrd) {
                     toast.error('Số lượng bạn chọn đã đạt mức tối đa của sản phẩm này.')
-                    console.log('0 :>> ');
+
                     return countPrd;
                 } else {
                     return +prev + 1;
@@ -177,10 +181,10 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
                         userId: current._id,
                         productId: pid,
                         quantity: quantity,
-                        color: varriants ? currentProduct.color : product?.color,
+                        color: varriants ? currentProduct?.color : product?.color,
                         thumb: product?.thumb,
                         title: product?.title,
-                        price: product?.price * quantity
+                        price: varriants ? currentProduct?.price * quantity : product?.price * quantity
                     }
                 ));
 
@@ -193,16 +197,36 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
     };
 
 
+    useEffect(() => {
+        setIsAddToCartDisabled(product?.quantity === 0);
+
+    }, [product?.quantity]);
+
 
     const handleClickOptions = async (e, flag) => {
         e.stopPropagation()
         if (flag === 'WISHLIST') {
-            const response = await apiUpdateWishlist(pid)
-            if (response.success) {
-                toast.success(response.message)
-                dispatch(getCurrent())
-            } else {
-                toast.error(response.message)
+            if (!current) return Swal.fire({
+                title: 'Almost...',
+                text: 'Please login first!',
+                icon: 'info',
+                cancelButtonText: 'Not now!',
+                showCancelButton: true,
+                confirmButtonText: 'Go login page'
+            }).then((rs) => {
+                if (rs.isConfirmed) navigate({
+                    pathname: `/${path.LOGIN}`,
+                    search: createSearchParams({ redirect: location.pathname }).toString()
+                })
+            })
+            else {
+                const response = await apiUpdateWishlist(pid)
+                if (response.success) {
+                    toast.success(response.message)
+                    dispatch(getCurrent())
+                } else {
+                    toast.error(response.message)
+                }
             }
         }
     }
@@ -245,7 +269,7 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
                     </div>
                 </div>
                 <div className=" w-2/5 flex flex-col gap-2">
-                    <h2 className="text-[30px] font-semibold">{`${formatMoney(formatPrice(product?.price))} VNĐ`}</h2>
+                    <h2 className="text-[30px] font-semibold">{`${formatMoney(product?.price)} VNĐ`}</h2>
                     <div className="flex items-center gap-5">
                         <div className="flex items-center">{renderStartFromNumber(product?.totalRating)?.map((el, index) => (<span key={index}>{el}</span>))}</div>
                         <div className=" border-r pr-5">{`${product?.rating.length} Ratings`}</div>
@@ -269,7 +293,7 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
                                 <img src={product?.thumb} alt="thumb" className="w-8 h-8 object-cover rounded-md" />
                                 <span className="flex flex-col">
                                     <span>{product?.color} </span>
-                                    <span className="text-sm">{product?.price}</span>
+                                    <span className="text-sm">{formatMoney(product?.price)}</span>
                                 </span>
                             </div>
                             {product?.varriants?.map(el => (
@@ -279,7 +303,7 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
                                     <img src={el?.thumb} alt="thumb" className="w-8 h-8 object-cover rounded-md" />
                                     <span className="flex flex-col">
                                         <span>{el?.color} </span>
-                                        <span className="text-sm">{el?.price}</span>
+                                        <span className="text-sm">{formatMoney(el?.price)}</span>
                                     </span>
                                 </div>
                             ))
@@ -296,9 +320,18 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
                             />
                             <div className="mx-4 text-gray-500 ">{`${product?.quantity} Products available in stock`}</div>
                         </div>
-                        <Button fw handleOnClick={handleAddToCart}>
-                            Add to cart
-                        </Button>
+                        {isAddToCartDisabled &&
+                            <Button fw style={'px-4 py-2 rounded-md text-white my-2 bg-red-400 text-semibold cursor-not-allowed'}>
+                                Add to cart
+                            </Button>
+                        }
+
+                        {!isAddToCartDisabled &&
+                            <Button fw handleOnClick={handleAddToCart}>
+                                Add to cart
+                            </Button>
+
+                        }
 
                     </div>
                 </div>
@@ -313,8 +346,9 @@ const DetailProducts = ({ navigate, dispatch, location }) => {
                     pid={product?._id}
                     rerender={rerender} />
             </div>
-            <div className="w-main m-auto mt-8">
+            <div className="w-main m-auto mt-8 mb-8">
                 <h3 className="text-[20px] uppercase font-semibold py-[15px] border-2 border-t-main">OTHER CUSTINERS ALSO BUY:</h3>
+
                 <CustomSlider normal={true} products={relatedProduct} />
             </div>
 

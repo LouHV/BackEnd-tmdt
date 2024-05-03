@@ -53,12 +53,11 @@ const UpdateCategory = ({ editCategory, setEditCategory, fectchCategory }) => {
   //tao sp
   const handleUpdateCategory = async (data) => {
     const finalPayload = { ...data }
-    finalPayload.image = data?.image?.length === 0 ? preview.images : data.image[0]
+    finalPayload.image = data?.image?.length === 0 ? preview.image : data.image[0]
     const formData = new FormData()
     for (let i of Object.entries(finalPayload)) formData.append(i[0], i[1])
-    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }))
+    
     const response = await apiUpdateCategorys(formData, editCategory._id)
-    dispatch(showModal({ isShowModal: false, modalChildren: null }))
 
     if (response.success) {
       toast.success(response.message)
@@ -68,13 +67,13 @@ const UpdateCategory = ({ editCategory, setEditCategory, fectchCategory }) => {
         image: '',
       })
       setEditCategory(null)
-
+      toast.success(response.message)
     }
   };
   const fectchBrand = async (params) => {
     const response = await apiGetBrand({
       ...params,
-      limit: process.env.REACT_APP_LIMIT,
+      limit: 20,
     });
     if (response?.success) setBrands(response);
   };

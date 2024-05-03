@@ -53,6 +53,7 @@ const ManageOrder = () => {
   const { register, formState: { errors }, handleSubmit, reset, watch } = useForm()
   const [orders, setOrders] = useState(null)
   const [counts, setCounts] = useState(0)
+  console.log('paramss :>> ', params);
 
 
   const handleSearchProducts = (data) => {
@@ -143,7 +144,7 @@ const ManageOrder = () => {
     }
   }, [queryDecounce])
 
-  
+
   useEffect(() => {
     const searchParams = Object.fromEntries([...params]);
     fectchOrders(searchParams);
@@ -211,12 +212,14 @@ const ManageOrder = () => {
                 </td>
                 <td className="p-2 border border-black text-center">{el?.coupon_code}</td>
                 <td className="p-2 border border-black text-center">{`${formatMoney(formatPrice(Math.round(el?.total)))} VNĐ`}</td>
-                <td className="p-2 border border-black text-center">{`${formatMoney(formatPrice(Math.round(el?.discountedTotal)))} VNĐ`}</td>   
+                <td className="p-2 border border-black text-center">{`${formatMoney(formatPrice(Math.round(el?.discountedTotal)))} VNĐ`}</td>
                 <td className="p-2 border border-black text-center ">
                   {STATUS.find(status => status.id == el.status)?.name || 'Unknown'}
-                  <div className='hover:text-main cursor-pointer'>
-                    <FaPen onClick={(e) => handleEditClick(e, el._id)} />
-                  </div>
+                  {STATUS.find(status => status.id == el.status)?.name !== 'Huỷ đơn' && (
+                    <div className='hover:text-main cursor-pointer'>
+                      <FaPen onClick={(e) => handleEditClick(e, el._id)} />
+                    </div>
+                  )}
                   {/* <Tooltip
                     content={
                       <div className="tooltip">

@@ -55,7 +55,18 @@ const MoMoPayment = ({ amount, payload, setIsSuccess }) => {
 
             if (response.success) {
                 setIsSuccess(true);
+                const response1 = await apiCreateOrder(payload)
+                if (response1.success) {
+                    setIsSuccess(true)
+                    setTimeout(() => {
+                        Swal.fire('Congrat!', 'Order was created.', 'success').then(() => {
+                            navigate('/')
+                            window.close()
+                        })
+                    }, 1500)
+                }
                 window.open(`${response.jsonResponse.payUrl}`, "_blank");
+                
             }
 
             // const res = await apiCreateOrder(payload);
@@ -71,43 +82,12 @@ const MoMoPayment = ({ amount, payload, setIsSuccess }) => {
         }
     };
 
-    const handlePaymentQrCode = async () => {
-        try {
-            const response = await createPaymentQrCode({
-                requestId,
-                orderId,
-                requestType: requestTypeQrcode,
-                notifyUrl,
-                returnUrl,
-                amount,
-                orderInfo,
-                extraData
-            })
-            if (!response) {
-                throw new Error('Failed to create payment');
-            }
-
-            if (response.success) {
-                setIsSuccess(true);
-                // console.log("XXXX", response.jsonResponse.payUrl);
-                window.open(`${response.jsonResponse.payUrl}`, "_blank");
-            }
-
-
-
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
-
     return (
         <>
             <div>
-                <button onClick={handlePayment}>Thanh toán bằng Momo Credit</button>
+                <button className='px-4 py-2 rounded-md text-white my-2 bg-main text-semibold ' onClick={handlePayment}>Thanh toán bằng Momo Credit</button>
             </div>
-            <div>
-                <button onClick={handlePaymentQrCode}>Thanh toán bằng Momo QR Code</button>
-            </div>
+           
         </>
     );
 };

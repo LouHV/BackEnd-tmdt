@@ -7,6 +7,7 @@ const getRevenueByDay = asyncHandler(async (req, res) => {
     try {
         const day = req.params.day;
         let startDate;
+        let endDate;
 
         switch (day) {
             case '7':
@@ -25,6 +26,13 @@ const getRevenueByDay = asyncHandler(async (req, res) => {
                 startDate = new Date();
                 startDate.setFullYear(startDate.getFullYear() - 1);
                 break;
+            case 'custom':
+                startDate = new Date(req.query.startDate);
+                endDate = new Date(req.query.endDate);
+                if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+                    return res.status(400).json({ success: false, message: 'Invalid startDate or endDate' });
+                }
+                break;
             default:
                 return res.status(400).json({ success: false, message: 'Invalid day parameter' });
         }
@@ -42,7 +50,30 @@ const getRevenueByDay = asyncHandler(async (req, res) => {
                         _id: {
                             $dateToString: { format: "%Y-%m", date: "$createdAt" }
                         },
-                        totalRevenue: { $sum: "$total" }
+                        totalRevenue: { $sum: "$discountedTotal" }
+                    }
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        time: "$_id",
+                        revenue: "$totalRevenue"
+                    }
+                }
+            ]);
+        } else if (day === 'custom') {
+            revenueData = await Order.aggregate([
+                {
+                    $match: {
+                        createdAt: { $gte: startDate, $lte: endDate }
+                    }
+                },
+                {
+                    $group: {
+                        _id: {
+                            $dateToString: { format: "%Y-%m-%d", date: "$createdAt" }
+                        },
+                        totalRevenue: { $sum: "$discountedTotal" }
                     }
                 },
                 {
@@ -65,7 +96,7 @@ const getRevenueByDay = asyncHandler(async (req, res) => {
                         _id: {
                             $dateToString: { format: "%Y-%m-%d", date: "$createdAt" }
                         },
-                        totalRevenue: { $sum: "$total" }
+                        totalRevenue: { $sum: "$discountedTotal" }
                     }
                 },
                 {

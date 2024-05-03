@@ -34,7 +34,7 @@ const createNewOrder = asyncHandler(async (req, res) => {
     }
     await Carts.deleteOne({ cart_userId: _id });
 
-    if (discountedTotal > 0) {
+    if (total - discountedTotal > 0) {
         const coupon = await Coupon.findOne({ coupon_code: coupon_code });
         if (coupon) {
             if (coupon.quantity > 0) {
@@ -230,6 +230,10 @@ const getOrderDetail = asyncHandler(async (req, res) => {
         const order = await Order.findById(orderId).populate({
             path: 'orderBy',
             select: 'mobile address'
+        })
+        .populate({
+            path: 'products.product',
+            select: 'price'
         })
 
         if (!order) throw new Error('Order not found');

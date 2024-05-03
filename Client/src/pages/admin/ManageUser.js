@@ -93,6 +93,7 @@ const ManageUser = () => {
         const response = await apiDeleteUsers(uid)
         if (response.success) {
           render()
+          fectchUser()
           toast.success(response.message)
         }
         else {

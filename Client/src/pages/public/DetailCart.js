@@ -52,7 +52,7 @@ const DetailCart = ({ navigate, dispatch }) => {
                         {/* <span>{`Subtotal (${current?.cart?.length || 0} items): `}</span> */}
                         <span>{`Subtotal (${cart?.cart_count_product || 0} items): `}</span>
                         {/* <span className='text-main'>{`${formatMoney(formatPrice(current?.cart?.reduce((sum, el) => +el.price + sum, 0)))} VND`}</span> */}
-                        <span className='text-main'>{`${formatMoney(formatPrice(cart?.cart_products.reduce((sum, el) => +el.price + sum, 0)))} VND`}</span>
+                        <span className='text-main'>{`${formatMoney(cart?.cart_products.reduce((sum, el) => +el.price + sum, 0))} VND`}</span>
                         <Button
                             handleOnClick={handleCheckout}
                         >Check out</Button>

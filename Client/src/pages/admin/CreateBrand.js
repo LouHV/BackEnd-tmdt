@@ -13,15 +13,15 @@ const CreateBrand = () => {
     const { register, formState: { errors }, reset, handleSubmit } = useForm();
     //tao coupon
     const handleCreateBrand = async (data) => {
-      dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }))
+      // dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }))
       const response = await apiCreateBrand(data)
-      dispatch(showModal({ isShowModal: false, modalChildren: null }))
+      // dispatch(showModal({ isShowModal: false, modalChildren: null }))
   
       if (response.success) {
-        toast.success(response.message)
+        toast.success(response?.message)
         reset()
       } else {
-        toast.error(response.message)
+        toast.error(response?.message)
       }
   
     };

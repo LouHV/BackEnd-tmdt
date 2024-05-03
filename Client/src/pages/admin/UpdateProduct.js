@@ -10,8 +10,8 @@ import { showModal } from '../../store/app/appSlice';
 import { apiUpdateProducts } from '../../apis';
 
 
-const UpdateProduct = ({ editProduct, setEditProduct,fectchProducts }) => {
-    
+const UpdateProduct = ({ editProduct, setEditProduct, fectchProducts }) => {
+
     const dispatch = useDispatch()
 
     const { categories } = useSelector(state => state.app);
@@ -24,12 +24,12 @@ const UpdateProduct = ({ editProduct, setEditProduct,fectchProducts }) => {
     });
 
     const [preview, setPreview] = useState({
-        thumb: null,
-        images: [],
+        thumb: editProduct?.thumb || '',
+        images: editProduct?.images || [],
     })
     const render = useCallback(() => {
         setUpdateProduct(!update)
-      }, [update])
+    }, [update])
 
     useEffect(() => {
         reset({
@@ -85,14 +85,16 @@ const UpdateProduct = ({ editProduct, setEditProduct,fectchProducts }) => {
             handlePreviewThumb(thumbFile[0]);
         }
     }, [watch('thumb')]);
-    
+
     useEffect(() => {
         const imagesFiles = watch('images');
-        if (imagesFiles instanceof FileList && imagesFiles.length > 0) {
+        if (imagesFiles instanceof FileList && imagesFiles?.length > 0) {
             handlePreviewImages(imagesFiles);
+        } else if (imagesFiles?.length === 0) {
+            // Nếu không có hình ảnh nào được chọn, sử dụng giá trị mặc định từ preview.images
+            setPreview(prev => ({ ...prev, images: editProduct?.images || [] }));
         }
     }, [watch('images')]);
-
     const handleRemoveImage = (name) => {
         const files = [...watch('images')]
         reset({
@@ -107,11 +109,16 @@ const UpdateProduct = ({ editProduct, setEditProduct,fectchProducts }) => {
         if (invalids === 0) {
             if (data.category) data.category = categories?.find(el => el.title === data.category)?.title;
             const finalPayload = { ...data, ...payload }
-            finalPayload.thumb = data?.thumb?.length === 0 ? preview.images : data.thumb[0]
+            finalPayload.thumb = data?.thumb?.length === 0 ? preview.thumb : data.thumb[0]
             const formData = new FormData()
             for (let i of Object.entries(finalPayload)) formData.append(i[0], i[1])
-            finalPayload.images = data?.images?.length === 0 ? preview.images : data.images
-            for (let image of finalPayload.images) formData.append('images', image)
+            finalPayload.images = data?.images?.length === 0 ? preview.images : data.images;
+            if (preview.images.length > 0) {
+                for (let image of preview.images) {
+                    formData.append('images', image);
+                }
+            }
+            console.log('data?.images?.length:>> ', data?.images?.length);
             dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }))
             const response = await apiUpdateProducts(formData, editProduct._id)
             dispatch(showModal({ isShowModal: false, modalChildren: null }))
@@ -122,7 +129,7 @@ const UpdateProduct = ({ editProduct, setEditProduct,fectchProducts }) => {
                 reset()
                 setPayload({
                     thumb: '',
-                    images: ''
+                    images: []
                 })
                 setEditProduct(null)
                 fectchProducts()
@@ -257,17 +264,12 @@ const UpdateProduct = ({ editProduct, setEditProduct,fectchProducts }) => {
                                     className='w-fit relative'
                                     onMouseLeave={() => setHoverElm(null)}>
                                     <img src={el} alt='product' className='h-[300px] w-[200px] object-contain' />
-                                    {hoverElm === el.name &&
-                                        <div className='absolute cursor-pointer inset-0 bg-gray-500 opacity-40'
-                                        // onClick={() => handleRemoveImage(el.name)}
-                                        >
-                                            <ImBin size={24} />
-                                        </div>}
+
                                 </div>
                             ))}
                         </div>
                     }
-                
+
                     <div className='mt-4 gap-2 flex'>
                         <Button type='submit' style='px-4 py-2 rounded-md text-white my-2 bg-blue-500 text-semibold hover:bg-blue-400'>Update</Button>
                         <Button style='px-4 py-2 rounded-md text-white my-2 bg-main text-semibold hover:bg-red-400' handleOnClick={() => setEditProduct(null)}>Cancel</Button>

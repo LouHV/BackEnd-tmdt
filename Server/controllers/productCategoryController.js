@@ -78,7 +78,7 @@ const updateCategory = asyncHandler(async (req, res) => {
     const response = await ProductCategory.findByIdAndUpdate(prdcId, req.body, { new: true })
     return res.json({
         success: response ? true : false,
-        updatedCategory: response ? response : 'Cannot update Product-category'
+        message: response ? 'Updated category' : 'Cannot update Product-category'
     })
 })
 
@@ -87,7 +87,7 @@ const deleteCategory = asyncHandler(async (req, res) => {
     const response = await ProductCategory.findByIdAndDelete(prdcId)
     return res.json({
         success: response ? true : false,
-        deletedCategory: response ? response : 'Cannot delete Product-category'
+        message: response ? 'deleted category' : 'Cannot delete Product-category'
     })
 })
 module.exports = {

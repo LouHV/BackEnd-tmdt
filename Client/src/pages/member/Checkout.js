@@ -10,6 +10,7 @@ import { toast } from 'react-toastify'
 import { IoIosArrowRoundBack } from "react-icons/io";
 import path from '../../ultils/path'
 import { getCart } from '../../store/cart/asyncActions'
+import { Navigate } from 'react-router-dom'
 
 const Checkout = ({ dispatch, navigate }) => {
     const { register, formState: { errors }, watch, setValue, reset, handleSubmit } = useForm()
@@ -57,7 +58,7 @@ const Checkout = ({ dispatch, navigate }) => {
         setPaymentMethod({ [name]: value });
 
     };
-
+    if (discountedTotal === 0) return <Navigate to={`/${path.HOME}`} replace={true} />
     return (
         <div className='w-full'>
             <div className='flex justify-start items-center text-xl m-8 hover:text-main cursor-pointer w-[85px] h-auto'
@@ -149,7 +150,7 @@ const Checkout = ({ dispatch, navigate }) => {
                     <Cash
                         payload={{
                             products: cart?.cart_products,
-                            total: Math.round(cart?.cart_products?.reduce((sum, el) => +el.price + sum, 0)),
+                            total: total,
                             orderBy: current?._id,
                             address: current?.address,
                             status: 1,

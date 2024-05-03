@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import InputForm from '../../components/input/inputForm';
-import { formatMoney, formatPrice } from '../../ultils/helper';
+import { formatMoney, formatPrice, truncateString } from '../../ultils/helper';
 import moment from 'moment';
 import { Pagination } from '../../components';
 import useDebounce from '../../hooks/useDebounce';
@@ -12,6 +12,7 @@ import UpdateBlog from './UpdateBlog'
 import { apiDeleteBlog, apiGetBlogs } from '../../apis';
 import { MdDeleteForever } from 'react-icons/md'
 import { FaRegEdit } from 'react-icons/fa'
+import DOMPurify from 'dompurify';
 const ManageBlog = () => {
   const [editBlog, setEditBlog] = useState(null);
 
@@ -131,12 +132,17 @@ const ManageBlog = () => {
               <tr key={el._id} className="text-center border border-black">
                 <td className="p-2 border border-black text-center">{((+params.get('page') > 1 ? +params.get('page') - 1 : 0) * process.env.REACT_APP_LIMIT) + idx + 1}</td>
                 <td className="p-2 border border-black text-center ">
-                  <div className='flex justify-center'> 
-                  <img src={el?.image_blog} alt='thumb' className=' w-12 h-12 object-cover ' />
+                  <div className='flex justify-center'>
+                    <img src={el?.image_blog} alt='thumb' className=' w-12 h-12 object-cover ' />
                   </div>
                 </td>
                 <td className="p-2 border border-black text-center">{el?.title_blog}</td>
-                <td className="p-2 border border-black text-center">{el?.description_blog}
+                <td className="p-2 border border-black text-center">
+                  {el?.description_blog?.length > 1 && <div
+                    className="text-sm cursor-pointer"
+                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(truncateString(el?.description_blog, 250)) }}
+                    title={el?.description_blog}
+                    ></div>}
                 </td>
                 <td className="p-2 border border-black text-center">{el?.category}</td>
 

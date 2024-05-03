@@ -6,7 +6,7 @@ import { SidebarAdmin } from '../../components'
 
 const AdminLayout = () => {
  const { isLoggedIn, current } = useSelector(state => state.user)
- if (!isLoggedIn || !current || +current.role !== 0) return <Navigate to={`/${path.LOGIN}`} replace={true} />
+ if (!isLoggedIn || !current || +current.role !== 0) return <Navigate to={`/${path.HOME}`} replace={true} />
  return (
     <div className='flex w-full bg-sky-100 min-h-screen relative text-black '>
       <div className='w-3/10 top-0 bottom-0 flex-none overflow-y-auto max-h-screen h-auto'>

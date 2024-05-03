@@ -159,7 +159,7 @@ const ManageProduct = () => {
                   </td>
                 <td className="p-2 border border-black text-center ">{`${formatMoney(formatPrice(el?.price))} VNĐ`}</td>
                 <td className="p-2 border border-black text-center">{el?.quantity}</td>
-                <td className="p-2 border border-black text-center">{el?.slod}</td>
+                <td className="p-2 border border-black text-center">{el?.sold||0}</td>
                 <td className="p-2 border border-black text-center">{el?.color}</td>
                 <td className="p-2 border border-black text-center">{moment(el?.createdAt).format('DD/MM/YYYY')}</td>
 

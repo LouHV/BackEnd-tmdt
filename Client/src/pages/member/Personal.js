@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import InputForm from '../../components/input/inputForm'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,7 +14,10 @@ const Personal = () => {
   const { register, formState: { errors }, handleSubmit, reset } = useForm()
   const { current } = useSelector(state => state.user)
   const dispatch = useDispatch()
-
+  const [preview, setPreview] = useState({
+    image: null,
+  })
+  
   useEffect(() => {
     reset({
       firstname: current?.firstname,
@@ -28,9 +31,16 @@ const Personal = () => {
   }, [current])
 
   const handleUpdateInfor = async (data) => {
-    const formData = new FormData()
-    if (data.avatar.length > 0) formData.append('avatar', data.avatar[0])
-    delete data.avatar
+    const formData = new FormData();
+ if (data.avatar.length > 0) {
+    const file = data.avatar[0];
+    if (file.size > 1024 * 1024) { // 1MB = 1024 * 1024 bytes
+      toast.error("File size must be less than 1MB");
+      return;
+    }
+    formData.append('avatar', file);
+ }
+ delete data.avatar;
 
     for (let i of Object.entries(data)) formData.append(i[0], i[1])
     
@@ -118,6 +128,7 @@ const Personal = () => {
         </div>
         <div className='w-1/3 items-center justify-center flex flex-col '>
           <div className=' border-l border-l-gray-300 mt-[-120px]'>
+            
             <label htmlFor='file' className='justify-center flex'>
               <img className='h-[100px] w-[100px] rounded-full object-contain border my-[20px]' src={current?.avatar || avartar} />
             </label>

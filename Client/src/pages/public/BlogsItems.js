@@ -3,6 +3,7 @@ import withBase from '../../hocs/withBase'
 import { format } from 'date-fns';
 import { FaArrowRightLong } from "react-icons/fa6";
 import { truncateString } from '../../ultils/helper';
+import DOMPurify from 'dompurify';
 
 
 
@@ -21,7 +22,16 @@ const BlogsItems = ({ el, dispatch, navigate }) => {
           <span>{`By ${el?.author_blog}`}</span>
           <span className='ml-2'>{`${format(el?.createdAt, 'MMM dd, yyyy')}`}</span>
         </div>
-        <span className=' mb-[15px] '>{truncateString(el?.description_blog, 250)}</span>
+        <span className=' mb-[15px] '>
+          {/* {el?.description_blog?.length > 1 &&
+            <div key={el} className=" leading-6 list-disc cursor-pointer"
+              title={el?.description_blog}
+            >{truncateString(el?.description_blog, 250)}</div>} */}
+          {el?.description_blog?.length > 1 && <div
+            className="text-sm cursor-pointer"
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(truncateString(el?.description_blog, 250)) }}></div>}
+          {/* {truncateString(el?.description_blog, 250)} */}
+        </span>
         <span className='flex items-center text-main gap-2 hover:text-black cursor-pointer'
           onClick={e => navigate(`/blogs/${el?._id}/${el?.title_blog}`)}>Read More
           <FaArrowRightLong />
