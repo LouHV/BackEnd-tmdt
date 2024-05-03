@@ -14,7 +14,7 @@ const Cash = ({ navigate, amount, payload, setIsSuccess }) => {
             setTimeout(() => {
                 Swal.fire('Congrat!', 'Order was created.', 'success').then(() => {
                     navigate('/')
-                    window.close()
+                    // window.close()
                 })
             }, 1500)
         }

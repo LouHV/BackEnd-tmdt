@@ -3,20 +3,27 @@ import { apiGetOrders, apiGetUserOrders } from '../../apis';
 import { useForm } from 'react-hook-form';
 import InputForm from '../../components/input/inputForm';
 import { Pagination } from '../../components';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { formatMoney, formatPrice } from '../../ultils/helper';
 import { STATUS } from '../../ultils/contants';
+
+import path from '../../ultils/path'
+
 
 const History = () => {
   const [orders, setOrders] = useState(null)
   const [counts, setCounts] = useState(0)
   const [params] = useSearchParams()
   const { register, formState: { errors }, watch } = useForm()
-  const q = watch('q')
+  const q = watch('q');
+
+  const navigate = useNavigate()
+
+
   const fectchOrders = async (params) => {
     const response = await apiGetUserOrders({ ...params, limit: process.env.REACT_APP_LIMIT })
-    // console.log('response :>> ', response);
+    console.log('response :>> ', response);
     if (response.success) {
       setOrders(response.Orders)
       setCounts(response.counts)
@@ -32,7 +39,7 @@ const History = () => {
       <header className='text-3xl py-4 border-b border-b-gray-300 '>
         History
       </header>
-      
+
       <div className="w-ful text-rightx">
         <table className="table-auto mb-6 w-full">
           <thead className="font-bold  text-[13px] border border-black text-center bg-main text-white">
@@ -42,7 +49,7 @@ const History = () => {
               <th className="px-4 py-2 border border-black">Total</th>
               <th className="px-4 py-2 border border-black">Status</th>
               <th className="px-4 py-2 border border-black">CreatedAt</th>
-              <th className="px-4 py-2 border border-black">Actions</th>
+              <th className="px-4 py-2 border border-black"></th>
 
 
             </tr>
@@ -63,6 +70,12 @@ const History = () => {
                 </td>
 
                 <td className="p-2 border border-black text-center">{moment(el?.createdAt).format('DD/MM/YYYY')}</td>
+
+                <td className="p-2 border border-black text-center cursor-pointer" style={{ margin: 20 }}
+                  onClick={() => navigate(`/detailorder/${el._id}`)}
+                >
+                  <i className="fas fa-eye"></i>
+                </td>
 
 
 

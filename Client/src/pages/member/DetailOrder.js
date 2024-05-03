@@ -100,7 +100,7 @@ const DetailOrder = () => {
 
 
                             </tr>}
-                        {orders.coupon_code &&
+                        {orders?.coupon_code &&
                             <tr>
                                 <td className="py-2 border-l border-l-black"></td>
                                 <td className="py-2 "></td>
