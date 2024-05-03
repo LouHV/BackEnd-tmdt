@@ -50,7 +50,7 @@ const createNewOrder = asyncHandler(async (req, res) => {
     })
 })
 
-const updateStatus = asyncHandler(async (req, res) => {
+const _updateStatus = asyncHandler(async (req, res) => {
     const { orderId } = req.params
     const { status } = req.body
     if (!status) throw new Error('Missing Status');
@@ -74,6 +74,46 @@ const updateStatus = asyncHandler(async (req, res) => {
         createdOrder: response ? response : 'Something went wrong',
     })
 })
+
+const updateStatus = asyncHandler(async (req, res) => {
+    const { orderId } = req.params;
+    const { status } = req.body;
+    if (!status) throw new Error('Missing Status');
+
+    const order = await Order.findById(orderId);
+    if (!order) throw new Error('Order not found');
+
+    if (status === 6) {
+        for (let product of order.products) {
+            const productInDb = await Product.findById(product.product);
+            if (!productInDb) throw new Error('Product not found');
+
+            productInDb.quantity += product.quantity;
+            await productInDb.save();
+        }
+    }
+
+    const response = await Order.findByIdAndUpdate(orderId, { status }, { new: true });
+    const user = await User.findOne({ _id: convertToObjectIdMongoDb(response.orderBy).toString() });
+    if (!user) throw new Error('missing user');
+
+    const html = `Đơn hàng của bạn đã được cập nhật trạng thái. Xem chi tiết thông tin đơn hàng tại đây: 
+    <a href=${process.env.CLIENT_URL}/detailorder/${orderId}>Click here</a>`;
+
+    const email = user.email;
+    const data = {
+        email,
+        html
+    }
+    const rsSendMail = await sendMail.sendMail2(data);
+    if (!rsSendMail) throw new Error('Missing send mail update status order');
+
+    return res.json({
+        success: response ? true : false,
+        createdOrder: response ? response : 'Something went wrong',
+    })
+});
+
 
 const getUserOder = asyncHandler(async (req, res) => {
     let queryCommand = Order.find();
@@ -231,10 +271,10 @@ const getOrderDetail = asyncHandler(async (req, res) => {
             path: 'orderBy',
             select: 'mobile address'
         })
-        .populate({
-            path: 'products.product',
-            select: 'price'
-        })
+            .populate({
+                path: 'products.product',
+                select: 'price'
+            })
 
         if (!order) throw new Error('Order not found');
 

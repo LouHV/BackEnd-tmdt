@@ -42,7 +42,8 @@ const getRevenueByDay = asyncHandler(async (req, res) => {
             revenueData = await Order.aggregate([
                 {
                     $match: {
-                        createdAt: { $gte: startDate }
+                        createdAt: { $gte: startDate },
+                        status: { $in: [1, 2, 3, 4, 5] }
                     }
                 },
                 {
@@ -65,7 +66,8 @@ const getRevenueByDay = asyncHandler(async (req, res) => {
             revenueData = await Order.aggregate([
                 {
                     $match: {
-                        createdAt: { $gte: startDate, $lte: endDate }
+                        createdAt: { $gte: startDate, $lte: endDate },
+                        status: { $in: [1, 2, 3, 4, 5] }
                     }
                 },
                 {
@@ -88,7 +90,8 @@ const getRevenueByDay = asyncHandler(async (req, res) => {
             revenueData = await Order.aggregate([
                 {
                     $match: {
-                        createdAt: { $gte: startDate }
+                        createdAt: { $gte: startDate },
+                        status: { $in: [1, 2, 3, 4, 5] }
                     }
                 },
                 {
